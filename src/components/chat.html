@@ -1,0 +1,33 @@
+ <script type = "text/javascript">
+    var chatIP = "103.99.62.238";
+    var chatJsUrl = "http://" + chatIP + "/chat-client/js/";
+
+    var jquery = document.createElement('script');
+      jquery.type = 'text/javascript';
+      jquery.src = chatJsUrl + 'jquery-3.2.1.min.js';
+      jquery.addEventListener('load', loadChat, false);
+
+    document.body.appendChild(jquery);
+
+    function loadChat() {
+      // Clear Current Session
+      sessionStorage.removeItem('636861745f757365726e616d65'); // chat_username
+      sessionStorage.removeItem('636861745f77656273697465436f6465'); // chat_websiteCode
+      sessionStorage.removeItem('636861745f6f4944'); // chat_oID
+      sessionStorage.removeItem('636861745f72616e646f6d'); // chat_random
+      sessionStorage.removeItem('636861745f726571756573744b6579'); // chat_requestKey
+
+      // Set New Session
+      sessionStorage['636861745f757365726e616d65'] = '<?php echo $_SESSION['username'] ?>';
+      sessionStorage['636861745f77656273697465436f6465'] = '<?php echo $_SESSION['websiteCode']; ?>';
+      sessionStorage['636861745f6f4944'] = '<?php echo $_SESSION['oID']; ?>';
+      sessionStorage['636861745f72616e646f6d'] = '<?php echo $_SESSION['random']; ?>';
+      sessionStorage['636861745f726571756573744b6579'] = '<?php echo $_SESSION['requestKey']; ?>';
+
+      var clientChatMain = document.createElement('script');
+        clientChatMain.type = 'text/javascript';
+        clientChatMain.src = chatJsUrl + 'client.chat.main.js';
+
+      document.body.appendChild(clientChatMain);
+    }
+  </script>

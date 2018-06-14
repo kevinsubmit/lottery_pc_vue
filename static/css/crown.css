@@ -1,0 +1,337 @@
+
+header .main {
+  background: #1952b4 ;
+}
+.logo{
+    background: url('/static/images/uc/logo.png');  
+}
+
+
+.second_menu_list{
+  background-color:  #2d59a5;
+}
+
+.bet-top{
+    background: url("/static/images/common/bg-top.png") no-repeat;
+    background-size: cover;
+} 
+.bet-top .leftPart {
+    border-right: 1px solid #ceb0ce;
+}
+.iosc,
+.adridc,
+.float-right{
+  background: #1c4fa8;
+} 
+.unsettlement h2 {
+  background: #2866b4;
+}
+.bet-top {
+  background-color: #5295dc;
+}
+.openData .nums span {
+  background:#366fbe;
+}
+
+.markSix #marksix_nav_15 li:last-child div span:first-child,
+#marksix_nav_34  div label  span:first-child,
+#marksix_nav_35  div label  span:first-child,
+#marksix_nav_36  div label  span:first-child,
+#marksix_nav_37  div label span:first-child,
+#marksix_nav_38  div label  span:first-child,
+#marksix_nav_39  div label span:first-child
+{
+  background: #366fbe!important;color:#fff!important;
+}
+
+
+
+
+
+.el-button.is-round {
+  padding: 8px 23px;
+  background-color: #1c4fa8;
+  border-color: #1c4fa8;
+  width: 100%;
+  box-shadow: 2px 2px 5px #1c4fa8;
+}
+.swal2-modal .swal2-styled {
+  background-color: #1c4fa8!important;
+  border-radius: 30px!important;
+  box-shadow: 2px 2px 5px #a29bbf!important;
+  padding: 8px 40px!important;
+} 
+.el-carousel__container .el-carousel__container {
+    background-size: cover;
+}
+.el-carousel__item img {
+    width: 100%;
+    height: 100%;  
+}
+/* .el-carousel__container .el-carousel__container div:nth-child(2) {
+  background: url("/static/images/uc/banner02.jpg");
+    background-size: cover;
+}
+
+.el-carousel__container .el-carousel__container div:nth-child(3) {
+  background: url("/static/images/uc/banner03.jpg");
+    background-size: cover;
+} */
+.bet-top .leftPart {
+    border-right: 1px solid #89a3d1;
+}
+
+.userInfo .avatar {
+  border: 1px solid #89a3d1;  
+}
+.logo  {
+    background: url('/static/images/crown/logo.png');  
+    background-size: contain;
+    display: inline-block;
+    width: 155px;  
+    height: 46px;
+    margin-top: 5px;
+}
+.ico_game {
+    background-size: contain!important;
+    width: 120px;
+    height: 80px;
+}
+
+
+.game_hot,
+.game_list li a,.second_menu_list a {
+    border-bottom: 1px solid #225799;
+}
+.game_title h3 {
+    color: #3e80d4;
+}
+.game_info ul li span:nth-child(1) {
+    color: #fff;
+    background-color: #3e80d4;
+} 
+.game_info ul li span:nth-child(2) {
+    color: #666;
+}
+.btn-pink {
+  background-color: #ff9200;
+  box-shadow: 2px 2px 5px #f5b3bb;
+}
+.btn-blue {
+  background-color: #1c4fa8;
+  box-shadow: 2px 2px 5px #a29bbf;
+}
+.btn-pink:hover {
+  background-color: #c0740d;
+}
+.btn-blue:hover {
+  background-color: #1561e5;
+}
+nav.top-nav {
+    height: 35px;
+    // background-size: cover;
+    margin-bottom: 10px;
+    box-shadow: 3px 2px 5px #cce2fe;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.top-nav ul li { 
+  float: left;
+  padding: 0 15px;
+  color: #333;
+  font-size: 15px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+  position: relative; 
+  // margin-right: 1px;
+}
+.top-nav ul li:hover{
+   color:#305eb2;
+}
+.top-nav ul .active {
+   
+    font-weight: bold;
+    color:#305eb2;
+    border-bottom: 2px solid #305eb2;
+    // background-color: #305eb2;
+} 
+.top-nav ul li:first-child:hover,
+.top-nav ul li:first-child.active {
+    border-bottom-left-radius: 5px;
+}
+ 
+.top-nav ul .active:hover {
+    font-weight: bold;
+}
+.offline div a,
+.offline div span,
+.btns-before-login .btn-try {
+    color: #333!important;
+    background-color: #6187cc;
+    background-color: #fff;
+    border: none;
+}
+.btns-before-login .btn-try {
+  background-color: #6187cc;
+  color: #fff!important;
+}
+.btns-before-login span {
+  opacity: 1!important;
+}
+footer {
+    color: #666;
+    background-color: #333;
+}
+.lotteryCqssc #ssc_nav_0 div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_2  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_3  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_4  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_5  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_6  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child, 
+.markSix #marksix_nav_14  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_15  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_16  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_17  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_27  li div:not(.game_title) span:first-child {
+    width: 50px;
+    border-radius: 5px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: 1px;
+    background-color: #3e80d4;
+}
+.markSix ul li:last-child span:nth-child(1) {
+  background-color: #3e80d4;
+}
+.six_lm_ball li span {
+  background-color: #ea6271;
+}
+#ten_result_172 td span,
+#ten_result_280 td span,
+.game_172 .result-ball,
+.game_280 .result-ball,
+.jsks .ksball_1,
+.jsks .ksball_2,
+.jsks .ksball_3,
+.jsks .ksball_4,
+.jsks .ksball_5,
+.jsks .ksball_6 {
+  background-image: url('/static/images/crown/ico-dice.png');  
+} 
+#ten_result_172 .ten_result_1,
+.game_172 .result-ball_1,
+#ten_result_280 .ten_result_1,
+.game_280 .result-ball_1,
+.jsks .ksball_1 {
+  background-position:  0 0;
+}
+#ten_result_172 .ten_result_2,
+.game_172 .result-ball_2,
+#ten_result_280 .ten_result_2,
+.game_280 .result-ball_2,
+.jsks .ksball_2 {
+    background-position: 0 118px;
+}
+#ten_result_172 .ten_result_3,
+.game_172 .result-ball_3,
+#ten_result_280 .ten_result_3,
+.game_280 .result-ball_3,
+.jsks .ksball_3 {
+  background-position: 0 236px;
+}
+#ten_result_172 .ten_result_4,
+.game_172 .result-ball_4,
+#ten_result_280 .ten_result_4,
+.game_280 .result-ball_4,
+.jsks .ksball_4 {
+  background-position: 0 354px;
+}
+#ten_result_172 .ten_result_5,
+.game_172 .result-ball_5,
+#ten_result_280 .ten_result_5,
+.game_280 .result-ball_5,
+.jsks .ksball_5 {
+  background-position: 0 614px;
+}
+#ten_result_172 .ten_result_6,
+.game_172 .result-ball_6,
+#ten_result_280 .ten_result_6,
+.game_280 .result-ball_6,
+.jsks .ksball_6 {
+  background-position: 0 590px;
+} 
+.header-modal-content li:hover,
+.header-modal-content li.active {
+  background-color: #1c4fa8!important;
+  color: #fff!important;
+}
+.common-content .el-tabs__item.is-active {
+    color: #fff;
+    background-color: #1c4fa8;
+}
+.moneyManage .el-tabs__item,
+.moneyManage .el-tabs__nav-scroll {
+  background-color: #3d83dc!important;
+  color: #fff!important;
+}
+ .moneyManage .el-tabs__item.is-active {
+    background-color: #1c4fa8!important;
+    color: #fff!important;
+}
+.grid-content .conmit div:first-child{
+    background-color: #ff9200;
+    box-shadow: 2px 2px 5px #ff9200;
+    border-radius: 60px 0 0 60px;
+}
+.grid-content .conmit div{
+    background-color: #1c4fa8;
+    box-shadow: 2px 2px 5px #1c4fa8;
+}
+
+.grid-content input{
+  width: 100%;
+  border: 1px solid #e6e6f0;
+  outline: none;
+  text-align: center;
+  height: 33px;
+}
+
+.grid-content .conmit{
+  border: none;
+  padding: 50px 0;
+}
+.grid-content .conmit div{
+  width: 120px;
+  color: #fff;
+  display: inline-block;
+  border-radius: 60px 0 0 60px ;
+  cursor: pointer;
+}
+.grid-content .conmit div:nth-child(2){
+  border-radius: 0 60px  60px 0 ;
+  background-color: #1c4fa8;
+  /*border: 1px solid ;*/
+}
+.grid-content .active {
+  background-color: #1c4fa8;  
+  border: 1px solid #1c4fa8;
+  color: #fff;
+} 
+
+.float-left_uc{
+  width:194px;
+  height:129px;
+  position: fixed;
+  left: 0;
+  bottom: 100px;
+  z-index: 9;
+  transition: all ease .5s;
+  background:url('/static/images/common/activitysmall.png') no-repeat;
+}
+
+.bank-offline-table th{
+  width: 17% !important;
+}

@@ -1,0 +1,33 @@
+/*头部*/
+
+
+
+ 
+/*投注区*/
+.game_list li a {
+    border-bottom: 1px solid #2d2c39;
+}
+.game_title h3 {
+    color: #666;
+}
+.game_info ul li span:nth-child(1) {
+    color: #fff;
+    background-color: #7b73be;
+}
+.game_info ul li span:nth-child(2) {
+    color: #7b73be;
+}
+.btn-pink {
+  background-color: #eb6877;
+  box-shadow: 2px 2px 5px #f5b3bb;
+}
+.btn-blue {
+  background-color: #453880;
+  box-shadow: 2px 2px 5px #a29bbf;
+}
+.btn-pink:hover {
+  background-color: #a8404c;
+}
+.btn-blue:hover {
+  background-color: #372d61;
+}

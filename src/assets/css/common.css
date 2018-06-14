@@ -1,0 +1,2983 @@
+/*投注区*/
+body {
+  font-family:  'Microsoft Yahei'!important;
+}
+.f-l {
+  // margin-top: 10px;
+  float: left;
+}
+.f-r {
+  float: right;
+} 
+
+ 
+
+.bet-top{
+    background-size: cover;
+} 
+.bet-top .leftPart {
+    border-right: 1px solid #ceb0ce;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#mainContainer .content {
+  margin-left: 190px;
+  transition: all ease .5s;
+}
+.siderLeft {
+    float: left;
+} 
+.game_info ul li span {
+    font-size: 14px;
+}
+h2.game_title {
+    color: #6a6d91;
+    font-size: 18px;
+    background-color: #fff;
+    padding-top: 10px;
+}
+.content h3.title {
+    font-size: 16px;
+    text-align: left;
+    color: #333;
+    height: 35px;
+    line-height: 35px;
+    background-color: #eff6ff;
+    /*border-bottom: 1px solid #ddd;*/
+    text-indent: 1%;
+}  
+
+#app {
+    /*// background:#deedff  url('/static/images/common/bg-home.jpg') repeat-x  ;*/
+    /*background:#deedff  url('@{public_img}/images/common/bg-home.jpg') repeat-x  ;*/
+    // background-size:cover ;
+} 
+.common-content {
+  background-color: #fff;
+  padding: 20px;
+  overflow-y: auto;
+}
+.moneyManage-page .common-content,
+.history-page .common-content,
+.result-page .common-content {
+    min-height: calc(96vh - 202px);
+}
+
+
+
+/*.rules {
+  height: calc(100vh - 254px)!important;
+  overflow-y: auto;  
+}*/
+.lotteryKlsf .game ul li div,
+.luckyFram .game ul li div  {
+  width: 25%; 
+  display: inline-block;
+}
+.lotteryKlsf .game ul li div:first-child,
+.luckyFram .game ul li div:first-child {
+   width: 100%;
+}
+.bet-area .game:first-child .game_title {
+    border-top: none;
+    background-color: #eff6ff;
+    margin: 0 -20px;
+    padding: 0 20px; 
+}
+.game_title h3 {
+  position: relative;
+  font-size: 14px;
+}
+.game_title h3:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #eff6ff transparent transparent;
+    position: absolute;
+    bottom: -8px;
+    left: 10px;
+} 
+
+.content-box {
+    margin-top: 15px;
+    overflow: auto;
+} 
+.bet-area {
+    width: 100%;
+}
+.bet-content { 
+  margin-right: 160px;
+  position: relative;
+  border-radius: 4px; 
+}
+.bet-center {
+  overflow-y: auto;
+  width: 100%;
+  height: calc(96vh - 187px)!important;
+  background-color: #fff;
+}
+.markSixSubNav + .bet-content > .bet-center {
+  height: calc(96vh - 220px)!important;
+} 
+.bet-content .bet-box {
+  padding: 0 20px 20px 20px;
+  background-color: #fff;
+  border-radius: 5px; 
+}
+
+
+ 
+/* .game_info ul li div:hover{
+    background:#f2f2fa;
+} */
+.game_title ul{
+    background: #fff;
+    font-size: 16px;
+    color: #676767;
+}
+.game_title ul li{
+    float: left;
+    width: 20%;
+    text-align: left;
+}
+.game_info ul li{
+    text-align: left;
+    display: inline-block;
+}
+
+.game_info ul li span:nth-child(1){
+    width: 60px;
+    border-radius: 5px;
+    margin: 0 5% 0 0;
+}
+.game_info ul li span:nth-child(2){
+    color: #bd4700;
+}
+.game_info ul li input{
+    height: 20px;
+    margin-left: 5%;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding-left: 5px;
+    width: 30%;
+    border-radius: 3px;
+}
+.btn-bet{
+  padding: 15px 0 0;
+  color: #666;
+  border-top: 1px solid #ccc;
+  margin: 5px -20px -15px -20px;
+}
+.btn-bet {
+
+}
+.btn-bet input:nth-child(1){
+    width: 90px;
+    height: 35px; 
+    line-height: 35px;
+    border-radius: 3px;
+    color: #666;
+    outline: none;
+    float: left;
+    margin-right: 10px;
+ 
+    background: #f7f7f7;
+    border: 1px solid #ddd;  
+    filter: alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=white,endcolorstr=gray,gradientType=0);
+    -ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=white,endcolorstr=gray,gradientType=0);
+    background: white;
+    background: -moz-linear-gradient(top, white, rgba(245, 245, 255, 0.5));
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(rgba(245, 245, 255, 0.5)));
+    background: -o-linear-gradient(top, white, rgba(245, 245, 255, 0.5));
+}
+.btn-bet .el-checkbox {
+    margin-top: 4px;
+    // float: left;
+    margin-left: 20px;
+}
+.btn-bet input[type="checkbox"]{
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  vertical-align: -2px;
+  margin: 0 5px;
+}
+.btn-bet input:nth-child(2) {
+    width: 78px;
+    height: 27px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0 5px;
+    // float: left;  
+    margin: 4px 0 0 10px;
+}
+.btn-pink,
+.btn-blue {
+    width: 90px; 
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    outline: none;
+    cursor: pointer;
+} 
+.btn-pink {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px; 
+}
+.btn-blue {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-right: 1px;
+}
+.btn-bet .btn-pink {
+  // margin-left: 12%;
+  // border-right: 1px solid #fff;
+}
+.btn-bet .btn-pink,
+.btn-bet .btn-blue {
+  // float: left;
+}
+.btn-bet .btn-blue {
+  // margin-left: -200px;
+}
+
+.se{
+    background: #f2f7ee;
+}
+.rules-page {
+    background-color: #fff;
+    min-height: 700px;
+}
+h3.title {
+    font-size: 16px;
+    text-align: left;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    /*background-color: #eee;*/
+    /*border-bottom: 1px solid #ddd;*/
+    text-indent: 15px;
+}
+.tabs div {
+    width: 12%;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+}
+.tabs div.active {
+    color: #000;
+    border-bottom: 2px solid #ff9101;
+}
+
+.clearfix:after{
+    display:block;
+    content: '';
+    clear:both;
+}
+.content {
+  font-size: 14px;
+  line-height: 30px;
+  color: #999; 
+}
+.result-bottom li {
+    float: left;
+}
+
+.row-5 {
+    width: 20%;
+    float: left;
+}
+.game_info ul li { 
+    background-color: #fff;
+}
+ 
+.lotteryPcdd li div:first-child{
+  width: 100%;
+  // float: left;
+}
+.pk10_0101 .game,
+.pk10_0103 .game {
+    width: 100%;
+}
+.pk10_0101 .game li,
+.pk10_0103 .game li {
+    // float: left;
+    display: inline-block;
+}
+.game_info ul li span,
+.game_info ul li input {
+    float: left;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+}
+.game_info ul li input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+}
+.game_info ul li span:nth-child(2) {
+    font-size: 14px;
+    color: #7b73be;
+    width: 35px;
+}
+.result-bottom ul {
+    float: left;
+}
+.result-bottom ul li span {
+    display: block;
+    width: 42px;
+    height: 27px;
+    line-height: 32px;
+    text-align: center;
+}
+
+.tabs-result {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px solid #999;
+    width: 20px;
+    padding: 0 25px 0 15px;
+    height: 100%;
+    line-height: 15px;
+}
+.tabs-result a {
+    color: #a4a4be;
+    padding: 15px 0 0 0;
+    display: block;
+    position: relative;
+}
+.tabs-result a.active:before {
+    content: '';
+    position: absolute;
+    right: 11px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-left: 5px solid #fff;
+    border-bottom: 5px solid transparent;
+}
+.tabs-result a:hover,
+.tabs-result a.active {
+    color: #fff;
+}
+
+
+.result-top span {
+    font-size: 30px;
+    color: #fff;
+    background-color: #ff9338;
+    width: 35px;
+    height: 35px;
+    margin-right: 5px;
+    display: block;
+    float: left;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 5px;
+}
+.bet-area .game.row-5,
+.pk10_0101 ul li {
+    width: 20%;
+}
+.pk10_0101 ul li:first-child {
+    width: 100%;
+} 
+.pk10_0101 .gyh li:first-child div,
+.pk10_0101 ul:not(.danhao) li:first-child div:not(.game_title) {
+  float: left;
+  width:20%;
+}
+.lotteryCqssc .qiu  li div:not(.game_title) span:first-child,
+.pk10_0101 .danhao  li div:not(.game_title) span:first-child,
+.pk10_0101 .zuhe  li:last-child div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_2  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_3  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_4  li:first-child div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_5  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_6  li:first-child div:not(.game_title) span:first-child,
+.pcegg li:last-child div:not(.game_title) span:first-child,
+#ssc_nav_1 li div:not(.game_title) span:first-child {  
+  width: 24px;
+  height: 24px; 
+  line-height: 24px;
+  text-align: center;
+  margin-top: -2px;
+}
+.lotteryCqssc .qiu  li div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_2  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_3  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_4  li:first-child div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_5  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_6  li:first-child div:not(.game_title) span:first-child,
+.pcegg li:last-child div:not(.game_title) span:first-child,
+#ssc_nav_1 li div:not(.game_title) span:first-child{border-radius:50%;}
+
+
+.pk10_0101 .gyh li:first-child div:first-child{
+  // float: left;
+  width:100%;
+}
+.pk10_0101 .zuhe li div:first-child,
+.pk10_0101 .zuhe li {
+  // float: left;
+  width:100%;
+}
+.pk10_0101 .danhao li:first-child {
+    width: 20%;
+}
+.pk10_0101 .danhao li,.pk10_0101 .gyh li{
+    width: 20%;
+}
+.pk10_0101 .zuhe li:first-child {
+    width: 100%;
+}
+.pk10_0101 .zuhe li div{
+  float: left;
+  width:20%;
+}
+.lotteryCqssc li,
+.lotteryCqssc #ssc_nav_0 li{ 
+  width: 20%;
+}
+.lotteryCqssc .qiu li,
+.lotteryCqssc #ssc_nav_0 li div:not(.game_title) {
+   width:100%;
+}
+.lotteryCqssc .qiu li div:first-child{
+     width:100%;
+}
+.lotteryCqssc .qiu li div {
+     width:20%;
+     float: left
+}
+.pk10_0102 .game:first-child li:first-child input {
+    width: 52px;
+}
+.pk10_0103 .game.row-5 {
+    width: 100%;
+}
+.pk10_0103 .game_info li {
+    float: left;
+}
+
+
+.markSix #marksix_nav_11 li:first-child div:nth-child(6) span:first-child,
+.markSix #marksix_nav_11 li div:nth-child(6) span:first-child  {
+  background-color:red!important;
+}
+.markSix #marksix_nav_11 li:first-child div:nth-child(7) span:first-child,
+.markSix #marksix_nav_11 li div:nth-child(7) span:first-child  {
+  background-color: #7bb600!important;
+}
+.markSix #marksix_nav_11 li:first-child div:nth-child(8) span:first-child,
+.markSix #marksix_nav_11 li div:nth-child(8) span:first-child  {
+  background-color: #387dd8!important;
+}
+.markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child,
+.markSix #marksix_nav_14  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_15  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_16  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_17  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_27  li div:not(.game_title) span:first-child {
+  margin-top: 7px!important;
+} 
+
+ 
+.markSix ul li:first-child div span:first-child,
+.six_lm_ball li span {
+  /*background-color: #ea6271;*/
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+/**六合彩特码球颜色*/
+#ten_result_69 .ten_result_5,
+#ten_result_69 .ten_result_1,
+#ten_result_69 .ten_result_2,
+#ten_result_69 .ten_result_7,
+#ten_result_69 .ten_result_8,
+#ten_result_69 .ten_result_12,
+#ten_result_69 .ten_result_13,
+#ten_result_69 .ten_result_18,
+#ten_result_69 .ten_result_19,
+#ten_result_69 .ten_result_23,
+#ten_result_69 .ten_result_24,
+#ten_result_69 .ten_result_29,
+#ten_result_69 .ten_result_30,
+#ten_result_69 .ten_result_34,
+#ten_result_69 .ten_result_35,
+#ten_result_69 .ten_result_40,
+#ten_result_69 .ten_result_45,
+#ten_result_69 .ten_result_46,
+
+.lottery_type_69 .balls .num_5,
+.lottery_type_69 .balls .num_1,
+.lottery_type_69 .balls .num_2,
+.lottery_type_69 .balls .num_7,
+.lottery_type_69 .balls .num_8,
+.lottery_type_69 .balls .num_12,
+.lottery_type_69 .balls .num_13,
+.lottery_type_69 .balls .num_18,
+.lottery_type_69 .balls .num_19,
+.lottery_type_69 .balls .num_23,
+.lottery_type_69 .balls .num_24,
+.lottery_type_69 .balls .num_29,
+.lottery_type_69 .balls .num_30,
+.lottery_type_69 .balls .num_34,
+.lottery_type_69 .balls .num_35,
+.lottery_type_69 .balls .num_40,
+.lottery_type_69 .balls .num_45,
+.lottery_type_69 .balls .num_46,
+
+
+.result-new .game_69 .result-ball_7,
+.result-new .game_69 .result-ball_1,
+.result-new .game_69 .result-ball_2,
+.result-new .game_69 .result-ball_5,
+.result-new .game_69 .result-ball_8,
+.result-new .game_69 .result-ball_12,
+.result-new .game_69 .result-ball_13,
+.result-new .game_69 .result-ball_18,
+.result-new .game_69 .result-ball_19,
+.result-new .game_69 .result-ball_23,
+.result-new .game_69 .result-ball_24,
+.result-new .game_69 .result-ball_29,
+.result-new .game_69 .result-ball_30,
+.result-new .game_69 .result-ball_34,
+.result-new .game_69 .result-ball_35,
+.result-new .game_69 .result-ball_40,
+.result-new .game_69 .result-ball_45,
+.result-new .game_69 .result-ball_46,
+
+
+.tm_ball_1,
+.tm_ball_2,
+.tm_ball_7,
+.tm_ball_8,
+.tm_ball_12,
+.tm_ball_13,
+.tm_ball_18,
+.tm_ball_19,
+.tm_ball_23,
+.tm_ball_24,
+.tm_ball_29,
+.tm_ball_30,
+.tm_ball_34,
+.tm_ball_35,
+.tm_ball_40,
+.tm_ball_45,
+.tm_ball_46,
+
+.markSixArea .lm_ball_1,
+.markSixArea .lm_ball_2,
+.markSixArea .lm_ball_7,
+.markSixArea .lm_ball_8,
+.markSixArea .lm_ball_12,
+.markSixArea .lm_ball_13,
+.markSixArea .lm_ball_18,
+.markSixArea .lm_ball_19,
+.markSixArea .lm_ball_23,
+.markSixArea .lm_ball_24,
+.markSixArea .lm_ball_29,
+.markSixArea .lm_ball_30,
+.markSixArea .lm_ball_34,
+.markSixArea .lm_ball_35,
+.markSixArea .lm_ball_40,
+.markSixArea .lm_ball_45,
+.markSixArea .lm_ball_46
+
+ {
+  /* background-color: red!important; */
+  background:url("/static/images/common/red_ball.png")!important;
+  background-size:100% 100% !important;
+  color:#000!important;
+}
+#ten_result_3 td .ten_result_19,
+#ten_result_3 td .ten_result_20
+#ten_result_47 td .ten_result_19,
+#ten_result_47 td .ten_result_20
+.lottery_type_47 .balls .num_19,
+.lottery_type_47 .balls .num_20,
+.ten_result_19,.ten_result_20,
+.lottery_type_3 .balls .num_19,
+.lottery_type_3 .balls .num_20,{
+  background:red !important;
+}
+
+
+.el-tabs__item{
+  font-size: 18px;
+}
+.lottery_type_69 .balls .num_3,
+.lottery_type_69 .balls .num_4,
+.lottery_type_69 .balls .num_9,
+.lottery_type_69 .balls .num_10,
+.lottery_type_69 .balls .num_14,
+.lottery_type_69 .balls .num_15,
+.lottery_type_69 .balls .num_20,
+.lottery_type_69 .balls .num_25,
+.lottery_type_69 .balls .num_26,
+.lottery_type_69 .balls .num_31,
+.lottery_type_69 .balls .num_36,
+.lottery_type_69 .balls .num_37,
+.lottery_type_69 .balls .num_41,
+.lottery_type_69 .balls .num_42,
+.lottery_type_69 .balls .num_47,
+.lottery_type_69 .balls .num_48,
+ 
+#ten_result_69 .ten_result_3,
+#ten_result_69 .ten_result_4,
+#ten_result_69 .ten_result_9,
+#ten_result_69 .ten_result_10,
+#ten_result_69 .ten_result_14,
+#ten_result_69 .ten_result_15,
+#ten_result_69 .ten_result_20,
+#ten_result_69 .ten_result_25,
+#ten_result_69 .ten_result_26,
+#ten_result_69 .ten_result_31,
+#ten_result_69 .ten_result_36,
+#ten_result_69 .ten_result_37,
+#ten_result_69 .ten_result_41,
+#ten_result_69 .ten_result_42,
+#ten_result_69 .ten_result_47,
+#ten_result_69 .ten_result_48,
+
+
+.result-new .game_69 .result-ball_3,
+.result-new .game_69 .result-ball_4,
+.result-new .game_69 .result-ball_9,
+.result-new .game_69 .result-ball_10,
+.result-new .game_69 .result-ball_14,
+.result-new .game_69 .result-ball_15,
+.result-new .game_69 .result-ball_20,
+.result-new .game_69 .result-ball_25,
+.result-new .game_69 .result-ball_26,
+.result-new .game_69 .result-ball_31,
+.result-new .game_69 .result-ball_36,
+.result-new .game_69 .result-ball_37,
+.result-new .game_69 .result-ball_41,
+.result-new .game_69 .result-ball_42,
+.result-new .game_69 .result-ball_47,
+.result-new .game_69 .result-ball_48, 
+
+.tm_ball_3,
+.tm_ball_4,
+.tm_ball_9,
+.tm_ball_10,
+.tm_ball_14,
+.tm_ball_15,
+.tm_ball_20,
+.tm_ball_25,
+.tm_ball_26,
+.tm_ball_31,
+.tm_ball_36,
+.tm_ball_37,
+.tm_ball_41,
+.tm_ball_42,
+.tm_ball_47,
+.tm_ball_48,
+
+.markSixArea .lm_ball_3,
+.markSixArea .lm_ball_4,
+.markSixArea .lm_ball_9,
+.markSixArea .lm_ball_10,
+.markSixArea .lm_ball_14,
+.markSixArea .lm_ball_15,
+.markSixArea .lm_ball_20,
+.markSixArea .lm_ball_25,
+.markSixArea .lm_ball_26,
+.markSixArea .lm_ball_31,
+.markSixArea .lm_ball_36,
+.markSixArea .lm_ball_37,
+.markSixArea .lm_ball_41,
+.markSixArea .lm_ball_42,
+.markSixArea .lm_ball_47,
+.markSixArea .lm_ball_48
+ {
+  /* background-color: #007fcd!important; */
+  background:url("/static/images/common/blue_ball.png")!important;
+  background-size:100% 100% !important;
+  color:#000!important;
+}
+
+
+
+#ten_result_69 .ten_result_5,
+#ten_result_69 .ten_result_6,
+#ten_result_69 .ten_result_11,
+#ten_result_69 .ten_result_16,
+#ten_result_69 .ten_result_17,
+#ten_result_69 .ten_result_21,
+#ten_result_69 .ten_result_22,
+#ten_result_69 .ten_result_27,
+#ten_result_69 .ten_result_28,
+#ten_result_69 .ten_result_32,
+#ten_result_69 .ten_result_33,
+#ten_result_69 .ten_result_38,
+#ten_result_69 .ten_result_39,
+#ten_result_69 .ten_result_43,
+#ten_result_69 .ten_result_44,
+#ten_result_69 .ten_result_49,
+
+.lottery_type_69 .balls .num_5,
+.lottery_type_69 .balls .num_6,
+.lottery_type_69 .balls .num_11,
+.lottery_type_69 .balls .num_16,
+.lottery_type_69 .balls .num_17,
+.lottery_type_69 .balls .num_21,
+.lottery_type_69 .balls .num_22,
+.lottery_type_69 .balls .num_27,
+.lottery_type_69 .balls .num_28,
+.lottery_type_69 .balls .num_32,
+.lottery_type_69 .balls .num_33,
+.lottery_type_69 .balls .num_38,
+.lottery_type_69 .balls .num_39,
+.lottery_type_69 .balls .num_43,
+.lottery_type_69 .balls .num_44,
+.lottery_type_69 .balls .num_49,
+
+
+.result-new .game_69 .result-ball_5,
+.result-new .game_69 .result-ball_6,
+.result-new .game_69 .result-ball_11,
+.result-new .game_69 .result-ball_16,
+.result-new .game_69 .result-ball_17,
+.result-new .game_69 .result-ball_21,
+.result-new .game_69 .result-ball_22,
+.result-new .game_69 .result-ball_27,
+.result-new .game_69 .result-ball_28,
+.result-new .game_69 .result-ball_32,
+.result-new .game_69 .result-ball_33,
+.result-new .game_69 .result-ball_38,
+.result-new .game_69 .result-ball_39,
+.result-new .game_69 .result-ball_43,
+.result-new .game_69 .result-ball_44,
+.result-new .game_69 .result-ball_49,
+ 
+
+.tm_ball_5,
+.tm_ball_6,
+.tm_ball_11,
+.tm_ball_16,
+.tm_ball_17,
+.tm_ball_21,
+.tm_ball_22,
+.tm_ball_27,
+.tm_ball_28,
+.tm_ball_32,
+.tm_ball_33,
+.tm_ball_38,
+.tm_ball_39,
+.tm_ball_43,
+.tm_ball_44,
+.tm_ball_49,
+
+.markSixArea .lm_ball_5,
+.markSixArea .lm_ball_6,
+.markSixArea .lm_ball_11,
+.markSixArea .lm_ball_16,
+.markSixArea .lm_ball_17,
+.markSixArea .lm_ball_21,
+.markSixArea .lm_ball_22,
+.markSixArea .lm_ball_27,
+.markSixArea .lm_ball_28,
+.markSixArea .lm_ball_32,
+.markSixArea .lm_ball_33,
+.markSixArea .lm_ball_38,
+.markSixArea .lm_ball_39,
+.markSixArea .lm_ball_43,
+.markSixArea .lm_ball_44,
+.markSixArea .lm_ball_49
+
+ {
+  /* background-color: #7eb900!important; */
+  background:url("/static/images/common/green_ball.png")!important;
+  background-size:100% 100% !important;
+  color:#000!important;
+}
+
+
+.result-top .num_1,
+.result-top .num_11 {
+    background-color: #eab533;
+    box-shadow: 0 0 5px #eab533;
+}
+
+.result-top .num_2,
+.result-top .num_12 {
+    background-color: #0189f9;
+    box-shadow: 0 0 5px #0189f9;
+}
+
+.result-top .num_3,
+.result-top .num_13 {
+    background-color: #62627e;
+    box-shadow: 0 0 5px #62627e;
+}
+
+.result-top .num_4,
+.result-top .num_14 {
+    background-color: #ff9135;
+    box-shadow: 0 0 5px #ff9135;
+}
+
+.result-top .num_5,
+.result-top .num_15 {
+    background-color: #569a9b;
+    box-shadow: 0 0 5px #569a9b;
+}
+
+.result-top .num_6,
+.result-top .num_16 {
+    background-color: #725ee1;
+    box-shadow: 0 0 5px #725ee1;
+}
+
+.result-top .num_7,
+.result-top .num_17 {
+    background-color: #b0b0b0;
+    box-shadow: 0 0 5px #b0b0b0;
+}
+
+.result-top .num_8,
+.result-top .num_18 {
+    background-color: #ff573a;
+    box-shadow: 0 0 5px #ff573a;
+}
+
+.result-top .num_9,
+.result-top .num_19 {
+    background-color: #964740;
+    box-shadow: 0 0 5px #964740;
+}
+
+.result-top .num_10,
+.result-top .num_20 {
+    background-color: #06bd00;
+    box-shadow: 0 0 5px #a39393;
+}
+
+ .ten_result_1,
+ .ten_result_01,
+ .ten_result_11,
+ .ten_result_21,
+ .ten_result_31,
+ .ten_result_41,
+ .ten_result_51,
+ .ten_result_61,
+ .ten_result_71,
+ .ten_result_81,
+
+.resultHistory .result-ball_1,
+.resultHistory .result-ball_01,
+.resultHistory .result-ball_11,
+.resultHistory .result-ball_21,
+.resultHistory .result-ball_31,
+.resultHistory .result-ball_41,
+.resultHistory .result-ball_51,
+.resultHistory .result-ball_61,
+.resultHistory .result-ball_71,
+.resultHistory .result-ball_81 {
+  background-color: #e4b326;
+}
+
+ .ten_result_2,
+ .ten_result_02,
+ .ten_result_12,
+ .ten_result_22,
+ .ten_result_32,
+ .ten_result_42,
+ .ten_result_52,
+ .ten_result_62,
+ .ten_result_72,
+ .ten_result_82,
+
+.resultHistory .result-ball_2,
+.resultHistory .result-ball_02,
+.resultHistory .result-ball_12,
+.resultHistory .result-ball_22,
+.resultHistory .result-ball_32,
+.resultHistory .result-ball_42,
+.resultHistory .result-ball_52,
+.resultHistory .result-ball_62,
+.resultHistory .result-ball_72,
+.resultHistory .result-ball_82
+ {
+  background-color: #008cff;
+}
+
+
+ .ten_result_3,
+ .ten_result_03,
+ .ten_result_13,
+ .ten_result_23,
+ .ten_result_33,
+ .ten_result_43,
+ .ten_result_53,
+ .ten_result_63,
+ .ten_result_73,
+ .ten_result_83,
+
+.resultHistory .result-ball_3,
+.resultHistory .result-ball_03,
+.resultHistory .result-ball_13,
+.resultHistory .result-ball_23,
+.resultHistory .result-ball_33,
+.resultHistory .result-ball_43,
+.resultHistory .result-ball_53,
+.resultHistory .result-ball_63,
+.resultHistory .result-ball_73,
+.resultHistory .result-ball_83 {
+  background-color: #323057;
+}
+
+
+ .ten_result_4,
+ .ten_result_04,
+ .ten_result_14,
+ .ten_result_24,
+ .ten_result_34,
+ .ten_result_44,
+ .ten_result_54,
+ .ten_result_64,
+ .ten_result_74,
+ .ten_result_84,
+
+.resultHistory .result-ball_4,
+.resultHistory .result-ball_04,
+.resultHistory .result-ball_14,
+.resultHistory .result-ball_24,
+.resultHistory .result-ball_34,
+.resultHistory .result-ball_44,
+.resultHistory .result-ball_54,
+.resultHistory .result-ball_64,
+.resultHistory .result-ball_74,
+.resultHistory .result-ball_84 {
+  background-color: #ff7600;
+}
+
+ .ten_result_5,
+ .ten_result_05,
+ .ten_result_15,
+ .ten_result_25,
+ .ten_result_35,
+ .ten_result_45,
+ .ten_result_55,
+ .ten_result_65,
+ .ten_result_75,
+ .ten_result_85,
+
+.resultHistory .result-ball_5,
+.resultHistory .result-ball_05,
+.resultHistory .result-ball_15,
+.resultHistory .result-ball_25,
+.resultHistory .result-ball_35,
+.resultHistory .result-ball_45,
+.resultHistory .result-ball_55,
+.resultHistory .result-ball_65,
+.resultHistory .result-ball_75,
+.resultHistory .result-ball_85 {
+  background-color: #58a6a6;
+}
+
+ .ten_result_6,
+ .ten_result_06,
+ .ten_result_16,
+ .ten_result_26,
+ .ten_result_36,
+ .ten_result_46,
+ .ten_result_56,
+ .ten_result_66,
+ .ten_result_76,
+ .ten_result_86,
+
+.resultHistory .result-ball_6,
+.resultHistory .result-ball_06,
+.resultHistory .result-ball_16,
+.resultHistory .result-ball_26,
+.resultHistory .result-ball_36,
+.resultHistory .result-ball_46,
+.resultHistory .result-ball_56,
+.resultHistory .result-ball_66,
+.resultHistory .result-ball_76,
+.resultHistory .result-ball_86 {
+  background-color: #5434ff;
+}
+
+ .ten_result_7,
+ .ten_result_07,
+ .ten_result_17,
+ .ten_result_27,
+ .ten_result_37,
+ .ten_result_47,
+ .ten_result_57,
+ .ten_result_67,
+ .ten_result_77,
+ .ten_result_87,
+
+.resultHistory .result-ball_7,
+.resultHistory .result-ball_07,
+.resultHistory .result-ball_17,
+.resultHistory .result-ball_27,
+.resultHistory .result-ball_37,
+.resultHistory .result-ball_47,
+.resultHistory .result-ball_57,
+.resultHistory .result-ball_67,
+.resultHistory .result-ball_77,
+.resultHistory .result-ball_87 {
+  background-color: #b0b0b0;
+}
+
+ .ten_result_8,
+ .ten_result_08,
+ .ten_result_18,
+ .ten_result_28,
+ .ten_result_38,
+ .ten_result_48,
+ .ten_result_58,
+ .ten_result_68,
+ .ten_result_78,
+ .ten_result_88,
+
+.resultHistory .result-ball_8,
+.resultHistory .result-ball_08,
+.resultHistory .result-ball_18,
+.resultHistory .result-ball_28,
+.resultHistory .result-ball_38,
+.resultHistory .result-ball_48,
+.resultHistory .result-ball_58,
+.resultHistory .result-ball_68,
+.resultHistory .result-ball_78,
+.resultHistory .result-ball_88 {
+  background-color: #f92a08;
+}
+
+
+ .ten_result_9,
+ .ten_result_09,
+ .ten_result_19,
+ .ten_result_29,
+ .ten_result_39,
+ .ten_result_49,
+ .ten_result_59,
+ .ten_result_69,
+ .ten_result_79,
+ .ten_result_89,
+
+.resultHistory .result-ball_9,
+.resultHistory .result-ball_09,
+.resultHistory .result-ball_19,
+.resultHistory .result-ball_29,
+.resultHistory .result-ball_39,
+.resultHistory .result-ball_49,
+.resultHistory .result-ball_59,
+.resultHistory .result-ball_69,
+.resultHistory .result-ball_79,
+.resultHistory .result-ball_89 {
+  background-color: #700e01;
+}
+ .ten_result_0,
+ .ten_result_10,
+ .ten_result_20,
+ .ten_result_30,
+ .ten_result_40,
+ .ten_result_50,
+ .ten_result_60,
+ .ten_result_70,
+ .ten_result_80,
+
+.resultHistory .result-ball_0,
+.resultHistory .result-ball_10,
+.resultHistory .result-ball_20,
+.resultHistory .result-ball_30,
+.resultHistory .result-ball_40,
+.resultHistory .result-ball_50,
+.resultHistory .result-ball_60,
+.resultHistory .result-ball_70,
+.resultHistory .result-ball_80 {
+  background-color: #09be00;
+}
+
+
+#changlong .game_title { 
+    background-color: #eff6ff;
+    text-align: left;
+    text-indent: 10px;
+}
+.common-content .el-table__body {
+  border: 1px solid #ddd;  
+}
+
+ .moneyManage .el-tabs__item.is-active {
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+}
+.moneyManage .el-tabs__item.is-active:after {
+  position: absolute;
+  left: 40%;
+  bottom: -4px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #fff;
+}
+.moneyManage .el-tabs__active-bar {
+  display: none;
+}
+.moneyManage .el-tabs__item,
+.moneyManage .el-tabs__nav-scroll {
+  margin-right: 0;
+  height: 40px;
+  line-height: 40px;
+}
+.moneyManage .el-tabs__item {
+  height: 38px;
+  border-radius: 0;
+}
+.el-step__head {
+    text-align: left;
+}
+#pane-record .el-table th:nth-child(4) {
+  border-right: none!important;
+}
+.common-content .el-table td, 
+.common-content .el-table th {
+  padding: 7px 0;
+  border-bottom: none;
+  text-align: center;
+}
+.common-content .el-table--striped .el-table__body tr.el-table__row--striped td {
+    background: #f8f9fb;
+}
+.common-content .el-table th.is-leaf {
+  border-bottom: none;
+  background-color: #f1f3f8;
+  border-top: 1px solid #ddd;
+  padding: 2px 0;
+}
+#pane-all .history  .el-table th:nth-child(5),
+ .moneyManage .el-table th:nth-child(7),
+.result-page .el-table th:nth-child(3) {
+  border-right: 2px solid #ddd;  
+}
+.common-content .el-table__header-wrapper {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;  
+}
+.common-content .el-table {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;  
+} 
+.common-content .el-table th.is-leaf:first-child {
+  border-left: 1px solid #ddd;
+}
+.common-content .el-table th:last-child {
+  border-right: 1px solid #ddd;
+}
+
+.common-content .el-tabs__item.is-active {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.common-content .el-tabs__item{
+  padding: 0 20px!important;
+}
+
+.common-content .el-tabs__active-bar {
+  display: none;
+}
+.common-content .el-tabs__item {
+  border-radius: 4px;
+  background-color: #f1f3f8;
+  margin-right: 5px;
+  font-size: 14px;
+  color: #666;
+} 
+
+.common-content .el-tabs__nav-wrap::after {
+  background-color: #fff;
+}
+
+
+  .history-page-1 .el-tabs__item{
+    border-radius:0;
+    height:20px;
+    line-height: 20px;
+    padding:0;
+    margin:0;
+    text-align: center;
+    border-right:1px solid #666;
+    background:none;
+    width:auto;  
+  }
+
+  .history-page-1 .el-tabs__item.is-active{
+    color:#1849a6;
+    background:none;
+  }
+
+.page {
+    margin: 20px 0;
+}
+
+.closeBet {
+  color: #ccc;
+} 
+.bet-top .flip-clock-wrapper {
+  left: 0;
+}
+.el-message {
+    box-shadow: 0 10px 30px #525255;
+}
+.userInfo {
+  min-width: 320px;
+} 
+.el-table--border::after, .el-table--group::after, .el-table::before {
+    background-color: #fff;
+}
+
+.el-table::before {
+  height: 6px!important;
+  background-color: #fff!important;
+}
+.el-table__row:last-child td {
+  border-bottom: 2px solid #ddd!important;
+}  
+
+/*登录密码弹窗css*/
+/*弹窗*/
+.popup-content {    
+    border: 1px solid #ccc;
+    width: 360px;
+    margin: 0 auto;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-top: 10%;
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 105!important;
+}
+.popup-title {
+  background-color: #e1e2ee;
+  height: 35px;
+  line-height: 35px;
+  text-align: left;
+  padding: 0 20px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-size: 16px;
+  color: #666;
+  position: relative;
+} 
+.popup-title .el-icon-circle-close-outline {
+    cursor: pointer;
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    font-size: 30px;
+    color: #e8e8e8;
+}
+.popup-title .el-icon-circle-close-outline:hover {
+  color: #fff;
+}
+.popup-content .row {
+  border-bottom: 1px solid #ddd;
+  height: 50px;
+} 
+.popup-content .row input {
+  border: none; 
+  height: 40px;
+  line-height: 40px;
+  background-color: #fff;
+  outline: none;
+  width: 100%;
+  padding-top: 10;
+}
+.reg-form .popup-content .row input {
+  padding-top: 17px!important;
+}
+.popup-body {
+  padding: 20px 30px 30px 30px;
+}
+.btn-form {
+  margin-top: 20px;
+}
+#btn-bind-form button,
+#btn-login-form button,
+.btn-form button {
+  border: none;
+  width: 100%;
+  border-radius: 30px;
+  margin-bottom: 10px;
+  height: 35px;
+  line-height: 35px;
+}
+.btn-form button a {
+  color: #fff;
+}
+.popup-footer {
+  border-top: 1px solid #ddd;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;  
+  color: #999;
+} 
+.popup-footer ul {
+  padding-left: 54px;  
+}
+.popup-footer li {
+  float: left;
+  color: #7b73be; 
+}
+.popup-footer a {
+  color: #eb6877;
+  cursor: pointer;
+}
+.popup-footer a:hover {
+  color: #666;
+  text-decoration: underline;
+}
+.popup-footer li:last-child a {
+  border-right: none;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #bbb;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #bbb;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #bbb;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #bbb;
+}
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: .7;
+  filter:alpha(opacity = 50);
+  background-color: #000;
+  z-index: 66;
+}
+.popup-content .row {
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+.popup-content .row .ico {
+  position: absolute;
+  left: 0;
+  top: 13px;
+}
+.popup-content .row .ico + input {
+  padding-left: 40px;
+  width: 85%!important;
+}
+#ssc_nav_0 li:last-child {
+  width: 100%;
+} 
+/* #ssc_nav_0 li div:not(.game_title),
+.lotteryCqssc .qiu li div:not(.game_title) {
+  width: 25%;
+  float: left;
+} */
+.lotteryPcdd .game_info li div span:first-child,
+#xyft  .game_info .gyh li div span:first-child ,
+.markSix #marksix_nav_11 li div span:first-child  {
+  width: 50px;
+} 
+#xyft  .game_info .zuhe li:first-child div:not(.game_title),
+.luckyFram li div:not(.game_title),
+.pk10_0101 .game_info .zuhe li:first-child div:not(.game_title),
+.lotteryCqssc #ssc_nav_0 li:last-child div:not(.game_title) ,
+.lotteryPcdd  li div:not(.game_title),
+#marksix_nav_1 li:last-child div:not(.game_title) {
+  width: 25%;
+  display: inline-block;
+} 
+#xyft  .game_info .zuhe li:first-child div span:first-child,
+.pk10_0101 .game_info li div span:first-child {
+  width: 45px;
+} 
+ 
+.luckyFram  li:first-child,
+.luckyFram  li:nth-child(2),
+.luckyFram  li:nth-child(3),
+.luckyFram  li:nth-child(4) {
+  height: 65px;
+}
+
+/* #farm_lm ul li,
+ #ten_lm ul li,
+ .lotteryKlsf ul li {
+   height: 35px;
+ } */ 
+/* #farm_lm ul {
+  height: 70px;
+} */
+.promoNav .content { 
+  margin-left: 0!important;
+  padding-top: 0!important;
+} 
+.promoNav .common-content {  
+  padding: 0!important;
+}
+.pk10_0101 .danhao .game_title {
+  margin-bottom: 15px!important;
+} 
+/* .lotteryCqssc .game_title {
+  margin-bottom: 10px!important;
+} */
+
+.swal2-modal .swal2-styled:focus {
+  outline: none;
+  box-shadow: none;
+}
+.swal2-modal {
+  padding: 20px 15px!important;
+}
+/* .lotteryCqssc #ssc_nav_0 li:last-child div:not(.game_title) {
+  margin:0;
+} */
+/* .lotteryCqssc #ssc_nav_0 li:last-child div:not(.game_title) {
+  margin:0;
+}  */
+ 
+/* .game li div,
+.markSix li:first-child .game_title,
+#xyft ul li:first-child div:not(.game_title),
+.pk10_0101 ul.danhao li:first-child div:not(.game_title) {
+  margin-top: 10px!important;
+} */
+
+/* .lotteryCqssc li:last-child div:not(.game_title),
+.markSix li:last-child div:not(.game_title),
+.lotteryPcdd li div:not(.game_title),
+.lotteryKlsf li div:not(.game_title),
+.luckyFram li div:not(.game_title),
+.jsks li div:not(.game_title) {
+  margin-bottom: 0!important;
+}  */
+
+.markSix li:last-child {
+  width: 100%;
+}
+ 
+.markSix #marksix_nav_2 li:last-child div:not(.game_title),
+.markSix #marksix_nav_3 li:last-child div:not(.game_title),
+.markSix #marksix_nav_4 li:last-child div:not(.game_title),
+.markSix #marksix_nav_5 li:last-child div:not(.game_title),
+.markSix #marksix_nav_6 li:last-child div:not(.game_title),
+.markSix #marksix_nav_7 li:last-child div:not(.game_title),
+.markSix #marksix_nav_8 li:last-child div:not(.game_title),
+.markSix #marksix_nav_9 li:last-child div:not(.game_title),
+.markSix #marksix_nav_10 li:last-child div:not(.game_title) {
+  width: 25%;
+  display: inline-block;
+}
+.markSix #marksix_nav_11 li:nth-child(2),
+.markSix #marksix_nav_11 li:nth-child(3),
+.markSix #marksix_nav_11 li:nth-child(4),
+.markSix #marksix_nav_11 li:nth-child(5),
+.markSix #marksix_nav_11 li:nth-child(6) {
+  width: 100%!important;
+}
+.markSix #marksix_nav_11 li:nth-child(2) div:not(.game_title),
+.markSix #marksix_nav_11 li:nth-child(3) div:not(.game_title),
+.markSix #marksix_nav_11 li:nth-child(4) div:not(.game_title),
+.markSix #marksix_nav_11 li:nth-child(5) div:not(.game_title),
+.markSix #marksix_nav_11 li:nth-child(6) div:not(.game_title) {
+  width:20%;
+  display: inline-block;
+}
+.btn-bind {
+  background-color: #eb6877;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 15px;
+  margin-left: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* .markSix  li  div:not(.game_title),
+.markSix #marksix_nav_14 li div:not(.game_title),
+.markSix #marksix_nav_15 li div:not(.game_title),
+.markSix #marksix_nav_16 li div:not(.game_title),
+.markSix #marksix_nav_17 li div:not(.game_title),
+.markSix #marksix_nav_27 li div:not(.game_title),
+.markSix #marksix_nav_34 li div:not(.game_title),
+.markSix #marksix_nav_40 li div:not(.game_title),
+.pk10_0101 ul li:first-child div:not(.game_title) {
+    margin-bottom: 5px!important;
+}
+.pk10_0101 ul.gyh li:first-child div:not(.game_title),
+.pk10_0101 ul.zuhe li:first-child div:not(.game_title),
+#xyft ul.zuhe li:first-child div:not(.game_title),
+.lotteryCqssc #ssc_nav_5  li:nth-child(2) div:not(.game_title),
+.lotteryCqssc #ssc_nav_5  li:nth-child(4) div:not(.game_title),
+.lotteryCqssc #ssc_nav_5  li:nth-child(5) div:not(.game_title),
+.lotteryCqssc #ssc_nav_5  li:nth-child(6) div:not(.game_title) {
+    margin-bottom: 0!important;
+}
+ 
+.lotteryCqssc ul#ssc_nav_2 li .game_title {
+
+} */
+.game li div {
+  margin-top: 10px;
+}
+.game li,
+.pk10_0101 .danhao li  {
+  padding-bottom: 10px;
+}
+.pk10_0101 .gyh li:first-child,
+.pk10_0101 .zuhe li,
+.markSix li,
+.lotteryKlsf li,
+.jsks li,
+.lotteryCqssc #ssc_nav_1 li ,
+.lotteryCqssc #ssc_nav_2 li ,
+.lotteryCqssc #ssc_nav_3 li ,
+.lotteryCqssc #ssc_nav_4 li ,
+.lotteryCqssc #ssc_nav_5 li ,
+.lotteryCqssc #ssc_nav_6 li,
+.six_lm_ball li {
+  padding-bottom: 0;
+} 
+.markSix li:nth-child(2) .game_title,
+.markSix li:nth-child(3) .game_title,
+.markSix li:nth-child(4) .game_title,
+.markSix li:nth-child(5) .game_title,
+.lotteryPcdd li .game_title,
+.lotteryKlsf li .game_title,
+.luckyFram li .game_title,
+.jsks li .game_title,
+.lotteryCqssc #ssc_nav_0 li:last-child .game_title {
+  margin-bottom: 10px!important;
+}
+ 
+.markSix li div {
+  margin-top: 5px;
+}
+.markSix li div:hover{
+  /* background-color: rgba(245, 245, 255, 0.) */
+  background-color: rgba(245, 245, 255, 0)
+}
+.markSix li:nth-child(2) div,
+.markSix li:nth-child(2) .game_title,
+.markSix li:nth-child(3) .game_title,
+.markSix li:nth-child(4) .game_title,
+.markSix li:nth-child(5) .game_title,
+.lotteryPcdd li div:not(.game_title),
+.lotteryKlsf li div:not(.game_title),
+.luckyFram li div:not(.game_title),
+.lotteryCqssc #ssc_nav_0 li:last-child div:not(.game_title) {
+  margin-top: 0;
+}
+
+.ten_farm_ball_0,
+.ten_farm_ball_1,
+.ten_farm_ball_2,
+.ten_farm_ball_3,
+.ten_farm_ball_4,
+.ten_farm_ball_5,
+.ten_farm_ball_6,
+.ten_farm_ball_7,
+.ten_farm_ball_8,
+.ten_farm_ball_9,
+.ten_farm_ball_10,
+.ten_farm_ball_11,
+.ten_farm_ball_12,
+.ten_farm_ball_13,
+.ten_farm_ball_14,
+.ten_farm_ball_15,
+.ten_farm_ball_16,
+.ten_farm_ball_17,
+.ten_farm_ball_18,
+.ten_farm_ball_19,
+.ten_farm_ball_20 {
+  width: 24px!important;
+  height: 24px!important;
+  line-height: 24px!important;
+  border-radius: 50%!important;
+}
+.ten_farm_ball_19,
+.ten_farm_ball_20 {
+  background-color: red!important;
+}
+.bet-top-placeholder {
+  margin-bottom: 10px;
+  height: 80px;
+  width: 1030px;
+  line-height: 80px;
+  font-size: 20px;
+  text-align: center;
+  color: #8a8bcc;
+  width: 96.5%;
+}
+.lotteryPcdd  li,
+.lotteryCqssc .qiu li,
+.lotteryCqssc #ssc_nav_0 li:last-child  {
+  padding-bottom: 0;
+}
+/* .lotteryCqssc #ssc_nav_0 li {
+  padding-bottom: 0;
+} */
+
+.lotteryCqssc #ssc_nav_0 li:nth-child(6) .game_title {
+  margin-bottom: 10px!important;
+}
+/* .lotteryCqssc #ssc_nav_0 li:nth-child(6) div:not(.game_title) { 
+    padding-top: 10px;
+}
+ */
+.lotteryCqssc #ssc_nav_0.qiu li:nth-child(6) div:not(.game_title) {
+  padding-bottom: 10px;
+}
+.lotteryCqssc #ssc_nav_0.qiu li:nth-child(6) div:nth-child(6),
+.lotteryCqssc #ssc_nav_0.qiu li:nth-child(6) div:nth-child(7),
+.lotteryCqssc #ssc_nav_0.qiu li:nth-child(6) div:nth-child(8) {
+  padding-bottom: 0;
+}
+
+#ten_result_160 td span,
+#ten_result_2 td span,
+#ten_result_46 td span,
+#ten_result_250 td span,
+.result-new .game_2 .result-ball,
+.result-new .game_46 .result-ball,
+.result-new .game_250 .result-ball,
+.result-new .game_3 .result-ball,
+.result-new .game_47 .result-ball,
+.result-new .game_160 .result-ball,
+.cqssc .balls span {
+  background-color: #3e80d4!important;
+  border-radius: 50%!important;
+  box-shadow: 2px 2px 4px 0px rgba(16, 15, 15, 0.8);
+}
+.result-new .game_3 .result-ball_19,
+.result-new .game_3 .result-ball_20,
+.result-new .game_47 .result-ball_19,
+.result-new .game_47 .result-ball_20 {
+  background-color: red!important;
+}
+
+.game_160 .pcegg { 
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 3px;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+}
+
+.modal-content input {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding-left: 5px;
+  width: 80px;
+  text-align: center;
+}
+.modal-content li input {
+  height: 22px;
+  line-height: 22px;
+}
+
+
+
+
+/*优惠页面 promo*/
+.notices-page .page {
+  padding: 30px 0 60px 0;
+}
+.notices-page .el-table th {
+  text-align: center!important;
+}
+.noticesBox {
+  padding: 10px;
+}
+.noticesList {
+  padding: 15px 0;
+  text-align: left;
+  border-bottom:1px solid #ddd;
+}
+.noticesList h4 {
+  font-size: 16px;
+  color: #333; 
+}
+.noticesList p { 
+  font-size: 16px;
+  color: #666; 
+  overflow-y: auto;
+}
+.noticesImg {
+    width: 200px;
+    height: 120px;
+    background-color: #e1e2ee;
+    float: left;
+    margin-right: 20px;
+    color: #f3f3f6;
+    font-size: 30px;
+    line-height: 120px;
+    text-align: center;
+}
+.noticesImg img {
+  width: 100%; 
+  height: 100%;
+  border-radius: 5px;
+}
+.promo-content {
+    font-size: 14px;
+    text-align: left;
+    margin-top: 80px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+.promo-content h2 { 
+  text-align: center;
+  font-size: 20px;
+  border-bottom: 1px solid dashed;
+ } 
+ .promo-content h4 {
+  margin: 20px 0 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+ }
+.promo-content table {
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+.promo-content td,
+.promo-content th {
+  border: 1px solid #ddd;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  text-align: center;
+} 
+.promo-content th {
+     border-bottom: 1px solid #ddd;
+    background-color: #f2f3f8;
+    height: 35px;
+    line-height: 35px; 
+}
+
+.promo-content li {
+  line-height: 30px;
+}
+.notices .btn-promo {
+    padding: 8px 23px;
+    background-color: #1c4fa8;
+    border-color: #1c4fa8;
+    width: 120px;
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 2px 2px 5px #ccc;
+    float: right;
+    outline: none;
+    cursor: pointer;
+}
+.markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child {
+  margin-top: 5px!important;
+}
+/*
+#marksix_nav_28 li:last-child div:nth-child(8) span:first-child,
+#marksix_nav_31 li:last-child div:nth-child(8) span:first-child {
+      background-color: #3e80d4;
+}*/
+/*#marksix_nav_15 li:last-child div:nth-child(15) span:first-child,
+#marksix_nav_15 li:last-child div:nth-child(16) span:first-child,
+#marksix_nav_15 li:last-child div:nth-child(20) span:first-child,
+#marksix_nav_15 li:last-child div:nth-child(21) span:first-child,
+#marksix_nav_15 li:last-child div:nth-child(22) span:first-child {
+      background-color: #3e80d4!important;
+}*/
+.common-content .el-table{
+  border-right: 1px solid #ddd;
+}
+
+.el-table::before{
+  background-color:#ddd!important;
+}
+/**图标 ico **/
+.ico {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  transition: all .5s ease;
+}
+.userInfo span {
+  opacity: .5;
+}
+.btns span {
+  opacity: .5;
+}
+.btns span:hover {
+  opacity: 1;    
+}
+
+.ico-my-yunpay, 
+.ico-my-paymethods, 
+.ico-my-bank,
+.ico-my-alipay, 
+.ico-my-cai, 
+.ico-my-qq,
+.ico-my-wechat,
+.ico-my-jd {
+  vertical-align: -9px;
+}
+ 
+
+/* .setting:hover .ico-my-set{
+  background: url("/static/images/common/icon/ico-my-set-h.png");  
+} */
+
+
+/* .lotteryPcdd ul li:last-child div:nth-child(2) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(15) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(16) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(29) span:first-child {
+  background-color: #e76774!important;
+}
+// 03,06,09,12,15,18,21,24为红波。
+// 绿波（三个数值和）：01,04,07,10,16,19,22,25为绿波。
+// 蓝波（三个数值和）：02,05,08,11,17,20,23,26为蓝波。
+.lotteryPcdd ul li:last-child div:nth-child(2) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(15) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(16) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(29) span:first-child {
+  background-color: gray!important;
+} */
+
+.lotteryPcdd ul li:last-child div:nth-child(2) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(15) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(16) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(29) span:first-child {
+  background-color: #ccc!important;
+}
+.tm_ball_红波,
+.lotteryPcdd ul li:first-child div:nth-child(13) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(5) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(8) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(11) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(14) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(17) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(20) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(23) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(26) span:first-child {
+  background-color: red!important;  /* 红 */
+}
+.tm_ball_绿波,
+.lotteryPcdd ul li:first-child div:nth-child(14) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(3) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(6) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(9) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(12) span:first-child,
+
+.lotteryPcdd ul li:last-child div:nth-child(18) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(21) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(24) span:first-child,
+.lotteryPcdd ul li:last-child div:nth-child(27) span:first-child {
+  background-color: #7eb900!important;  /* 绿 */
+}
+#farm_lm .lm_ball_1,
+#farm_lm .lm_ball_2,
+#farm_lm .lm_ball_3,
+#farm_lm .lm_ball_4,
+#farm_lm .lm_ball_5,
+#farm_lm .lm_ball_6,
+#farm_lm .lm_ball_7,
+#farm_lm .lm_ball_8,
+#farm_lm .lm_ball_9,
+#farm_lm .lm_ball_10,
+#farm_lm .lm_ball_11,
+#farm_lm .lm_ball_12,
+#farm_lm .lm_ball_13,
+#farm_lm .lm_ball_14,
+#farm_lm .lm_ball_15,
+#farm_lm .lm_ball_16,#farm_lm .lm_ball_17,
+#farm_lm .lm_ball_18{
+  background-color: #007FCE!important;
+}
+
+#farm_lm .lm_ball_19,#farm_lm .lm_ball_20{
+  background-color: #C24A2C!important
+}
+.siderLeft_gd + .content  #farm_lm .lm_ball_1,
+.siderLeft_gd + .content  #farm_lm .lm_ball_2,
+.siderLeft_gd + .content  #farm_lm .lm_ball_3,
+.siderLeft_gd + .content  #farm_lm .lm_ball_4,
+.siderLeft_gd + .content  #farm_lm .lm_ball_5,
+.siderLeft_gd + .content  #farm_lm .lm_ball_6,
+.siderLeft_gd + .content  #farm_lm .lm_ball_7,
+.siderLeft_gd + .content  #farm_lm .lm_ball_8,
+.siderLeft_gd + .content  #farm_lm .lm_ball_9,
+.siderLeft_gd + .content  #farm_lm .lm_ball_10,
+.siderLeft_gd + .content  #farm_lm .lm_ball_11,
+.siderLeft_gd + .content  #farm_lm .lm_ball_12,
+.siderLeft_gd + .content  #farm_lm .lm_ball_13,
+.siderLeft_gd + .content  #farm_lm .lm_ball_14,
+.siderLeft_gd + .content  #farm_lm .lm_ball_15,
+.siderLeft_gd + .content  #farm_lm .lm_ball_16,
+.siderLeft_gd + .content  #farm_lm .lm_ball_17,
+.siderLeft_gd + .content  #farm_lm .lm_ball_18,
+.siderLeft_gd + .content  #farm_lm .lm_ball_19,#farm_lm .lm_ball_20{
+  background-color: #e03f5e!important;
+}
+
+.siderLeft_ly + .content  #farm_lm .lm_ball_1,
+.siderLeft_ly + .content  #farm_lm .lm_ball_2,
+.siderLeft_ly + .content  #farm_lm .lm_ball_3,
+.siderLeft_ly + .content  #farm_lm .lm_ball_4,
+.siderLeft_ly + .content  #farm_lm .lm_ball_5,
+.siderLeft_ly + .content  #farm_lm .lm_ball_6,
+.siderLeft_ly + .content  #farm_lm .lm_ball_7,
+.siderLeft_ly + .content  #farm_lm .lm_ball_8,
+.siderLeft_ly + .content  #farm_lm .lm_ball_9,
+.siderLeft_ly + .content  #farm_lm .lm_ball_10,
+.siderLeft_ly + .content  #farm_lm .lm_ball_11,
+.siderLeft_ly + .content  #farm_lm .lm_ball_12,
+.siderLeft_ly + .content  #farm_lm .lm_ball_13,
+.siderLeft_ly + .content  #farm_lm .lm_ball_14,
+.siderLeft_ly + .content  #farm_lm .lm_ball_15,
+.siderLeft_ly + .content  #farm_lm .lm_ball_16,
+.siderLeft_ly + .content  #farm_lm .lm_ball_17,
+.siderLeft_ly + .content  #farm_lm .lm_ball_18,
+.siderLeft_ly + .content  #farm_lm .lm_ball_19,#farm_lm .lm_ball_20{
+  background-color: #C24A2C!important;
+}
+
+.tm_ball_蓝波
+{
+    background-color: #007fcd!important;
+    color:white!important
+}
+
+.tm_ball_红波,.tm_ball_绿波{
+  color: white!important;
+}
+/*#marksix_nav_15 .tm_ball_5 {
+  background-color: #3e80d4!important;  
+}
+
+*/
+.danhao .pk_1{
+    background-color:#e6b525!important;
+}
+.danhao .pk_2{
+       background-color: #008fff!important;;
+}
+.danhao .pk_3{
+    background-color:#313055!important;
+}
+.pk_4{
+    background-color:#ff7600!important;
+}
+.pk_5{
+    background-color:#65a9aa!important;
+}
+.pk_6{
+    background-color:#5234ff!important;
+}
+.pk_7{
+    background-color:#806e6e!important;
+}
+.pk_8{
+    background-color:#ff2600!important;
+}
+.pk_9{
+    background-color:#730b00!important;
+}
+.pk_10{
+    background-color:#07bf00!important;
+}
+
+
+#marksix_nav_14{
+  position: relative;
+} 
+.promo-page,
+.about-page {
+  animation-duration: 0.5s;
+  transition: all ease .5s;
+  animation-name: fadeInRight1;
+  width: 1260px;
+  margin:0 auto;
+  padding: 70px 0 0 0px;
+  /*height: calc(100vh - 100px)!important;*/
+}
+.six_lm_ball ul li label,
+.lm_ball ul li label,
+#marksix_nav_17 label,
+#marksix_nav_34 label,
+#marksix_nav_40 label,
+#marksix_nav_27 label {
+  display: block;
+  cursor: pointer;
+  min-height: 26px;
+}
+.six_lm_ball ul li label input,
+.lm_ball ul li label input {
+  width:30px;
+  vertical-align: middle;
+}
+.six_lm_ball ul li label input,
+.lm_ball ul li label input,
+#marksix_nav_17 label input,
+#marksix_nav_34 label input,
+#marksix_nav_40 label input,
+#marksix_nav_27 label input {
+  cursor: pointer;  
+}
+
+table.result-new td li {
+  width: 30px;
+} 
+.cha{
+  width: 40px;
+  height: 40px;
+  /*background: url('/static/images/common/icon/close.png') no-repeat;*/
+  position: absolute;
+  font-size: 40px;
+  right: -40px;
+  top: -40px;
+  cursor: pointer;
+  color: #ccc;
+}
+.cha:hover {
+  color: #fff;
+}
+
+.ico_game_2 {
+  background: url('/static/images/common/icon/ico-top-cqssc.png') left center no-repeat;
+}
+
+.ico_game_172 {
+  background: url('/static/images/common/ico-top-jsks.png') left center no-repeat;
+}
+
+
+#marksix_nav_12 li {
+  width: 16.66%;
+  float: left;
+}
+
+#marksix_nav_12 li div:not(.game_title) {
+  width: 100%;
+  margin-top: 10px;
+  height: 20px;
+}
+#marksix_nav_12 li div:nth-child(2) {
+  margin-top: 15px;
+}
+
+
+#marksix_nav_12 li span:nth-child(1) {
+  background-color: #3e80d4;
+  width: 40px!important;
+  border-radius: 5px!important;
+  height: 20px;
+  line-height: 20px;
+}
+/*#marksix_nav_12 li:nth-child(1) div.game_title {
+  margin-bottom: 10px;
+}
+#marksix_nav_12 li:nth-child(1) div:not(.game_title) {
+  margin-top: 4px;
+}*/
+#marksix_nav_12 li:nth-child(2) .game_title {
+  margin-bottom: 0!important;
+}
+#marksix_nav_12 label {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+}
+
+
+/*form ct.css*/
+
+.game_160 .pcegg_1,
+.game_160 .pcegg_4,
+.game_160 .pcegg_7,
+.game_160 .pcegg_10,
+.game_160 .pcegg_16,
+.game_160 .pcegg_19,
+.game_160 .pcegg_22,
+.game_160 .pcegg_25,
+
+#ten_result_160 .total_1,
+#ten_result_160 .total_4,
+#ten_result_160 .total_7,
+#ten_result_160 .total_10,
+#ten_result_160 .total_16,
+#ten_result_160 .total_19,
+#ten_result_160 .total_22,
+#ten_result_160 .total_25
+
+.lottery_type_160 .balls .total_1,
+.lottery_type_160 .balls .total_4,
+.lottery_type_160 .balls .total_7,
+.lottery_type_160 .balls .total_10,
+.lottery_type_160 .balls .total_16,
+.lottery_type_160 .balls .total_19,
+.lottery_type_160 .balls .total_22,
+.lottery_type_160 .balls .total_25{
+  background-color: #7EB900;
+}
+
+.game_160 .pcegg_2,
+.game_160 .pcegg_5,
+.game_160 .pcegg_8,
+.game_160 .pcegg_11,
+.game_160 .pcegg_17,
+.game_160 .pcegg_20,
+.game_160 .pcegg_23,
+.game_160 .pcegg_26,
+
+#ten_result_160 .total_2,
+#ten_result_160 .total_5,
+#ten_result_160 .total_8,
+#ten_result_160 .total_11,
+#ten_result_160 .total_17,
+#ten_result_160 .total_20,
+#ten_result_160 .total_23,
+#ten_result_160 .total_26
+
+.lottery_type_160 .balls .total_2,
+.lottery_type_160 .balls .total_5,
+.lottery_type_160 .balls .total_8,
+.lottery_type_160 .balls .total_11,
+.lottery_type_160 .balls .total_17,
+.lottery_type_160 .balls .total_20,
+.lottery_type_160 .balls .total_23,
+.lottery_type_160 .balls .total_26  {
+  background-color: #3E80D4;
+}
+
+
+.game_160 .pcegg_3,
+.game_160 .pcegg_6,
+.game_160 .pcegg_9,
+.game_160 .pcegg_12,
+.game_160 .pcegg_15,
+.game_160 .pcegg_18,
+.game_160 .pcegg_21,
+.game_160 .pcegg_24,
+
+#ten_result_160 .total_3,
+#ten_result_160 .total_6,
+#ten_result_160 .total_9,
+#ten_result_160 .total_12,
+#ten_result_160 .total_15,
+#ten_result_160 .total_18,
+#ten_result_160 .total_21,
+#ten_result_160 .total_24,
+
+.lottery_type_160 .balls .total_3,
+.lottery_type_160 .balls .total_6,
+.lottery_type_160 .balls .total_9,
+.lottery_type_160 .balls .total_12,
+.lottery_type_160 .balls .total_15,
+.lottery_type_160 .balls .total_18,
+.lottery_type_160 .balls .total_21,
+.lottery_type_160 .balls .total_24 {
+  background:red!important;
+}
+
+
+.game_160 .pcegg_0,
+.game_160 .pcegg_13,
+.game_160 .pcegg_14,
+.game_160 .pcegg_27,
+
+#ten_result_160 .total_0,
+#ten_result_160 .total_13,
+#ten_result_160 .total_14,
+#ten_result_160 .total_27,
+
+.lottery_type_160 .balls .total_0,
+.lottery_type_160 .balls .total_13,
+.lottery_type_160 .balls .total_14,
+.lottery_type_160 .balls .total_27 {
+  background-color: #999;
+}
+#marksix_nav_14 .banbo{
+  width: 60%;
+  position: absolute;
+  top: 24px;
+  right: 0;
+}
+.latest-ten-table td:not(.round) span {
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 2px;
+  color: #fff;
+  font-size: 14px;
+  display: inline-block;
+}
+ span.result-ball.result-ball_tm {
+    background-color: #ea6271;
+}
+span.plus_tm {
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+
+#ten_result_160 .total {
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 2px;
+    color: #fff;
+    font-size: 14px;
+    display: inline-block;
+}
+.latest-ten-table .latest-ten-title th:last-child,
+.latest-ten-table td.total {
+  display: none;
+}
+#ten_result_160 .latest-ten-title th:last-child,
+#ten_result_160 td.total {
+  display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 倒计时插件css  flipclock css
+/* Get the bourbon mixin from http://bourbon.io */
+/* Reset */
+.flip-clock-wrapper * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-clock-wrapper a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #ccc; }
+
+.flip-clock-wrapper a:hover {
+  color: #fff; }
+
+.flip-clock-wrapper ul {
+  list-style: none; }
+
+.flip-clock-wrapper.clearfix:before,
+.flip-clock-wrapper.clearfix:after {
+  content: " ";
+  display: table; }
+
+.flip-clock-wrapper.clearfix:after {
+  clear: both; }
+
+.flip-clock-wrapper.clearfix {
+  *zoom: 1; }
+
+/* Main */
+.flip-clock-wrapper {
+  font: normal 11px "Helvetica Neue", Helvetica, sans-serif;
+  -webkit-user-select: none;
+    position: absolute!important;
+    left: 118px;
+}
+
+.flip-clock-meridium {
+  background: none !important;
+  box-shadow: 0 0 0 !important;
+  font-size: 36px !important; }
+
+.flip-clock-meridium a { color: #313333; }
+
+.flip-clock-wrapper {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  margin: 1em;
+}
+
+.flip-clock-wrapper:before,
+.flip-clock-wrapper:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.flip-clock-wrapper:after {
+    clear: both;
+}
+
+/* Skeleton */
+.flip-clock-wrapper ul {
+  position: relative;
+  float: left;
+  margin: 5px;
+  width: 60px;
+  height: 90px;
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 87px;
+  border-radius: 6px;
+  background: #000;
+}
+
+.flip-clock-wrapper ul li {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 87px;
+  text-decoration: none !important;
+}
+
+.flip-clock-wrapper ul li:first-child {
+  z-index: 2; }
+
+.flip-clock-wrapper ul li a {
+  display: block;
+  height: 100%;
+  -webkit-perspective: 200px;
+  -moz-perspective: 200px;
+  perspective: 200px;
+  margin: 0 !important;
+  overflow: visible !important;
+  cursor: default !important; }
+
+.flip-clock-wrapper ul li a div {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  font-size: 80px;
+  overflow: hidden;
+  outline: 1px solid transparent; }
+
+.flip-clock-wrapper ul li a div .shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2; }
+
+.flip-clock-wrapper ul li a div.up {
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  -o-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  top: 0;
+    border-bottom: 1px solid #281414;
+  }
+
+.flip-clock-wrapper ul li a div.up:after {
+  content: "";
+  position: absolute;
+  top: 44px;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 3px;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.flip-clock-wrapper ul li a div.down {
+  -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+  bottom: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.flip-clock-wrapper ul li a div div.inn {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 200%;
+  color: #ccc;
+  text-shadow: 0 1px 2px #000;
+  text-align: center;
+  background-color: #333;
+  border-radius: 6px;
+  font-size: 70px; }
+
+.flip-clock-wrapper ul li a div.up div.inn {
+  top: 0; }
+
+.flip-clock-wrapper ul li a div.down div.inn {
+  bottom: 0; }
+
+/* PLAY */
+.flip-clock-wrapper ul.play li.flip-clock-before {
+  z-index: 3; }
+
+.flip-clock-wrapper .flip {   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7); }
+
+.flip-clock-wrapper ul.play li.flip-clock-active {
+  -webkit-animation: asd 0.5s 0.5s linear both;
+  -moz-animation: asd 0.5s 0.5s linear both;
+  animation: asd 0.5s 0.5s linear both;
+  z-index: 5; }
+
+.flip-clock-divider {
+  float: left;
+  display: inline-block;
+  position: relative;
+  width: 15px;
+  height: 100px; }
+
+.flip-clock-divider:first-child {
+  width: 0; 
+  display: none;
+}
+
+.flip-clock-dot {
+    display: block; 
+    width: 6px!important;
+    height: 6px!important;
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    left: 4px;
+}
+
+.flip-clock-divider .flip-clock-label {
+  position: absolute;
+  top: -1.5em;
+  right: -90px;
+  color: black;
+  text-shadow: none; }
+
+.flip-clock-divider.minutes .flip-clock-label {
+  right: -88px; }
+
+.flip-clock-divider.seconds .flip-clock-label {
+  right: -91px; }
+
+.flip-clock-dot.top {
+  top: 30px; }
+
+.flip-clock-dot.bottom {
+  bottom: 30px; }
+
+  .flip-clock-wrapper {
+    margin: 0!important;
+  }
+  .flip-clock-label {
+    display: none;
+  }
+  .flip-clock-wrapper ul li a div div.inn {
+    font-size: 30px!important;
+  }
+  .flip-clock-wrapper ul {
+      width: 30px!important;
+      height: 48px!important;
+      font-size: 36px!important;
+      line-height: 43px!important;
+      margin: 2px 4px!important;
+  }
+  .flip-clock-wrapper ul li {
+      line-height: 50px!important;
+  }
+  .flip-clock-divider {
+    height: 50px!important;
+    width: 13px!important;
+  }
+  #swal2-content{
+    width:285px;
+    margin:0 auto;
+    text-align:0 auto;
+  }
+
+
+
+
+
+
+@-webkit-keyframes asd {
+  0% {
+    z-index: 2; }
+
+  20% {
+    z-index: 4; }
+
+  100% {
+    z-index: 4; } }
+
+@-moz-keyframes asd {
+  0% {
+    z-index: 2; }
+
+  20% {
+    z-index: 4; }
+
+  100% {
+    z-index: 4; } }
+
+@-o-keyframes asd {
+  0% {
+    z-index: 2; }
+
+  20% {
+    z-index: 4; }
+
+  100% {
+    z-index: 4; } }
+
+@keyframes asd {
+  0% {
+    z-index: 2; }
+
+  20% {
+    z-index: 4; }
+
+  100% {
+    z-index: 4; } }
+
+.flip-clock-wrapper ul.play li.flip-clock-active .down {
+  z-index: 2;
+  -webkit-animation: turn 0.5s 0.5s linear both;
+  -moz-animation: turn 0.5s 0.5s linear both;
+  animation: turn 0.5s 0.5s linear both; }
+#ten_result_69  td:nth-child(3) span:nth-child(7) {
+  color: #333!important;
+  font-size: 22px;
+  vertical-align: middle;
+}
+@-webkit-keyframes turn {
+  0% {
+    -webkit-transform: rotateX(90deg); }
+
+  100% {
+    -webkit-transform: rotateX(0deg); } }
+
+@-moz-keyframes turn {
+  0% {
+    -moz-transform: rotateX(90deg); }
+
+  100% {
+    -moz-transform: rotateX(0deg); } }
+
+@-o-keyframes turn {
+  0% {
+    -o-transform: rotateX(90deg); }
+
+  100% {
+    -o-transform: rotateX(0deg); } }
+
+@keyframes turn {
+  0% {
+    transform: rotateX(90deg); }
+
+  100% {
+    transform: rotateX(0deg); } }
+
+.flip-clock-wrapper ul.play li.flip-clock-before .up {
+  z-index: 2;
+  -webkit-animation: turn2 0.5s linear both;
+  -moz-animation: turn2 0.5s linear both;
+  animation: turn2 0.5s linear both; }
+
+@-webkit-keyframes turn2 {
+  0% {
+    -webkit-transform: rotateX(0deg); }
+
+  100% {
+    -webkit-transform: rotateX(-90deg); } }
+
+@-moz-keyframes turn2 {
+  0% {
+    -moz-transform: rotateX(0deg); }
+
+  100% {
+    -moz-transform: rotateX(-90deg); } }
+
+@-o-keyframes turn2 {
+  0% {
+    -o-transform: rotateX(0deg); }
+
+  100% {
+    -o-transform: rotateX(-90deg); } }
+
+@keyframes turn2 {
+  0% {
+    transform: rotateX(0deg); }
+
+  100% {
+    transform: rotateX(-90deg); } }
+
+.flip-clock-wrapper ul li.flip-clock-active {
+  z-index: 3; }
+
+/* SHADOW */
+.flip-clock-wrapper ul.play li.flip-clock-before .up .shadow {
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, black 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, black));
+  background: linear, top, rgba(0, 0, 0, 0.1) 0%, black 100%;
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, black 100%);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, black 100%);
+  background: linear, to bottom, rgba(0, 0, 0, 0.1) 0%, black 100%;
+  -webkit-animation: show 0.5s linear both;
+  -moz-animation: show 0.5s linear both;
+  animation: show 0.5s linear both; }
+
+.flip-clock-wrapper ul.play li.flip-clock-active .up .shadow {
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, black 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, black));
+  background: linear, top, rgba(0, 0, 0, 0.1) 0%, black 100%;
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, black 100%);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, black 100%);
+  background: linear, to bottom, rgba(0, 0, 0, 0.1) 0%, black 100%;
+  -webkit-animation: hide 0.5s 0.3s linear both;
+  -moz-animation: hide 0.5s 0.3s linear both;
+  animation: hide 0.5s 0.3s linear both; }
+
+/*DOWN*/
+.flip-clock-wrapper ul.play li.flip-clock-before .down .shadow {
+  background: -moz-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, black), color-stop(100%, rgba(0, 0, 0, 0.1)));
+  background: linear, top, black 0%, rgba(0, 0, 0, 0.1) 100%;
+  background: -o-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.1) 100%);
+  background: -ms-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.1) 100%);
+  background: linear, to bottom, black 0%, rgba(0, 0, 0, 0.1) 100%;
+  -webkit-animation: show 0.5s linear both;
+  -moz-animation: show 0.5s linear both;
+  animation: show 0.5s linear both; }
+
+.flip-clock-wrapper ul.play li.flip-clock-active .down .shadow {
+  background: -moz-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, black), color-stop(100%, rgba(0, 0, 0, 0.1)));
+  background: linear, top, black 0%, rgba(0, 0, 0, 0.1) 100%;
+  background: -o-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.1) 100%);
+  background: -ms-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.1) 100%);
+  background: linear, to bottom, black 0%, rgba(0, 0, 0, 0.1) 100%;
+  -webkit-animation: hide 0.5s 0.3s linear both;
+  -moz-animation: hide 0.5s 0.3s linear both;
+  animation: hide 0.5s 0.2s linear both; }
+
+@-webkit-keyframes show {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@-moz-keyframes show {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@-o-keyframes show {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@keyframes show {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes hide {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0; } }
+
+@-moz-keyframes hide {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0; } }
+
+@-o-keyframes hide {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0; } }
+
+@keyframes hide {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0; } }
+
+ 
+
+ 
+
+@keyframes bounceInLeft {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  from {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  to {
+    transform: none;
+  }
+} 
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeInRight1 {
+  from {
+    opacity: 0;
+    transform: translate3d(20%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeBanbo {
+  from {
+    opacity: 0;
+    // transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    // transform: none;
+  }
+}
+
+@keyframes fadeMarkSix {
+  from {
+    opacity: 0;
+    transform: translate3d(10%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+
+.ball-t-blue-f {
+  background: url("/static/images/common/blue_f_ball.png") no-repeat;
+  background-size: 100%;
+  color:#fff !important;
+}
+.ball-t-gray-f {
+  background: url("/static/images/common/gray_f_ball.png") no-repeat;
+  background-size: 100%;
+  color:#000 !important;
+}
+
+
+
+@media screen and (max-width: 1400px) {
+  .modal-content {
+    top: 15%!important;
+  }
+  .ten-content {
+    top: 15%;
+  }
+}
+
+

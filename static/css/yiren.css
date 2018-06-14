@@ -1,0 +1,506 @@
+.float-right .cs{
+  background:url("//jkysxh.cn/img/pc/static/images/common/icon/ico-right-cs.png") no-repeat 50% #782d3f!important;
+}
+.float-right .weixin{
+  background:url("//jkysxh.cn/img/pc/static/images/common/icon/ico-right-call.png") no-repeat 50% #782d3f!important;
+}
+.siderLeft_yiren{
+  background:#862a41!important;
+}
+.markSix #marksix_nav_15 li:last-child div span:first-child{
+  background: #C24A2C!important;
+  color:#fff!important;
+}
+
+.tab.act{
+  background-color: #a05970!important;
+}
+
+
+.second_menu_list{
+  background-color:  #782d3f
+}
+
+.lotteryPcdd  li:first-child div:last-child  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(4)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(7)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(10)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(13)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(19)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(22)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(25)  span:first-child,
+.lotteryPcdd  li:last-child div:nth-child(28)  span:first-child{
+  background:#007FCD;
+}
+
+#marksix_nav_34  div label  span:first-child,
+#marksix_nav_35  div label  span:first-child,
+#marksix_nav_36  div label  span:first-child,
+#marksix_nav_37  div label span:first-child,
+#marksix_nav_38  div label  span:first-child,
+#marksix_nav_39  div label span:first-child
+{
+  background: #C24A2C!important;
+  color:#fff!important;
+}
+.swal2-confirm{
+  background:#ff9200!important;
+}
+.swal2-cancel{
+  background: #862C41!important;
+}
+header .main {
+  background: #862C41;
+}
+.header_yiren{
+  background:  #782d3f;
+  width: 100%;
+  height: 60px;
+} 
+.logo {
+  background: url('/static/images/yiren/logo.png');
+  height: 46px;
+}
+ 
+.bet-top .leftPart {
+    border-right: 1px solid #ceb0ce;
+}
+
+.header_yiren li{
+  color:#FBA117!important;
+}
+
+.clock11 span{
+  background: #F6A555!important;
+}
+
+
+.header_yiren li.active{
+  background:#782d3f;
+}
+
+.game_info ul li span:nth-child(1) {
+  color: #fff;
+  background-color: #C24A2C;
+}
+.game_hot,
+.game_list li a,.second_menu_list a {
+    border-bottom: 1px solid #a05970;
+}
+
+.game_list .active,.second_menu_list > li.active,.game_hot:hover {
+  background:linear-gradient(to right,rgba(0, 0, 0, 0),#e09b56)!important;
+}
+
+.game_name div:nth-child(1) {
+    opacity: .7!important;
+}
+
+
+.tads div.activ {
+  border-bottom:none;
+   color:#862C41!important
+}
+.tads div.activ a {
+  color:#862C41!important;
+  border-bottom:none;
+}
+
+
+.el-radio__input.is-checked .el-radio__inner{
+    border-color: #862C41!important;
+    background: #862C41!important;
+}
+
+.el-radio__input.is-checked+.el-radio__label{
+  color: #862C41!important;
+}
+
+/* .game_info ul li span:nth-child(2) {
+    color: #4e2834!important;
+} */
+.iosc,
+.adridc,
+.btn-blue {
+  background: #862A41;
+}
+.float-right {
+  background: #4B4B4B;
+}
+/* .el-tabs__item.is-active {
+  color: #fff!important;
+  background: #862A41!important;
+} */
+
+.common-content .el-tabs__item.is-active {
+  color: #852E41!important;
+  background-color: white!important;
+}
+
+.result-page .el-tabs__item.is-active{
+  color:white !important;
+  background-color: #852E41!important;
+}
+
+.el-tabs__active-bar {
+  background-color: #f6a555!important;
+}
+.common-content .el-tabs__item.is-active,
+.header-modal-content li:hover,
+.header-modal-content li.active,
+{
+  color: #fff!important;
+  background-color: #852E41!important;
+}
+
+.btns span,
+.setting span,
+.userInfo span {
+  color:#fff!important;
+  opacity: 1!important;
+}
+
+.btn-blue {
+  box-shadow: 2px 2px 5px #862A41;
+}
+.btn-blue:hover {
+  background-color: #862A41;
+}
+
+.unsettlement h2 {
+  background: #862A41;
+}
+
+.bet-top{
+  background: url("/static/images/yiren/bg-top.jpg") no-repeat;
+  background-size: cover;
+} 
+ 
+.bet-top-placeholder_yiren {
+  background: #862A41!important;
+}
+.openData .nums span {
+  background: #852E41;
+}
+
+.siderLeft_yiren + .content .markSixSubNav li button.active, 
+.siderLeft_yiren + .content .markSixSubNav li button.isred {
+  color: #fff;
+  background: #862A41!important;
+}
+.openData .nums .habi1 {
+   background: #852E41!important;
+}
+
+
+   
+
+
+
+.siderLeft_yiren .game_name div:nth-child(1) {
+  opacity: 1!important;
+}
+.siderLeft_yiren .game_name div:nth-child(2) {
+  color:  #f79d75!important;
+  opacity: 1!important;
+}
+
+
+
+
+.el-button.is-round {
+  padding: 8px 23px;
+  background-color: #862A41;
+  border-color: #862A41;
+  width: 100%;
+  box-shadow: 2px 2px 5px #862A41;
+}
+.swal2-modal .swal2-styled {
+  /* background-color: #862A41!important; */
+  border-radius: 30px!important;
+  box-shadow: 2px 2px 5px #862A41!important;
+  padding: 8px 40px!important;
+} 
+.el-carousel__container .el-carousel__container {
+    background-size: cover;
+}
+.el-carousel__item img {
+    width: 100%;
+    height: 100%;  
+}
+/* .el-carousel__container .el-carousel__container div:nth-child(2) {
+  background: url("/static/images/ct/banner02.jpg");
+    background-size: cover;
+}
+
+.el-carousel__container .el-carousel__container div:nth-child(3) {
+  background: url("/static/images/ct/banner03.jpg");
+    background-size: cover;
+} */
+.bet-top .leftPart {
+    border-right: 1px solid #89a3d1;
+}
+
+.userInfo .avatar {
+  border: 1px solid #89a3d1;  
+}
+.ico_game {
+    background-size: contain!important;
+    width: 120px;
+    height: 80px;
+}
+.header_yiren .userInfo,
+.header_yiren .userInfo .btns {
+    border-color: #801e3f!important;
+}
+
+#changlong h3{
+  background: #b53b4d;
+  color:#fff!important;
+  border-radius: 10px 10px 0 0;
+}
+#changlong h3:before{
+  border:none;
+}
+
+.game_title h3,
+.el-checkbox__input.is-checked+.el-checkbox__label
+{
+    color: #862A41!important;
+}
+/*.game_info ul li span:nth-child(2) {
+    color: #e74368!important;
+}*/
+.btn-pink {
+  background-color: #ff9200;
+  box-shadow: 2px 2px 5px #f5b3bb;
+}
+.btn-pink:hover {
+  background-color: #c0740d;
+}
+nav.top-nav {
+    height: 35px;
+    // background-size: cover;
+    margin-bottom: 10px;
+    box-shadow: 3px 2px 5px #cce2fe;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.top-nav ul li { 
+  float: left;
+  padding: 0 15px;
+  color: #333;
+  font-size: 15px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+  position: relative; 
+  // margin-right: 1px;
+}
+.top-nav ul li:hover{
+   color:#a52351;
+}
+.top-nav ul .active {
+  font-weight: bold;
+  color: #a52351;
+  border-bottom: 2px solid #f6a555;
+} 
+.top-nav ul li:first-child:hover,
+.top-nav ul li:first-child.active {
+    border-bottom-left-radius: 5px;
+}
+ 
+.top-nav ul .active:hover {
+    font-weight: bold;
+}
+.offline div a,
+.offline div span,
+.btns-before-login .btn-try {
+    color: #333!important;
+    background-color: #6187cc;
+    background-color: #fff;
+    border: none;
+}
+.btns-before-login .btn-try {
+  background-color: #6187cc;
+  color: #fff!important;
+}
+.btns-before-login span {
+  opacity: 1!important;
+}
+footer {
+    color: #666;
+    background-color: #333;
+}
+.lotteryCqssc #ssc_nav_0 div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_2  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_3  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_4  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_5  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_6  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child, 
+.markSix #marksix_nav_14  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_15  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_16  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_17  li div:not(.game_title) span:first-child,
+.markSix #marksix_nav_27  li div:not(.game_title) span:first-child {
+    width: 50px;
+    border-radius: 5px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: 1px;
+    /* background-color: #862A41; */
+}
+/* .markSix ul li:last-child span:nth-child(1) {
+  background-color: #862A41;
+} */
+.six_lm_ball li span {
+  background-color: #ea6271;
+}
+#ten_result_172 td span,
+#ten_result_280 td span,
+.game_172 .result-ball,
+.game_280 .result-ball,
+.jsks .ksball_1,
+.jsks .ksball_2,
+.jsks .ksball_3,
+.jsks .ksball_4,
+.jsks .ksball_5,
+.jsks .ksball_6 {
+  background-image: url('/static/images/crown/ico-dice.png');  
+} 
+#ten_result_172 .ten_result_1,
+.game_172 .result-ball_1,
+#ten_result_280 .ten_result_1,
+.game_280 .result-ball_1,
+.jsks .ksball_1 {
+  background-position:  0 0;
+}
+#ten_result_172 .ten_result_2,
+.game_172 .result-ball_2,
+#ten_result_280 .ten_result_2,
+.game_280 .result-ball_2,
+.jsks .ksball_2 {
+    background-position: 0 118px;
+}
+#ten_result_172 .ten_result_3,
+.game_172 .result-ball_3,
+#ten_result_280 .ten_result_3,
+.game_280 .result-ball_3,
+.jsks .ksball_3 {
+  background-position: 0 236px;
+}
+#ten_result_172 .ten_result_4,
+.game_172 .result-ball_4,
+#ten_result_280 .ten_result_4,
+.game_280 .result-ball_4,
+.jsks .ksball_4 {
+  background-position: 0 354px;
+}
+#ten_result_172 .ten_result_5,
+.game_172 .result-ball_5,
+#ten_result_280 .ten_result_5,
+.game_280 .result-ball_5,
+.jsks .ksball_5 {
+  background-position: 0 614px;
+}
+#ten_result_172 .ten_result_6,
+.game_172 .result-ball_6,
+#ten_result_280 .ten_result_6,
+.game_280 .result-ball_6,
+.jsks .ksball_6 {
+  background-position: 0 590px;
+} 
+.moneyManage .el-tabs__item,
+.moneyManage .el-tabs__nav-scroll {
+  background-color: #da4765!important;
+  color: #fff!important;
+}
+.jsks_odds{color:#7b73be;}
+ .moneyManage .el-tabs__item.is-active {
+    background-color: #92112c!important;
+    color: #fff!important;
+}
+.grid-content .conmit div:first-child{
+    background-color: #ff9200;
+    box-shadow: 2px 2px 5px #ff9200;
+    border-radius: 60px 0 0 60px;
+}
+.grid-content .conmit div{
+    background-color: #862A41;
+    box-shadow: 2px 2px 5px #862A41;
+}
+
+.grid-content input{
+  width: 100%;
+  border: 1px solid #e6e6f0;
+  outline: none;
+  text-align: center;
+  height: 33px;
+}
+
+.grid-content .conmit{
+  border: none;
+  padding: 50px 0;
+}
+.grid-content .conmit div{
+  width: 120px;
+  color: #fff;
+  display: inline-block;
+  border-radius: 60px 0 0 60px ;
+  cursor: pointer;
+}
+.grid-content .conmit div:nth-child(2){
+  border-radius: 0 60px  60px 0 ;
+  background-color: #862A41;
+  /*border: 1px solid ;*/
+}
+
+.bank-offline-table th{
+  width: 17% !important;
+}
+ 
+.el-checkbox__input.is-checked .el-checkbox__inner, 
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #862A41!important;
+  border-color: #862A41!important;
+}
+.el-tabs__item.is-active{
+  color: #a05970!important;
+}
+.el-tabs__item:hover{
+  color: #a05970!important;
+}
+.payment .el-col button:hover{
+  background: #a05970!important;
+}
+.payment .el-col button:hover{
+  border: 1px solid #a05970!important;
+}
+.el-button--primary{
+  background:#C24A2C!important;
+  border:1px solid #C24A2C!important;
+}
+.list{
+  border:none !important;
+}
+
+.game_info ul li span:nth-child(1):not(.tm_ball_蓝波) {
+  font-weight: 700;
+  color: black;
+  background-color: #eff6ff;
+}
+.game_info ul li span:nth-child(2):not(.lhc_ball_num),.jsks_odds {
+  color: #b53b4d!important;
+  font-weight: 600
+}
+
+.danhao label span:first-child{
+  color:white!important;
+}
+
+.ten_farm_ball_19,.ten_farm_ball_20{
+  color:white!important;
+}
+
