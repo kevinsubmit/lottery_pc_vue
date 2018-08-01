@@ -1,6 +1,5 @@
 <template>
-  <!-- getApiName!=='ly'&& -->
-  <div class="home" v-if="shouldLoadPage&&(getApiName!=='ly'&& getApiName!=='hg'&&getApiName!=='yiren'&&getApiName!=='tt'&&getApiName!=='gd')">
+  <div class="home" v-if="shouldLoadPage&&(getApiName!=='ly'&&getApiName!=='hg'&&getApiName!=='yiren'&&getApiName!=='tt'&&getApiName!=='gd'&&getApiName!=='yiteng')">
     <hg-Header :showLoginListen="showLoginListen"></hg-Header>
     <!-- <div class="abs-w" v-show="getApiName=='yiren'"></div> -->
     <div class="home-content">
@@ -115,6 +114,7 @@ export default {
       slider: "",
       shouldLoadPage: false,
       isLogin: false,
+      bgc:false,
       gameNavs: {
         260: {
           title: "88赛马",
@@ -226,6 +226,7 @@ export default {
   },
   computed: {},
   created() {
+    console.log(sessionStorage.getItem("im_token"))
     //获取轮播图（图片地址)
     // 去除地址栏垃圾而复杂的参数
     // 取hash之后的参数
@@ -248,7 +249,8 @@ export default {
         this.getApiName == "ly" ||
         this.getApiName == "yiren" ||
         this.getApiName == "tt" ||
-        this.getApiName == "gd"
+        this.getApiName == "gd"||
+        this.getApiName == "yiteng"
       ) {
         params.username = urlParams.username;
         params.oid = urlParams.oid;
@@ -295,7 +297,9 @@ export default {
       this.getApiName == "ly" ||
       this.getApiName == "yiren" ||
       this.getApiName == "tt" ||
-      this.getApiName == "gd"
+      this.getApiName == "gd" ||
+      this.getApiName == "yiteng"
+      
     ) {
       if (sessionStorage.getItem("im_token")) {
         this.$http.post("/systems/game_sort").then(res => {

@@ -32,10 +32,6 @@
           </p>
           <p>TEL：+{{tel}}</p>
           <p>EMAIL：{{email}}</p>
-          <!-- <p v-if="getApiName =='klc'">TEL : ++63-995-778-8000 &nbsp;&nbsp;&nbsp;&nbsp;EMAIL : lebo.technical@gmail.com</p>
-          <p v-if="getApiName =='gd'">TEL：+63-928-769-5555 &nbsp;&nbsp;&nbsp;&nbsp;EMAIL：gdcaipiao@gmail.com</p>
-          <p v-if="getApiName =='yiren'">TEL : +63-927-893-5888 &nbsp;&nbsp;&nbsp;&nbsp;EMAIL : yirenzhuanyuan@gmail.com</p>
-          <p v-if="getApiName =='agcai'">TEL : 00852-81972795 &nbsp;&nbsp;&nbsp;&nbsp; QQ:962366888&nbsp;&nbsp;&nbsp;&nbsp;EMAIL : ag1008666@gmail.com</p> -->
           <div v-if="getApiName =='sd'">
             <p>关于668彩票网的任何操作及相关问题，您可以在（常见问题）中找到答案， 如果您仍然有任何疑惑，可以随时扫描下发二维码关注微信公众号：【live2805a】， 或点击在线7x24小时在线客服咨询 ，信公众号：live2805a 请扫一扫关注!
               <img src="/static/images/sd/weixin.jpg" />
@@ -46,10 +42,6 @@
             <p>客服：09166251666</p>
             <p>投诉：09951701666</p>
           </div>
-          <!-- <p v-if="getApiName === 'uc'">TEL：400-8888-88 &nbsp;&nbsp;&nbsp;&nbsp;EMAIL：uc2222com@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;QQ：929852222</p>
-          <p v-if="getApiName =='yile'">TEL：+639561422986 &nbsp;&nbsp;&nbsp;&nbsp;QQ：199991030</p>
-          <p v-if="getApiName =='crown'">EMAIL：hga0004.com@Gmail.com &nbsp;&nbsp;&nbsp;&nbsp;QQ：1395011538</p>
-          <p v-if="getApiName =='fulicai'">TEL：+639561422986 &nbsp;&nbsp;&nbsp;&nbsp;QQ：199991030</p> -->
         </div>
       </div>
 

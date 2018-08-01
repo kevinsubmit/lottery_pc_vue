@@ -24,7 +24,7 @@
           </el-table>
 
         </el-tab-pane>
-        
+
         <el-tab-pane label="今日已结" name="yijie">
           <el-table :data="yijie" stripe style="width: 100%">
 
@@ -99,8 +99,8 @@ export default {
     },
     getTotalData(page, number, date) {
       let params = {};
-      
-      
+
+
       params.page = page;
       params.number = number;
       params.type = 0;
@@ -109,6 +109,7 @@ export default {
         .post("/getinfo/getAGHunterBill", JSON.stringify(params))
         .then(res => {
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$swal({
               text: "账户已下线，请重新登陆",
               type: "error",
@@ -130,8 +131,8 @@ export default {
     getYijie(page, number, date) {
       let today = Date.parse(new Date());
       let params = {};
-      
-      
+
+
       params.page = page;
       params.number = number;
       params.type = 1;
@@ -142,6 +143,7 @@ export default {
         .post("/getinfo/getAGHunterBill", JSON.stringify(params))
         .then(res => {
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$router.push({
               path: "/home"
             });

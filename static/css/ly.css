@@ -1,3 +1,4 @@
+.pay-methods div div:nth-child(7),.pay-methods div div:nth-child(6){display:none;}
 .game_gamesport_box {
   background-image: url("/static/images/common/sportgame/bg1.png")!important
 }
@@ -6,6 +7,12 @@
 }
 .float-right .weixin{
   background:url("//jkysxh.cn/img/pc/static/images/common/icon/ico-right-call.png") no-repeat 50% #782d3f!important;
+}
+.fucai3d .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
+  color:#862A41!important;
+}
+.fucai3d .el-tabs--border-card>.el-tabs__header .el-tabs__item:hover{
+  color:#862A41!important;
 }
 
 .luzhu-box ul li{color:black!important;}
@@ -100,13 +107,13 @@ header .main {
   background: linear-gradient(to bottom, #bf2a3f,#a1384e)!important;
   width: 100%;
   height: 60px;
-} 
+}
 .logo {
   width:160px!important;
   background: url('/static/images/ly/logo.png');
   height: 46px;
 }
- 
+
 .bet-top .leftPart {
     border-right: 1px solid #ceb0ce;
 }
@@ -134,6 +141,18 @@ header .main {
 .game_hot,
 .game_list li a,.second_menu_list a {
     border-bottom: 1px solid #a05970;
+}
+/* .game_info ul li span:first-child{
+  background:#eff6ff!important;
+} */
+.bgn{
+  background:#eff6ff!important;
+}
+.dw{
+  color:#862A41!important;
+}
+.ly_red{
+  color:#b53b4d!important
 }
 
 .game_list .active,.second_menu_list > li.active,.game_hot:hover {
@@ -230,8 +249,8 @@ header .main {
   /* background: url("/static/images/ly/bg-top.jpg") no-repeat; */
   background: #b52d40;
   background-size: cover;
-} 
- 
+}
+
 .bet-top-placeholder_ly {
   background: #9b2433!important;
 }
@@ -239,7 +258,7 @@ header .main {
   background: #9b2433;
 }
 
-.siderLeft_ly + .content .markSixSubNav li button.active, 
+.siderLeft_ly + .content .markSixSubNav li button.active,
 .siderLeft_ly + .content .markSixSubNav li button.isred {
   color: #fff;
   /* background: #862A41!important; */
@@ -250,7 +269,7 @@ header .main {
 }
 
 
-   
+
 
 
 
@@ -280,13 +299,13 @@ header .main {
   border-radius: 30px!important;
   box-shadow: 2px 2px 5px #862A41!important;
   padding: 8px 40px!important;
-} 
+}
 .el-carousel__container .el-carousel__container {
     background-size: cover;
 }
 .el-carousel__item img {
     width: 100%;
-    height: 100%;  
+    height: 100%;
 }
 /* .el-carousel__container .el-carousel__container div:nth-child(2) {
   background: url("/static/images/ct/banner02.jpg");
@@ -302,7 +321,7 @@ header .main {
 }
 
 .userInfo .avatar {
-  border: 1px solid #89a3d1;  
+  border: 1px solid #89a3d1;
 }
 .ico_game {
     background-size: contain!important;
@@ -350,7 +369,7 @@ nav.top-nav {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-.top-nav ul li { 
+.top-nav ul li {
   float: left;
   padding: 0 15px;
   color: #333;
@@ -359,7 +378,7 @@ nav.top-nav {
   line-height: 35px;
   text-align: center;
   cursor: pointer;
-  position: relative; 
+  position: relative;
   // margin-right: 1px;
 }
 .top-nav ul li:hover{
@@ -369,12 +388,12 @@ nav.top-nav {
   font-weight: bold;
   color: #a52351;
   border-bottom: 2px solid #f6a555;
-} 
+}
 .top-nav ul li:first-child:hover,
 .top-nav ul li:first-child.active {
     border-bottom-left-radius: 5px;
 }
- 
+
 .top-nav ul .active:hover {
     font-weight: bold;
 }
@@ -398,12 +417,12 @@ footer {
     background-color: #333;
 }
 .lotteryCqssc #ssc_nav_0 div:not(.game_title) span:first-child,
-.lotteryCqssc #ssc_nav_2  li div:not(.game_title) span:first-child, 
-.lotteryCqssc #ssc_nav_3  li div:not(.game_title) span:first-child, 
-.lotteryCqssc #ssc_nav_4  li div:not(.game_title) span:first-child, 
-.lotteryCqssc #ssc_nav_5  li div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_2  li div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_3  li div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_4  li div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_5  li div:not(.game_title) span:first-child,
 .lotteryCqssc #ssc_nav_6  li div:not(.game_title) span:first-child,
-.markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child, 
+.markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child,
 .markSix #marksix_nav_14  li div:not(.game_title) span:first-child,
 .markSix #marksix_nav_15  li div:not(.game_title) span:first-child,
 .markSix #marksix_nav_16  li div:not(.game_title) span:first-child,
@@ -432,8 +451,8 @@ footer {
 .jsks .ksball_4,
 .jsks .ksball_5,
 .jsks .ksball_6 {
-  background-image: url('/static/images/crown/ico-dice.png');  
-} 
+  background-image: url('/static/images/crown/ico-dice.png');
+}
 #ten_result_172 .ten_result_1,
 .game_172 .result-ball_1,
 #ten_result_280 .ten_result_1,
@@ -475,7 +494,7 @@ footer {
 .game_280 .result-ball_6,
 .jsks .ksball_6 {
   background-position: 0 590px;
-} 
+}
 .moneyManage .el-tabs__item,
 .moneyManage .el-tabs__nav-scroll {
   background-color: #da4765!important;
@@ -524,8 +543,8 @@ footer {
 .bank-offline-table th{
   width: 17% !important;
 }
- 
-.el-checkbox__input.is-checked .el-checkbox__inner, 
+
+.el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner {
   background-color: #862A41!important;
   border-color: #862A41!important;
@@ -553,6 +572,7 @@ footer {
 
 /*  方球 */
 .danhao  .icon-rect-ball {
+	color: white!important;
   text-shadow: 1px 1px 1px #000;
 }
 .danhao .icon-rect-ball-1.pk_1 {

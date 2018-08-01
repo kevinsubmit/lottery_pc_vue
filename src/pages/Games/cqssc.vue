@@ -31,13 +31,14 @@
                                     <div class="game_title">
                                         <h3>{{item.name}}</h3>
                                     </div>
-                                    <div class="clearfix" v-for='(ite,i,j) in item.list'>
-                                      <label>
+                                    <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click="togglePlay($event, ite)" style="cursor: pointer">
+                                      <!--<label>-->
                                         <span style='cursor:pointer;'>{{ite.name}}</span>
-                                        <span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>
-                                        <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
-                                        <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                      </label>
+                                        <!--<span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                                        <span style='cursor:pointer;' class="tewo">{{ite.odds}}</span>
+                                        <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)" @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
+                                        <input v-else readonly value="封盘" class="closeBet">
+                                      <!--</label>-->
                                     </div>
                                 </li>
                             </ul>
@@ -50,7 +51,7 @@
                      <input type="text" @input="checkMoney()" @blur="saveMoneyBlur(quickyMoney)" v-model="quickyMoney"/>
                       <input @click="confirm" type="button" name="" class="btn-pink" value="确定">
                     <input @click="reset" type="button" name="" class="btn-blue" value="重置"/>
-                  
+
 
                  </div>
             </div>
@@ -76,6 +77,7 @@ import lotteryArea from '../../components/lotteryArea'
 import betDialog from '../../components/betDialog'
 import changLong from '../../components/changlong'
 import luZhu from '../../components/luzhu'
+import { togglePlayActive, clearAllActives } from '../../utils/common'
 export default {
     data () {
         return {
@@ -131,9 +133,13 @@ export default {
           this.quickyMoney = ''
         }
          if(this.quickyMoney==""){
-        
+
            sessionStorage.removeItem('quickyMoney')
         }
+
+				// 将预设的金额赋值到选中玩法的金额
+        const presetPrice = this.quickyMoney
+				Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
       },
       fetchData(i) {
         let params = {};
@@ -143,9 +149,9 @@ export default {
 
           if (res.data.msg == "4001") {
             this.$swal({
-              text: "账户已下线，请重新登陆", 
+              text: "账户已下线，请重新登陆",
               type: "error",
-              timer: 1200, 
+              timer: 1200,
             })
             .then(function (response) {
             }).catch(e => {
@@ -180,7 +186,7 @@ export default {
             this.list_0 = JSON.parse(localStorage.getItem('ssc_list_0'));
             this.list_1 = JSON.parse(localStorage.getItem('ssc_list_1'));
             this.list_2 = JSON.parse(localStorage.getItem('ssc_list_2'));
-           
+
             // console.log(this.type_code)
             if(this.type_code==0){
                this.list = this.list_0;
@@ -191,7 +197,7 @@ export default {
              }
          } else {
            this.$http.all([this.getOdds(lmp),this.getOdds(gyh),this.getOdds(ydw)]).then(this.$http.spread((acct,perms,qzhs) => {
-            
+
               // console.log(acct,perms,qzhs)
               this.list_0 = acct.data;
               // console.log(this.list_0)
@@ -218,6 +224,8 @@ export default {
         return this.$http.post('/getinfo/odds', JSON.stringify(i))
       },
       changeNavN(i){
+				clearAllActives()// 去掉颜色的选中状态
+
         if (this.list_2.length>3) {
           this.list_2[0] = this.list_1[i-2];
           this.list_2[1] = this.list_0[i-2];
@@ -227,7 +235,7 @@ export default {
           this.list_2.unshift(this.list_0[i-2]);
           this.list_2.unshift(this.list_1[i-2]);
         }
-        this.list = this.list_2;
+        this.list = this.list_2 ;
         localStorage.setItem('ssc_list_2',JSON.stringify(this.list_2));
         // console.log(this.list);
         this.classCode=i;
@@ -237,6 +245,8 @@ export default {
         // console.log(this.type_code)
       },
       changeNav(i){
+				clearAllActives()// 去掉颜色的选中状态
+
         this.list = this[`list_${i}`]
         this.$refs.cName.className='';
          this.classCode=i;
@@ -255,8 +265,8 @@ export default {
         this.betArr = [];
         let ites = JSON.parse(ite)
         ites.title = name
-        ites.money = this.quickyMoney          
-        this.betArr.push(ites) 
+        ites.money = this.quickyMoney
+        this.betArr.push(ites)
         if (this.betArr.length == 0) {
           this.$swal({
             text: "请选择下注项目！",
@@ -286,6 +296,7 @@ export default {
           return
         }
         this.betArr.length = [];
+        // 遍历所有的input标签，每个玩法的投注信息都存在该标签上
         for (let i = 0; i < this.$refs.kuang.length; i++) {
           if (this.$refs.kuang[i].value>0) {
             let ite = JSON.parse(this.$refs.kuang[i].getAttribute("data-obj"))
@@ -319,18 +330,21 @@ export default {
           }
         }
       },
-      inputFocus (key) {
-        let quickyMoney = sessionStorage.getItem("quickyMoney");
+      inputFocus (event, item) {
+				event.target.value = sessionStorage.getItem("quickyMoney") || ''
+				// event.target.value = presetPrice;
+				// item.value = presetPrice;
+        /*let quickyMoney = sessionStorage.getItem("quickyMoney");
         if(quickyMoney > 0) {
-          key.target.value = quickyMoney;        
+          event.target.value = quickyMoney;
         } else {
           return false
-        }
+        }*/
       },
       saveMoneyBlur (quickyMoney) {
         if (quickyMoney <= 0 || quickyMoney === '') {
           this.isSaveMoney = false
-          sessionStorage.removeItem('quickyMoney')        
+          sessionStorage.removeItem('quickyMoney')
         }
         if (quickyMoney > 0 && this.isSaveMoney === true) {
           sessionStorage.removeItem('quickyMoney')
@@ -351,9 +365,18 @@ export default {
       },
       reset(){
         for (let i = 0; i < this.$refs.kuang.length; i++) {
-          this.$refs.kuang[i].value = "";
+        	let el = this.$refs.kuang[i]
+          el.value = "";
+					el.parentNode.classList.remove('active-color')
         }
-      }
+      },
+			// 切换玩法的选中状态
+			togglePlay(event) {
+				if (!this.closeBet) return// 封盘不能切换
+				if (event.target.tagName === 'INPUT') return// input标签不触发切换
+
+				togglePlayActive(event, this.quickyMoney)
+			}
     },
   mounted() {
     setInterval(() => {
@@ -375,7 +398,13 @@ export default {
         this.fetchData(1);
         this.showDialog = false;
       }
-    }
+    },
+		closeBet(val) {
+			if (!val) {
+				// 如果封盘了，则清空玩法的选中状态
+				clearAllActives()
+			}
+		}
   }
 }
 </script>

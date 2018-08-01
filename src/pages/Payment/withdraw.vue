@@ -41,11 +41,11 @@
 				  <el-col :span="6"><div class="grid-content shuru ">
 				  		<span>￥</span>
 				  	    <div>
-				  	    	<input type="text" name="" v-model='shu'  onkeyup="this.value=this.value.replace(/\D/g,'')">
+				  	    	<input type="text" autocomplete="off" name="" v-model='shu'  onkeyup="this.value=this.value.replace(/\D/g,'')">
 				  	    </div>
 				  	    <span class='el-icon-error' @click='resetMoney()'></span>
 				  </div></el-col>
-				  <el-col :span="9" style='margin-left:40px;'><div class="grid-content bank" style='color:#453880'>单笔下限<span style='color:#ea6271;'>100</span>;单笔上限<span style='color:#ea6271'>1,000,000,00</span></div></el-col>
+				  <el-col :span="9" style='margin-left:40px;'><div class="grid-content bank" style='color:#453880'>单笔下限<span style='color:#ea6271;'>100</span>;单笔上限<span style='color:#ea6271'>1,000,000.00</span></div></el-col>
 				</el-row>
 				
 				<el-row :gutter="20" style='margin-top:20px;'>

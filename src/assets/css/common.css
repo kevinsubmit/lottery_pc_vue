@@ -8,16 +8,16 @@ body {
 }
 .f-r {
   float: right;
-} 
+}
 
- 
+
 
 .bet-top{
     background-size: cover;
-} 
+}
 .bet-top .leftPart {
     border-right: 1px solid #ceb0ce;
-} 
+}
 
 
 
@@ -42,9 +42,9 @@ body {
 }
 .siderLeft {
     float: left;
-} 
+}
 .game_info ul li span {
-    font-size: 14px;
+    font-size: 12px;
 }
 h2.game_title {
     color: #6a6d91;
@@ -61,13 +61,13 @@ h2.game_title {
     background-color: #eff6ff;
     /*border-bottom: 1px solid #ddd;*/
     text-indent: 1%;
-}  
+}
 
 #app {
     /*// background:#deedff  url('/static/images/common/bg-home.jpg') repeat-x  ;*/
     /*background:#deedff  url('@{public_img}/images/common/bg-home.jpg') repeat-x  ;*/
     // background-size:cover ;
-} 
+}
 .common-content {
   background-color: #fff;
   padding: 20px;
@@ -83,22 +83,43 @@ h2.game_title {
 
 /*.rules {
   height: calc(100vh - 254px)!important;
-  overflow-y: auto;  
+  overflow-y: auto;
 }*/
 .lotteryKlsf .game ul li div,
-.luckyFram .game ul li div  {
-  width: 25%; 
+.luckyFram .game ul li div,
+.gd11x5 .game ul li div
+{
+  width: 25%;
   display: inline-block;
+	padding: 4px;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.lotteryKlsf .game ul li div:not(.game_title),
+.luckyFram .game ul li div:not(.game_title),
+.gd11x5 .game ul li div:not(.game_title)
+{
+	width: 23%;
+	margin: 2px 1%;
+	vertical-align: top;
 }
 .lotteryKlsf .game ul li div:first-child,
-.luckyFram .game ul li div:first-child {
+.luckyFram .game ul li div:first-child,
+.gd11x5 .game ul li div:first-child
+{
    width: 100%;
 }
 .bet-area .game:first-child .game_title {
     border-top: none;
     background-color: #eff6ff;
-    margin: 0 -20px;
-    padding: 0 20px; 
+    /*margin: 0 -20px;*/
+    padding: 0 20px;
+	  border-radius: 0;
+		box-sizing: border-box;
+		margin-bottom: 10px;
+}
+.pcegg .bet-area .game:first-child .game_title{
+		margin-bottom: 16px;
 }
 .game_title h3 {
   position: relative;
@@ -114,21 +135,22 @@ h2.game_title {
     position: absolute;
     bottom: -8px;
     left: 10px;
-} 
+}
 
 .content-box {
     margin-top: 15px;
     overflow: auto;
-} 
+}
 .bet-area {
     width: 100%;
 }
-.bet-content { 
+.bet-content {
   margin-right: 160px;
   position: relative;
-  border-radius: 4px; 
+  border-radius: 4px;
 }
 .bet-center {
+	overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
   height: calc(96vh - 187px)!important;
@@ -136,15 +158,18 @@ h2.game_title {
 }
 .markSixSubNav + .bet-content > .bet-center {
   height: calc(96vh - 220px)!important;
-} 
+}
 .bet-content .bet-box {
-  padding: 0 20px 20px 20px;
+	width: 100%;
+  /*padding: 0 20px 20px 20px;*/
+  padding-bottom: 20px;
   background-color: #fff;
-  border-radius: 5px; 
+  border-radius: 5px;
+	box-sizing: border-box;
 }
 
 
- 
+
 /* .game_info ul li div:hover{
     background:#f2f2fa;
 } */
@@ -162,21 +187,46 @@ h2.game_title {
     text-align: left;
     display: inline-block;
 }
+.game_info ul li div:not(.game_title){
+	width:18%;
+	margin: 2px 1% 0;
+	padding: 4px;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.pcegg .game_info ul li div:not(.game_title){
+	margin-top: -8px;
+}
+#ssc_nav_1 li div:not(.game_title){
+	width:92%;
+	margin: 2px 4% 0;
+}
+.pk10_0101 .game li div:not(.game_title){
+		width: 92%;
+		margin: 4px auto;
+		padding: 4px;
+		box-sizing: border-box;
+		border-radius: 4px;
+}
+.pk10_0101 .game .zuhe li div:not(.game_title){
+	width: 18%;
+	margin: 2px 1% 0;
+}
 
 .game_info ul li span:nth-child(1){
-    width: 60px;
+    width: 50px;
     border-radius: 5px;
-    margin: 0 5% 0 0;
+    margin: 1px 5% 0 0;
 }
 .game_info ul li span:nth-child(2){
     color: #bd4700;
 }
 .game_info ul li input{
+	  flex: 1;
     height: 20px;
-    margin-left: 5%;
+    margin: 0 0 0 5%;
     border: 1px solid #ddd;
-    border-radius: 2px;
-    padding-left: 5px;
+    /*padding-left: 5px;*/
     width: 30%;
     border-radius: 3px;
 }
@@ -191,16 +241,16 @@ h2.game_title {
 }
 .btn-bet input:nth-child(1){
     width: 90px;
-    height: 35px; 
+    height: 35px;
     line-height: 35px;
     border-radius: 3px;
     color: #666;
     outline: none;
     float: left;
     margin-right: 10px;
- 
+
     background: #f7f7f7;
-    border: 1px solid #ddd;  
+    border: 1px solid #ddd;
     filter: alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=white,endcolorstr=gray,gradientType=0);
     -ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=white,endcolorstr=gray,gradientType=0);
     background: white;
@@ -226,21 +276,21 @@ h2.game_title {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 0 5px;
-    // float: left;  
+    // float: left;
     margin: 4px 0 0 10px;
 }
 .btn-pink,
 .btn-blue {
-    width: 90px; 
+    width: 90px;
     color: #fff;
     height: 30px;
     line-height: 30px;
     outline: none;
     cursor: pointer;
-} 
+}
 .btn-pink {
   border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px; 
+  border-bottom-left-radius: 30px;
 }
 .btn-blue {
   border-top-right-radius: 30px;
@@ -298,7 +348,7 @@ h3.title {
 .content {
   font-size: 14px;
   line-height: 30px;
-  color: #999; 
+  color: #999;
 }
 .result-bottom li {
     float: left;
@@ -308,10 +358,10 @@ h3.title {
     width: 20%;
     float: left;
 }
-.game_info ul li { 
+.game_info ul li {
     background-color: #fff;
 }
- 
+
 .lotteryPcdd li div:first-child{
   width: 100%;
   // float: left;
@@ -340,6 +390,7 @@ h3.title {
     font-size: 14px;
     color: #7b73be;
     width: 35px;
+    cursor: pointer;
 }
 .result-bottom ul {
     float: left;
@@ -404,33 +455,37 @@ h3.title {
 }
 .pk10_0101 ul li:first-child {
     width: 100%;
-} 
+}
 .pk10_0101 .gyh li:first-child div,
 .pk10_0101 ul:not(.danhao) li:first-child div:not(.game_title) {
   float: left;
-  width:20%;
+  /*width:20%;*/
+  width:18%;
+	margin: 10px 1%;
+	padding: 4px;
+	border-radius: 4px;
 }
 .lotteryCqssc .qiu  li div:not(.game_title) span:first-child,
 .pk10_0101 .danhao  li div:not(.game_title) span:first-child,
 .pk10_0101 .zuhe  li:last-child div:not(.game_title) span:first-child,
-.lotteryCqssc #ssc_nav_2  li:first-child div:not(.game_title) span:first-child, 
-.lotteryCqssc #ssc_nav_3  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_2  li:first-child div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_3  li:first-child div:not(.game_title) span:first-child,
 .lotteryCqssc #ssc_nav_4  li:first-child div:not(.game_title) span:first-child,
-.lotteryCqssc #ssc_nav_5  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_5  li:first-child div:not(.game_title) span:first-child,
 .lotteryCqssc #ssc_nav_6  li:first-child div:not(.game_title) span:first-child,
 .pcegg li:last-child div:not(.game_title) span:first-child,
-#ssc_nav_1 li div:not(.game_title) span:first-child {  
+#ssc_nav_1 li div:not(.game_title) span:first-child {
   width: 24px;
-  height: 24px; 
+  height: 24px;
   line-height: 24px;
   text-align: center;
-  margin-top: -2px;
+  margin-top: -1px;
 }
 .lotteryCqssc .qiu  li div:not(.game_title) span:first-child,
-.lotteryCqssc #ssc_nav_2  li:first-child div:not(.game_title) span:first-child, 
-.lotteryCqssc #ssc_nav_3  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_2  li:first-child div:not(.game_title) span:first-child,
+.lotteryCqssc #ssc_nav_3  li:first-child div:not(.game_title) span:first-child,
 .lotteryCqssc #ssc_nav_4  li:first-child div:not(.game_title) span:first-child,
-.lotteryCqssc #ssc_nav_5  li:first-child div:not(.game_title) span:first-child, 
+.lotteryCqssc #ssc_nav_5  li:first-child div:not(.game_title) span:first-child,
 .lotteryCqssc #ssc_nav_6  li:first-child div:not(.game_title) span:first-child,
 .pcegg li:last-child div:not(.game_title) span:first-child,
 #ssc_nav_1 li div:not(.game_title) span:first-child{border-radius:50%;}
@@ -459,12 +514,19 @@ h3.title {
   width:20%;
 }
 .lotteryCqssc li,
-.lotteryCqssc #ssc_nav_0 li{ 
+.lotteryCqssc #ssc_nav_0 li{
   width: 20%;
 }
 .lotteryCqssc .qiu li,
 .lotteryCqssc #ssc_nav_0 li div:not(.game_title) {
    width:100%;
+}
+.lotteryCqssc #ssc_nav_0 li div:not(.game_title) {
+	width:92%;
+	margin: 2px 4%;
+	padding: 4px;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 .lotteryCqssc .qiu li div:first-child{
      width:100%;
@@ -502,10 +564,10 @@ h3.title {
 .markSix #marksix_nav_16  li div:not(.game_title) span:first-child,
 .markSix #marksix_nav_17  li div:not(.game_title) span:first-child,
 .markSix #marksix_nav_27  li div:not(.game_title) span:first-child {
-  margin-top: 7px!important;
-} 
+  /*margin-top: 7px!important;*/
+}
 
- 
+
 .markSix ul li:first-child div span:first-child,
 .six_lm_ball li span {
   /*background-color: #ea6271;*/
@@ -649,7 +711,7 @@ h3.title {
 .lottery_type_69 .balls .num_42,
 .lottery_type_69 .balls .num_47,
 .lottery_type_69 .balls .num_48,
- 
+
 #ten_result_69 .ten_result_3,
 #ten_result_69 .ten_result_4,
 #ten_result_69 .ten_result_9,
@@ -683,7 +745,7 @@ h3.title {
 .result-new .game_69 .result-ball_41,
 .result-new .game_69 .result-ball_42,
 .result-new .game_69 .result-ball_47,
-.result-new .game_69 .result-ball_48, 
+.result-new .game_69 .result-ball_48,
 
 .tm_ball_3,
 .tm_ball_4,
@@ -778,7 +840,7 @@ h3.title {
 .result-new .game_69 .result-ball_43,
 .result-new .game_69 .result-ball_44,
 .result-new .game_69 .result-ball_49,
- 
+
 
 .tm_ball_5,
 .tm_ball_6,
@@ -1124,13 +1186,17 @@ h3.title {
 }
 
 
-#changlong .game_title { 
+#changlong .game_title {
     background-color: #eff6ff;
     text-align: left;
     text-indent: 10px;
 }
 .common-content .el-table__body {
-  border: 1px solid #ddd;  
+  border: 1px solid #ddd;
+}
+
+.userSetData .el-table th, .el-table tr{
+  cursor: pointer;
 }
 
  .moneyManage .el-tabs__item.is-active {
@@ -1168,7 +1234,7 @@ h3.title {
 #pane-record .el-table th:nth-child(4) {
   border-right: none!important;
 }
-.common-content .el-table td, 
+.common-content .el-table td,
 .common-content .el-table th {
   padding: 7px 0;
   border-bottom: none;
@@ -1186,16 +1252,16 @@ h3.title {
 #pane-all .history  .el-table th:nth-child(5),
  .moneyManage .el-table th:nth-child(7),
 .result-page .el-table th:nth-child(3) {
-  border-right: 2px solid #ddd;  
+  border-right: 2px solid #ddd;
 }
 .common-content .el-table__header-wrapper {
   border-top-left-radius: 4px;
-  border-top-right-radius: 4px;  
+  border-top-right-radius: 4px;
 }
 .common-content .el-table {
   border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;  
-} 
+  border-bottom-right-radius: 4px;
+}
 .common-content .el-table th.is-leaf:first-child {
   border-left: 1px solid #ddd;
 }
@@ -1221,7 +1287,7 @@ h3.title {
   margin-right: 5px;
   font-size: 14px;
   color: #666;
-} 
+}
 
 .common-content .el-tabs__nav-wrap::after {
   background-color: #fff;
@@ -1237,7 +1303,7 @@ h3.title {
     text-align: center;
     border-right:1px solid #666;
     background:none;
-    width:auto;  
+    width:auto;
   }
 
   .history-page-1 .el-tabs__item.is-active{
@@ -1251,7 +1317,7 @@ h3.title {
 
 .closeBet {
   color: #ccc;
-} 
+}
 .bet-top .flip-clock-wrapper {
   left: 0;
 }
@@ -1260,7 +1326,7 @@ h3.title {
 }
 .userInfo {
   min-width: 320px;
-} 
+}
 .el-table--border::after, .el-table--group::after, .el-table::before {
     background-color: #fff;
 }
@@ -1271,11 +1337,11 @@ h3.title {
 }
 .el-table__row:last-child td {
   border-bottom: 2px solid #ddd!important;
-}  
+}
 
 /*登录密码弹窗css*/
 /*弹窗*/
-.popup-content {    
+.popup-content {
     border: 1px solid #ccc;
     width: 360px;
     margin: 0 auto;
@@ -1299,7 +1365,7 @@ h3.title {
   font-size: 16px;
   color: #666;
   position: relative;
-} 
+}
 .popup-title .el-icon-circle-close-outline {
     cursor: pointer;
     position: absolute;
@@ -1314,9 +1380,9 @@ h3.title {
 .popup-content .row {
   border-bottom: 1px solid #ddd;
   height: 50px;
-} 
+}
 .popup-content .row input {
-  border: none; 
+  border: none;
   height: 40px;
   line-height: 40px;
   background-color: #fff;
@@ -1352,15 +1418,15 @@ h3.title {
   line-height: 35px;
   text-align: center;
   border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;  
+  border-bottom-right-radius: 8px;
   color: #999;
-} 
+}
 .popup-footer ul {
-  padding-left: 54px;  
+  padding-left: 54px;
 }
 .popup-footer li {
   float: left;
-  color: #7b73be; 
+  color: #7b73be;
 }
 .popup-footer a {
   color: #eb6877;
@@ -1411,7 +1477,7 @@ h3.title {
 }
 #ssc_nav_0 li:last-child {
   width: 100%;
-} 
+}
 /* #ssc_nav_0 li div:not(.game_title),
 .lotteryCqssc .qiu li div:not(.game_title) {
   width: 25%;
@@ -1421,21 +1487,26 @@ h3.title {
 #xyft  .game_info .gyh li div span:first-child ,
 .markSix #marksix_nav_11 li div span:first-child  {
   width: 50px;
-} 
+}
 #xyft  .game_info .zuhe li:first-child div:not(.game_title),
 .luckyFram li div:not(.game_title),
 .pk10_0101 .game_info .zuhe li:first-child div:not(.game_title),
 .lotteryCqssc #ssc_nav_0 li:last-child div:not(.game_title) ,
 .lotteryPcdd  li div:not(.game_title),
 #marksix_nav_1 li:last-child div:not(.game_title) {
-  width: 25%;
-  display: inline-block;
-} 
+	display: inline-block;
+	/*width: 25%;*/
+	width: 23%;
+	margin: 10px 1% 0;
+	padding: 4px;
+	box-sizing: border-box;
+	border-radius: 4px;
+}
 #xyft  .game_info .zuhe li:first-child div span:first-child,
 .pk10_0101 .game_info li div span:first-child {
   width: 45px;
-} 
- 
+}
+
 .luckyFram  li:first-child,
 .luckyFram  li:nth-child(2),
 .luckyFram  li:nth-child(3),
@@ -1447,20 +1518,20 @@ h3.title {
  #ten_lm ul li,
  .lotteryKlsf ul li {
    height: 35px;
- } */ 
+ } */
 /* #farm_lm ul {
   height: 70px;
 } */
-.promoNav .content { 
+.promoNav .content {
   margin-left: 0!important;
   padding-top: 0!important;
-} 
-.promoNav .common-content {  
+}
+.promoNav .common-content {
   padding: 0!important;
 }
 .pk10_0101 .danhao .game_title {
   margin-bottom: 15px!important;
-} 
+}
 /* .lotteryCqssc .game_title {
   margin-bottom: 10px!important;
 } */
@@ -1478,7 +1549,7 @@ h3.title {
 /* .lotteryCqssc #ssc_nav_0 li:last-child div:not(.game_title) {
   margin:0;
 }  */
- 
+
 /* .game li div,
 .markSix li:first-child .game_title,
 #xyft ul li:first-child div:not(.game_title),
@@ -1498,7 +1569,7 @@ h3.title {
 .markSix li:last-child {
   width: 100%;
 }
- 
+
 .markSix #marksix_nav_2 li:last-child div:not(.game_title),
 .markSix #marksix_nav_3 li:last-child div:not(.game_title),
 .markSix #marksix_nav_4 li:last-child div:not(.game_title),
@@ -1508,8 +1579,16 @@ h3.title {
 .markSix #marksix_nav_8 li:last-child div:not(.game_title),
 .markSix #marksix_nav_9 li:last-child div:not(.game_title),
 .markSix #marksix_nav_10 li:last-child div:not(.game_title) {
-  width: 25%;
-  display: inline-block;
+	display: inline-block;
+	/*width: 25%;*/
+	width: 22%;
+	margin: 6px 1%;
+	padding: 5px 4px 2px;
+	border-radius: 4px;
+}
+.markSix #marksix_nav_2 li:last-child div:not(.game_title){
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 .markSix #marksix_nav_11 li:nth-child(2),
 .markSix #marksix_nav_11 li:nth-child(3),
@@ -1523,7 +1602,7 @@ h3.title {
 .markSix #marksix_nav_11 li:nth-child(4) div:not(.game_title),
 .markSix #marksix_nav_11 li:nth-child(5) div:not(.game_title),
 .markSix #marksix_nav_11 li:nth-child(6) div:not(.game_title) {
-  width:20%;
+  width:18%;
   display: inline-block;
 }
 .btn-bind {
@@ -1557,13 +1636,13 @@ h3.title {
 .lotteryCqssc #ssc_nav_5  li:nth-child(6) div:not(.game_title) {
     margin-bottom: 0!important;
 }
- 
+
 .lotteryCqssc ul#ssc_nav_2 li .game_title {
 
 } */
-.game li div {
+/*.game li div {
   margin-top: 10px;
-}
+}*/
 .game li,
 .pk10_0101 .danhao li  {
   padding-bottom: 10px;
@@ -1581,25 +1660,24 @@ h3.title {
 .lotteryCqssc #ssc_nav_6 li,
 .six_lm_ball li {
   padding-bottom: 0;
-} 
+}
 .markSix li:nth-child(2) .game_title,
 .markSix li:nth-child(3) .game_title,
 .markSix li:nth-child(4) .game_title,
 .markSix li:nth-child(5) .game_title,
-.lotteryPcdd li .game_title,
 .lotteryKlsf li .game_title,
 .luckyFram li .game_title,
 .jsks li .game_title,
 .lotteryCqssc #ssc_nav_0 li:last-child .game_title {
   margin-bottom: 10px!important;
 }
- 
+
 .markSix li div {
   margin-top: 5px;
 }
 .markSix li div:hover{
   /* background-color: rgba(245, 245, 255, 0.) */
-  background-color: rgba(245, 245, 255, 0)
+  /*background-color: rgba(245, 245, 255, 0)*/
 }
 .markSix li:nth-child(2) div,
 .markSix li:nth-child(2) .game_title,
@@ -1665,7 +1743,7 @@ h3.title {
 .lotteryCqssc #ssc_nav_0 li:nth-child(6) .game_title {
   margin-bottom: 10px!important;
 }
-/* .lotteryCqssc #ssc_nav_0 li:nth-child(6) div:not(.game_title) { 
+/* .lotteryCqssc #ssc_nav_0 li:nth-child(6) div:not(.game_title) {
     padding-top: 10px;
 }
  */
@@ -1682,13 +1760,16 @@ h3.title {
 #ten_result_2 td span,
 #ten_result_46 td span,
 #ten_result_250 td span,
+#ten_result_220 td span,
 .result-new .game_2 .result-ball,
 .result-new .game_46 .result-ball,
 .result-new .game_250 .result-ball,
+.result-new .game_220 .result-ball,
 .result-new .game_3 .result-ball,
 .result-new .game_47 .result-ball,
 .result-new .game_160 .result-ball,
-.cqssc .balls span {
+.cqssc .balls span,
+.fucai3d .balls span {
   background-color: #3e80d4!important;
   border-radius: 50%!important;
   box-shadow: 2px 2px 4px 0px rgba(16, 15, 15, 0.8);
@@ -1700,7 +1781,7 @@ h3.title {
   background-color: red!important;
 }
 
-.game_160 .pcegg { 
+.game_160 .pcegg {
     width: 28px;
     height: 28px;
     line-height: 28px;
@@ -1747,11 +1828,11 @@ h3.title {
 }
 .noticesList h4 {
   font-size: 16px;
-  color: #333; 
+  color: #333;
 }
-.noticesList p { 
+.noticesList p {
   font-size: 16px;
-  color: #666; 
+  color: #666;
   overflow-y: auto;
 }
 .noticesImg {
@@ -1766,7 +1847,7 @@ h3.title {
     text-align: center;
 }
 .noticesImg img {
-  width: 100%; 
+  width: 100%;
   height: 100%;
   border-radius: 5px;
 }
@@ -1777,11 +1858,11 @@ h3.title {
     border-top: 1px solid #ccc;
     padding-top: 20px;
 }
-.promo-content h2 { 
+.promo-content h2 {
   text-align: center;
   font-size: 20px;
   border-bottom: 1px solid dashed;
- } 
+ }
  .promo-content h4 {
   margin: 20px 0 10px 0;
   font-size: 16px;
@@ -1799,12 +1880,12 @@ h3.title {
   line-height: 30px;
   font-size: 14px;
   text-align: center;
-} 
+}
 .promo-content th {
      border-bottom: 1px solid #ddd;
     background-color: #f2f3f8;
     height: 35px;
-    line-height: 35px; 
+    line-height: 35px;
 }
 
 .promo-content li {
@@ -1823,7 +1904,7 @@ h3.title {
     cursor: pointer;
 }
 .markSix #marksix_nav_11 li:first-child div:not(.game_title) span:first-child {
-  margin-top: 5px!important;
+  /*margin-top: 5px!important;*/
 }
 /*
 #marksix_nav_28 li:last-child div:nth-child(8) span:first-child,
@@ -1858,23 +1939,24 @@ h3.title {
   opacity: .5;
 }
 .btns span:hover {
-  opacity: 1;    
+  opacity: 1;
 }
 
-.ico-my-yunpay, 
-.ico-my-paymethods, 
+.ico-my-yunpay,
+.ico-my-paymethods,
 .ico-my-bank,
-.ico-my-alipay, 
-.ico-my-cai, 
+.ico-my-alipay,
+.ico-my-cai,
 .ico-my-qq,
 .ico-my-wechat,
-.ico-my-jd {
+.ico-my-jd,
+.ico-my-union {
   vertical-align: -9px;
 }
- 
+
 
 /* .setting:hover .ico-my-set{
-  background: url("/static/images/common/icon/ico-my-set-h.png");  
+  background: url("/static/images/common/icon/ico-my-set-h.png");
 } */
 
 
@@ -2002,7 +2084,7 @@ h3.title {
   color: white!important;
 }
 /*#marksix_nav_15 .tm_ball_5 {
-  background-color: #3e80d4!important;  
+  background-color: #3e80d4!important;
 }
 
 */
@@ -2040,7 +2122,7 @@ h3.title {
 
 #marksix_nav_14{
   position: relative;
-} 
+}
 .promo-page,
 .about-page {
   animation-duration: 0.5s;
@@ -2059,7 +2141,14 @@ h3.title {
 #marksix_nav_27 label {
   display: block;
   cursor: pointer;
-  min-height: 26px;
+  /*min-height: 26px;
+	margin: 2px;*/
+}
+.six_lm_ball ul li label{
+	border-radius: 4px;
+}
+.lm_ball ul li label{
+	border-radius: 4px;
 }
 .six_lm_ball ul li label input,
 .lm_ball ul li label input {
@@ -2072,12 +2161,12 @@ h3.title {
 #marksix_nav_34 label input,
 #marksix_nav_40 label input,
 #marksix_nav_27 label input {
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 table.result-new td li {
   width: 30px;
-} 
+}
 .cha{
   width: 40px;
   height: 40px;
@@ -2552,12 +2641,12 @@ span.plus_tm {
   height: 100px; }
 
 .flip-clock-divider:first-child {
-  width: 0; 
+  width: 0;
   display: none;
 }
 
 .flip-clock-dot {
-    display: block; 
+    display: block;
     width: 6px!important;
     height: 6px!important;
     position: absolute;
@@ -2836,9 +2925,9 @@ span.plus_tm {
   100% {
     opacity: 0; } }
 
- 
 
- 
+
+
 
 @keyframes bounceInLeft {
   from, 60%, 75%, 90%, to {
@@ -2866,7 +2955,7 @@ span.plus_tm {
   to {
     transform: none;
   }
-} 
+}
 @keyframes bounceIn {
   from, 20%, 40%, 60%, 80%, to {
     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);

@@ -18,13 +18,21 @@ import "./components/index.js";
 if (process.env.NODE_ENV === "development") {
 	// Axios.defaults.baseURL = "//apiweb.hgb168.com";
 	// Axios.defaults.baseURL = "//agcai.lebole5.com";
-	// Axios.defaults.baseURL = "//wap.leyingcdn.com";
-	Axios.defaults.baseURL = "//www.lebole5.com";
+	Axios.defaults.baseURL = "//www.leyingcdn.com";
+	// Axios.defaults.baseURL = "//www.lebole5.com";
 	// Axios.defaults.baseURL = "//wap.l5uc.com";
-	// Axios.defaults.baseURL = "//yirenwap.lebole5.com";wap.l5dafa.com
+	// Axios.defaults.baseURL = "//yirenwap.lebole5.com";
 	// Axios.defaults.baseURL = "//tt.lebole5.com";
 	// Axios.defaults.baseURL = "//crowncai.lebole5.com";
 	// Axios.defaults.baseURL = "//fulicai.lebole5.com";
+	// Axios.defaults.baseURL = "//618cp.lebole5.com";
+	// Axios.defaults.baseURL = "//yiteng.lebole5.com";
+	// Axios.defaults.baseURL = "//618cp.lebole5.com";
+	// Axios.defaults.baseURL = "//ylh.lebole5.com";
+	// Axios.defaults.baseURL = "//yy.lebole5.com";
+	// Axios.defaults.baseURL = "//letian.lebole5.com";
+	Axios.defaults.baseURL = "//l5ran.lebole5.com";
+
 }
 
 //window.FlipClock = require('flipclock/compiled/flipclock')
@@ -36,7 +44,7 @@ if (Axios.defaults.toPC == 1) {
 
 // axios请求拦截器，避免每次请求接口都带上oid参数
 Axios.interceptors.request.use(
-	function(config) {
+	function (config) {
 		let params = JSON.parse(config.data || "{}");
 		config.data = JSON.stringify({
 			oid: sessionStorage.getItem("im_token"),
@@ -44,7 +52,7 @@ Axios.interceptors.request.use(
 		});
 		return config;
 	},
-	function(error) {
+	function (error) {
 		// Do something with request error
 		return Promise.reject(error);
 	}
@@ -93,7 +101,7 @@ router.beforeEach((to, from, next) => {
 		// 参数上面有推广链接,用户已经登陆
 		if (sessionStorage.getItem("im_token")) {
 			// 用户试玩
-			if (sessionStorage.getItem("im_realname" == "游客")) {
+			if (sessionStorage.getItem("im_realname") == "游客") {
 				next({
 					path: to.path,
 					query: {

@@ -1,11 +1,11 @@
-<template> 
-<div class="content history-page  history-page-1" ref='kuan' style="padding-top:0;margin-left:0"> 
+<template>
+<div class="content history-page  history-page-1" ref='kuan' style="padding-top:0;margin-left:0">
     <div class="history common-content">
         <el-tabs v-model="activeName" @tab-click="handleClick" >
             <el-tab-pane label="
             历史汇总" name="weijie" style="background:#fff">
             <el-table
-                
+
                 :data="weijie"
                 stripe
                 style="width: 100%">
@@ -24,17 +24,17 @@
                 label="派彩金额"
                 width="200"
                 prop="payout">
-                </el-table-column>   
+                </el-table-column>
 
                 <el-table-column
                 label="输赢结果"
                 prop="type"
                 width="180">
                 </el-table-column>
-                        
+
                 </el-table>
 
-                <div class="page"> 
+                <div class="page">
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChangeWeijie"
@@ -43,12 +43,12 @@
                     :page-size="16"
                     layout="total, prev, pager, next, jumper"
                     :total="allnumb">
-                </el-pagination> 
+                </el-pagination>
                 </div>
             </el-tab-pane>
-        </el-tabs> 
+        </el-tabs>
     </div>
-    
+
 </div>
 </template>
 
@@ -78,7 +78,7 @@ created () {
     if(sessionStorage.getItem('im_username') === '游客'){
         this.isDemo = true;
         this.activeName = 'weijie';
-        
+
     } else {
         this.getWeijie(1,16);
     }
@@ -100,15 +100,16 @@ methods: {
         this.$http.post('/externalGame/record', JSON.stringify(params)).then(res => {
             console.log(res)
             if (res.data.msg == 4001) {
+							  if (sessionStorage.getItem('im_username') === '游客') return
                 this.$router.push({
                     path: '/home'
                 })
             }
             if (res.data.msg == 2006) {
-                this.weijie = res.data.data||[];     
-            } 
+                this.weijie = res.data.data||[];
+            }
         }).catch(function(){
-            console.log('服务端连接异常！');  
+            console.log('服务端连接异常！');
         })
     },
     handleClick(tab) {
@@ -117,21 +118,21 @@ methods: {
         }
         if (tab.name === "weijie") {
         this.getWeijie(1,16);
-        } 
+        }
     },
     handleSizeChange(val) {
         this.getWeijie(1,val);
     },
     handleCurrentChangeWeijie(val) {
         if (this.$route.query.time) {
-        this.$router.replace({name: 'dzyy', query: {page: val, time: this.$route.query.time}})        
+        this.$router.replace({name: 'dzyy', query: {page: val, time: this.$route.query.time}})
         } else {
         this.$router.replace({name: 'dzyy', query: {page: val}})
         }
     },
     handleCurrentChangeYijie(val) {
         if (this.$route.query.time) {
-        this.$router.replace({name: 'dzyy', query: {pages: val, time: this.$route.query.time}})        
+        this.$router.replace({name: 'dzyy', query: {pages: val, time: this.$route.query.time}})
         } else {
         this.$router.replace({name: 'dzyy', query: {pages: val}})
         }
@@ -141,10 +142,10 @@ watch: {
     $route () {
         setTimeout(()=>{
         if (this.$route.query.pages) {
-            this.getWeijie(this.$route.query.page, 16)          
+            this.getWeijie(this.$route.query.page, 16)
         }
         },600)
-        
+
     }
 }
 }

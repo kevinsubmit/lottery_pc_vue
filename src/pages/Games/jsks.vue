@@ -26,13 +26,14 @@
                                         <div class="game_title">
                                             <h3>{{item[0].name}}</h3>
                                         </div>
-                                        <div class="clearfix" v-for='(ite,i,j) in item[0].list'>
-                                          <label>
+                                        <div class="clearfix hover-color" v-for='(ite,i,j) in item[0].list' @click="togglePlay($event, ite)" style="cursor: pointer">
+                                          <!--<label>-->
                                             <span v-for = "(it,i) in ite.name.split(',')" :class="`ksball_${it}`" style='cursor:pointer;'>{{it}}</span>
-                                            <span class="jsks_odds" @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>
-                                            <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
-                                            <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                          </label>
+                                            <!--<span class="jsks_odds" @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                                            <span class="jsks_odds" style='cursor:pointer;'>{{ite.odds}}</span>
+                                            <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
+                                            <input v-else readonly value="封盘" class="closeBet">
+                                          <!--</label>-->
                                         </div>
                                     </li>
                                 </ul>
@@ -62,6 +63,7 @@
 import lotteryArea from '../../components/lotteryArea'
 import betDialog from '../../components/betDialog'
 import changLong from '../../components/changlong'
+import { togglePlayActive, clearAllActives } from '../../utils/common'
 // import luZhu from '../../components/luzhu'
 /*import utils from '../../assets/js/game'
 console.log(utils.reset)*/
@@ -124,22 +126,26 @@ export default {
         this.quickyMoney = ''
       }
        if(this.quickyMoney==""){
-        
+
            sessionStorage.removeItem('quickyMoney')
         }
+
+			// 将预设的金额赋值到选中玩法的金额
+			const presetPrice = this.quickyMoney
+			Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
     },
     fetchData() {
       let params = {};
-      
+
       params.game_code = 172;
       this.classCode='0101'
        this.$http.post('/getinfo/game', JSON.stringify(params)).then(res => {
           // console.log(res.status)
           if (res.data.msg == 4001) {
             this.$swal({
-              text: "账户已下线，请重新登陆", 
+              text: "账户已下线，请重新登陆",
               type: "error",
-              timer: 1200, 
+              timer: 1200,
             })
             .then(function (response) {
             }).catch(e => {
@@ -148,7 +154,7 @@ export default {
               path: '/home'
             })
             return
-          } 
+          }
           if (res.status == 200) {
             this.$store.commit('updatelotteryMoney', res.data.lcurrency)
             // this.closeBet = true;
@@ -181,9 +187,9 @@ export default {
           this.$http.post('/getinfo/getAllOdds', JSON.stringify(dxsb)).then(res => {
              if (res.data.msg == 4001) {
               this.$swal({
-                text: "账户已下线，请重新登陆", 
+                text: "账户已下线，请重新登陆",
                 type: "error",
-                timer: 1200, 
+                timer: 1200,
               })
               .then(function (response) {
               }).catch(e => {
@@ -236,8 +242,8 @@ export default {
         this.betArr = [];
         let ites = JSON.parse(ite)
         ites.title = name
-        ites.money = this.quickyMoney          
-        this.betArr.push(ites) 
+        ites.money = this.quickyMoney
+        this.betArr.push(ites)
         if (this.betArr.length == 0) {
           this.$swal({
             text: "请选择下注项目！",
@@ -299,18 +305,19 @@ export default {
           }
         }
     },
-    inputFocus (key) {
-      let quickyMoney = sessionStorage.getItem("quickyMoney");
+		inputFocus (event, item) {
+			event.target.value = sessionStorage.getItem("quickyMoney") || ''
+      /*let quickyMoney = sessionStorage.getItem("quickyMoney");
       if(quickyMoney > 0) {
-        key.target.value = quickyMoney;        
+        key.target.value = quickyMoney;
       } else {
         return false
-      }
+      }*/
     },
     saveMoneyBlur (quickyMoney) {
       if (quickyMoney <= 0 || quickyMoney === '') {
         this.isSaveMoney = false
-        sessionStorage.removeItem('quickyMoney')        
+        sessionStorage.removeItem('quickyMoney')
       }
       if (quickyMoney > 0 && this.isSaveMoney === true) {
         sessionStorage.removeItem('quickyMoney')
@@ -331,9 +338,18 @@ export default {
     },
     reset(){
       for (let i = 0; i < this.$refs.kuang.length; i++) {
-        this.$refs.kuang[i].value = "";
+				let el = this.$refs.kuang[i]
+				el.value = "";
+				el.parentNode.classList.remove('active-color')
       }
-    }
+    },
+		// 切换玩法的选中状态
+		togglePlay(event) {
+			if (!this.closeBet) return// 封盘不能切换
+			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+
+			togglePlayActive(event, this.quickyMoney)
+		},
   },
   mounted() {
     setInterval(() => {
@@ -355,7 +371,13 @@ export default {
         this.fetchData();
         this.showDialog = false;
       }
-    }
+    },
+		closeBet(val) {
+    	if (!val) {
+				// 如果封盘了，则清空玩法的选中状态
+				clearAllActives()
+			}
+		}
   }
 }
 </script>
@@ -372,8 +394,14 @@ export default {
   margin: 0;
 }
 .jsks ul li div:not(.game_title) {
-  width: 25%;
+  /*width: 25%;*/
+  width: 23%;
+	margin: 2px 1%;
+	padding: 4px;
   display: inline-block;
+	border-radius: 4px;
+	box-sizing: border-box;
+	vertical-align: top;
 }
 
 .jsks .ksball_1,
@@ -425,8 +453,8 @@ export default {
 .jsks .ksball_4,
 .jsks .ksball_5,
 .jsks .ksball_6 {
-  background-image: url('/static/images/ct/ico-dice.png');  
-} 
+  background-image: url('/static/images/ct/ico-dice.png');
+}
 #ten_result_172 .ten_result_1,
 .game_172 .result-ball_1,
 .jsks .ksball_1 {
@@ -456,5 +484,9 @@ export default {
 .game_172 .result-ball_6,
 .jsks .ksball_6 {
   background-position: 0 590px;
+}
+.jsks_odds{
+  font-size: 14px;
+  color: #7b73be
 }
 </style>

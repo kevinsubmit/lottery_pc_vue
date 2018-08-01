@@ -110,6 +110,11 @@ const Bjkl8 = resolve => {
 	});
 };
 
+const Gd11x5 = resolve => {
+	require.ensure(["@/pages/Games/gd11x5"], () => {
+		resolve(require("@/pages/Games/gd11x5"));
+	});
+};
 
 const Ag = resolve => {
 	require.ensure(["@/pages/platform/ag"], () => {
@@ -125,6 +130,18 @@ const Agothers = resolve => {
 const LyAgGame = resolve => {
 	require.ensure(["@/pages/Games/lyAgGame"], () => {
 		resolve(require("@/pages/Games/lyAgGame"));
+	});
+};
+
+const yitengAgGame = resolve => {
+	require.ensure(["@/pages/Games/yitengAgGame"], () => {
+		resolve(require("@/pages/Games/yitengAgGame"));
+	});
+};
+
+const ytBuyuGame = resolve => {
+	require.ensure(["@/pages/Games/ytBuyuGame"], () => {
+		resolve(require("@/pages/Games/ytBuyuGame"));
 	});
 };
 
@@ -186,6 +203,11 @@ const Games = resolve => {
 const Promo = resolve => {
 	require.ensure(["@/pages/promo/index"], () => {
 		resolve(require("@/pages/promo/index"));
+	});
+};
+const duanwu = resolve => {
+	require.ensure(["@/pages/promo/duanwu"], () => {
+		resolve(require("@/pages/promo/duanwu"));
 	});
 };
 const notice = resolve => {
@@ -402,8 +424,8 @@ export default new VueRouter({
 					path: "/Games/race",
 					name: "Race",
 					component: Race
-        },
-        {
+				},
+				{
 					path: "/Games/Fucai3D",
 					name: "Fucai3D",
 					component: Fucai3D
@@ -412,6 +434,11 @@ export default new VueRouter({
 					path: "/Games/bjkl8",
 					name: "Bjkl8",
 					component: Bjkl8
+				},
+				{
+					path: "/Games/gd11x5",
+					name: "Gd11x5",
+					component: Gd11x5
 				},
 				{
 					path: "/historyXZ",
@@ -467,7 +494,7 @@ export default new VueRouter({
 					path: "/promo/index",
 					name: "Promo",
 					component: Promo
-				}
+				},
 			]
 		},
 		{
@@ -476,11 +503,16 @@ export default new VueRouter({
 			component: notice
 		},
 		{
+			path: "/duanwu",
+			name: "duanwu",
+			component: duanwu
+		},
+		{
 			path: "/bonus",
 			name: "Bonus",
 			component: Bonus
-    },
-    {
+		},
+		{
 			path: "/returnWater",
 			name: "returnWater",
 			component: returnWater
@@ -504,6 +536,16 @@ export default new VueRouter({
 			path: "/lyAgGame",
 			name: "LyAgGame",
 			component: LyAgGame
+		},
+		{
+			path: "/yitengAgGame",
+			name: "yitengAgGame",
+			component: yitengAgGame
+		},
+		{
+			path: "/ytBuyuGame",
+			name: "ytBuyuGame",
+			component: ytBuyuGame
 		},
 		{
 			path: "/aboutus",

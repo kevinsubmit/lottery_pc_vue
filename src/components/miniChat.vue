@@ -10,7 +10,7 @@ export default {
     return {
       chatIP: "www.chatroomtech.com", // live
       // chatIP: '103.99.62.238', // test
-      // chatIP: '10.10.10.73',
+      // chatIP: '10.10.10.90',
       linkInfo: {
         al: {
           name: "al",
@@ -34,13 +34,18 @@ export default {
         },
         uc: {
           name: "uc",
-          webcode: "c2d916a9b35aea3dd70b401e66c8f728",
+          webcode: "c265d8b50355960bf8b8d2748cb820bc",
           url: "https://www.uc22.com"
         },
         ct: {
           name: "ct",
           webcode: "50516e074d428f45b482f31f7b0d23f7",
           url: "https://www.caitou999.com"
+        },
+        "618cp": {
+          name: "618cp",
+          webcode: "db5bc06fea53b0f352445c1c708defdf",
+          url: "https://618cpcp.com/"
         }
       }
     };
@@ -49,7 +54,7 @@ export default {
     initiateMiniChat() {
       let md5 = require("md5");
       let _this = this;
-      this.chatJsUrl = location.protocol+`//${this.chatIP}/chat-client/js/`;
+      this.chatJsUrl = location.protocol + `//${this.chatIP}/chat-client/js/`;
 
       var loadChat = () => {
         if (sessionStorage.getItem("im_username") != undefined) {
@@ -85,7 +90,7 @@ export default {
           clientChatMain.type = "text/javascript";
           clientChatMain.src = this.chatJsUrl + "client.chat.main.js";
           clientChatMain.onload = function() {
-            _this.$store.commit("setSideMenuShow", true);
+            _this.$store.commit("openChatFunc", true);
           };
           this.$refs.miniChat.appendChild(clientChatMain);
         }
@@ -96,6 +101,11 @@ export default {
       jquery.src = this.chatJsUrl + "jquery-3.2.1.min.js";
       jquery.addEventListener("load", loadChat, false);
 
+      // 加载资源出错时,也需要显示侧边菜单
+      jquery.addEventListener("error", function(){
+        _this.$store.commit("openChatFunc", true);
+      }, false);
+      
       this.$refs.miniChat.appendChild(jquery);
     },
     generateSerial(length) {

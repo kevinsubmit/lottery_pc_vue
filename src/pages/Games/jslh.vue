@@ -14,7 +14,7 @@
       <lm-dialog v-if="showLmDialog" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round"  v-on:child-lm="listenLm"></lm-dialog>
         <nav class="top-nav">
             <ul class="clearfix">
-              <li v-for="(itmek,indexNav) in datas"  @click="changgeNav(itmek,indexNav)" :class='{active:itmek==select}'>{{itmek.name}}</span></li>
+              <li v-for="(itmek,indexNav) in datas"  @click="changgeNav(itmek,indexNav)" :class='{active:itmek==select}'><span>{{itmek.name}}</span></li>
             </ul>
         </nav>
 
@@ -39,11 +39,11 @@
                         <!-- </div> -->
                         <div class="six_lm_ball" v-if = "navI===4">
                            <ul class="">
-                             <li v-for = "i in [1,11,21,31,41,2,12,22,32,42,3,13,23,33,43,4,14,24,34,44,5,15,25,35,45,6,16,26,36,46,7,17,27,37,47,8,18,28,38,48,9,19,29,39,49,10,20,30,40]">
-                               <label>
+                             <li @click.stop.prevent="toggleCheckbox" v-for = "i in [1,11,21,31,41,2,12,22,32,42,3,13,23,33,43,4,14,24,34,44,5,15,25,35,45,6,16,26,36,46,7,17,27,37,47,8,18,28,38,48,9,19,29,39,49,10,20,30,40]">
+                               <label class="hover-color">
                                   <span :class="`lm_ball lm_ball_${i}`">{{i}}</span>
-                                  <input type="checkbox" :value="i" ref="check"  v-if="closeBet">
-                                  <input v-else="closeBet"  readonly value="封盘" class="closeBet" style='width:30px;'>
+                                  <input type="checkbox" @click.stop="chkbox" :value="i" ref="check"  v-if="closeBet">
+                                  <input v-else  readonly value="封盘" class="closeBet" style='width:30px;'>
                                 </label>
                              </li>
                            </ul>
@@ -69,12 +69,14 @@
                                         <h3>{{item.name}}</h3>
                                     </div>
                                     <!-- <div> -->
-                                   <div class="clearfix" v-for='(ite,i,j) in item.list'>
+                                   <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click.stop="toggleCheckbox" style="cursor: pointer">
                                       <label>
                                         <span :class="`tm_ball_${ite.name}`" style='cursor:pointer;'>{{ite.name}}</span>
-                                        <span @click='type_code>=17?"":confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>
-                                        <input ref='kuang'  :id="ite.key" :title="item.name" :name="ite.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event)" @input="chkInput()" min="1" onkeyup="value=this.value.replace(/\D+/g,'')" :type="`${navI>=8?'checkbox':'text'}`" maxlength="7" v-if="closeBet"/>
-                                        <input v-else="closeBet" readonly value="封盘" class="closeBet">                                    
+                                        <!--<span @click='type_code>=17?"":confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                                        <span style='cursor:pointer;'>{{ite.odds}}</span>
+                                        <input v-if="closeBet && navI >= 8" type="checkbox" @click.stop="chkBox" ref='kuang' :id="ite.key" :title="item.name" :name="ite.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event, ite)" @input="chkInput()" min="1" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7"/>
+                                        <input v-else-if="closeBet && navI < 8" type="text" ref='kuang' :id="ite.key" :title="item.name" :name="ite.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event, ite)" @input="chkInput()" min="1" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7"/>
+                                        <input v-else readonly value="封盘" class="closeBet">
                                       </label>
                                   </div>
                                   <div  class="banbo"  v-if='type_code == 14'>
@@ -86,14 +88,14 @@
                                    <div  class="marksixNavLeft"  v-if='type_code >=15 && type_code <=33'>
                                       <div  v-for='i in bose1' >
                                            <span v-for='j in i.numbers' class="lhc_ball_num" :class="`lhc_ball_num_${j}`">{{j}}</span>
-                                      </div>                                      
+                                      </div>
                                   </div>
-                                  
+
                                   <div  class="marksixNav"  v-if='type_code >=34 && type_code <=39'>
                                       <div  v-for='i in bose2' >
-                                           
+
                                            <span v-for='j in i' class="lhc_ball_num" :class="`lhc_ball_num_${j}`">{{j}}</span>
-                                      </div>                                      
+                                      </div>
                                   </div>
 
                                 </li>
@@ -127,6 +129,7 @@ import lmDialog from "../../components/lmDialog";
 import lhDialog from "../../components/lhDialog";
 import changLong from "../../components/changlong";
 import {cacheGame} from "@/utils"
+import { togglePlayActive, clearAllActives } from '../../utils/common'
 export default {
   data() {
     return {
@@ -628,20 +631,19 @@ export default {
     overlaymethod(){
       this.overlay = false
     },
-    getSixnumber () {    
+    getSixnumber () {
       if (cacheGame('sixnumber')){
         this.bose1 = cacheGame('sixnumber')
       } else {
-        this.$http.post("/user/getMarkSixNumbers").then(res => {  
+        this.$http.post("/user/getMarkSixNumbers").then(res => {
           if(res.data) {
             cacheGame('sixnumber', this.bose1)
-            this.bose1 = res.data;            
-          }           
+            this.bose1 = res.data;
+          }
         })
       }
     },
     checkMoney() {
-      // alert(111)
       let r = /^\+?[1-9][0-9]*$/; //正整数
       if (!r.test(this.quickyMoney)) {
         this.quickyMoney = "";
@@ -650,12 +652,16 @@ export default {
       if (this.quickyMoney == "") {
         sessionStorage.removeItem("quickyMoney");
       }
+
+			// 将预设的金额赋值到选中玩法的金额
+			const presetPrice = this.quickyMoney
+			Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
     },
     fetchData(i) {
       i==1?"":this.select = this.datas[0];
-      
+
       let params = {};
-      
+
       params.game_code = 270;
       this.$http.post("/getinfo/game", JSON.stringify(params))
         .then(res => {
@@ -740,12 +746,12 @@ export default {
           }
           cacheGame(`sixGame_${this.param.type_code}`, res.data)
           this.list = res.data;
-          
+
         })
         .catch(function() {
         });
 
-      }      
+      }
     },
     listenToMyBoy: function(i) {
       if (i === "close") {
@@ -759,15 +765,17 @@ export default {
       }
     },
     changgeNav(itmek, index) {
+			clearAllActives()// 去掉颜色的选中状态
+
       let nav = {
         4:"三全中",
         8:"二肖",
         9:"二肖连中",
         10:"二尾连中",
-        11:"五不中"        
-      } 
+        11:"五不中"
+      }
       if(index==4||index==8||index==9||index==10||index==11){
-        this.name = nav[index];  
+        this.name = nav[index];
       }else{
         this.name = itmek.name
       }
@@ -783,7 +791,7 @@ export default {
         this.datas[0].datasT[1].isCheck = true;
         this.datas[0].datasT[0].isCheck = false;
       }
- 
+
       for (let i = 0; i < this.$refs.kuang.length; i++) {
         this.$refs.kuang[i].value = "";
       }
@@ -807,7 +815,7 @@ export default {
       if (cacheGame(`sixGame_${this.param.type_code}`)){
         this.list = cacheGame(`sixGame_${this.param.type_code}`)
         this.reset();
-      }else{      
+      }else{
       this.$http
         .post("/getinfo/odds", JSON.stringify(this.param))
         .then(res => {
@@ -837,7 +845,7 @@ export default {
           cacheGame(`sixGame_${this.param.type_code}`, res.data)
           this.list = res.data;
           this.reset();
-          
+
         })
         .catch(function() {});
       }
@@ -907,11 +915,11 @@ export default {
           }
           cacheGame(`sixGame_${this.param.type_code}`, res.data)
           this.list = res.data;
-                
+
 
         })
         .catch(function() {});
-         this.reset();  
+         this.reset();
       }
     },
     listenHm: function(i) {
@@ -922,8 +930,15 @@ export default {
     closeDialog(){
       this.$emit('child-say', 'close');
     },
-    chkBox() {
-      this.showLmDialog = false;
+    chkBox(event) {
+			let inputEl = event.target
+			let wrapperEl = inputEl.parentNode.tagName == 'LI' ? inputEl.parentNode : inputEl.parentNode.parentNode
+			if (wrapperEl.classList.contains('active-color')) {
+				wrapperEl.classList.remove('active-color')// 去掉勾
+			} else {
+				wrapperEl.classList.add('active-color')// 打上勾
+			}
+      /*this.showLmDialog = false;
       let cboxLength = 0;
 
       if (this.type_code === 12) {
@@ -962,7 +977,7 @@ export default {
           }
         }
         return;
-      }
+      }*/
     },
       confirms (name, key, ite) {
         if (!this.closeBet) {
@@ -976,7 +991,7 @@ export default {
         this.betArr = [];
         let ites = JSON.parse(ite)
         ites.title = name
-        ites.money = this.quickyMoney        
+        ites.money = this.quickyMoney
         this.betArr.push(ites)
         if (this.betArr.length == 0) {
           this.$swal({
@@ -999,6 +1014,7 @@ export default {
           });
           return
         }
+
       if (!this.closeBet) {
         this.$swal({
           text: "已封盘！",
@@ -1021,7 +1037,7 @@ export default {
       ) {
         // 连码下注
         this.betArr = [];
-        this.chkBox();
+        // this.chkBox();
         let betnumber = [];
         switch (this.type_code) {
           case 617:
@@ -1054,7 +1070,7 @@ export default {
             break;
         }
 
-        this.betlm = {};       
+        this.betlm = {};
         this.betlm.game_code = this.game_code;
         this.betlm.type_code = this.datas[4].lianma;
         this.betlm.round = this.round;
@@ -1089,7 +1105,7 @@ export default {
             }
           }
         }
-    
+
 
         // 判断选中的号码数量
         let cboxLength = 0;
@@ -1329,13 +1345,14 @@ export default {
         }
       }
     },
-    inputFocus(key) {
-      let quickyMoney = sessionStorage.getItem("quickyMoney");
+		inputFocus (event, item) {
+			event.target.value = sessionStorage.getItem("quickyMoney") || ''
+      /*let quickyMoney = sessionStorage.getItem("quickyMoney");
       if (quickyMoney > 0) {
         key.target.value = quickyMoney;
       } else {
         return false;
-      }
+      }*/
     },
     saveMoneyBlur(quickyMoney) {
       if (quickyMoney <= 0 || quickyMoney === "") {
@@ -1357,13 +1374,15 @@ export default {
         this.quickyMoney = "";
       } // 保存快捷金额
     },
-    reset() {      
+    reset() {
       if (this.navI !== 4) {
         for (let i = 0; i < this.$refs.kuang.length; i++) {
+					let el = this.$refs.kuang[i]
           if ((this.$refs.kuang.type = "checkbox")) {
-            this.$refs.kuang[i].checked = false;
+						el.checked = false;
           } else {
-            this.$refs.kuang[i].value = "";
+						el.value = "";
+						el.parentNode.classList.remove('active-color')
           }
         }
       } else {
@@ -1372,10 +1391,34 @@ export default {
         }
       }
 
-      for (let i = 0; i < this.$refs.kuang.length; i++) {
-        this.$refs.kuang[i].value = "";
-      }
-    }
+			clearAllActives()
+    },
+		// 切换玩法的选中状态，针对text类型的input输入框
+		togglePlay(event) {
+			if (!this.closeBet) return// 封盘不能切换
+			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+
+			togglePlayActive(event, this.quickyMoney)
+		},
+		// 切换玩法的选中状态，针对checkbox类型的input输入框
+		toggleCheckbox(event) {
+			if (!this.closeBet) return// 封盘不能切换
+
+    	var currentTarget = event.currentTarget
+			var inputEl = currentTarget.querySelector('input')
+			if (inputEl.type === 'text') {
+				this.togglePlay(event)// 如果是text输入框， 则转到togglePlay去
+				return
+			}
+			var wrapperEl = currentTarget.getElementsByClassName('hover-color')[0] || currentTarget
+			if (inputEl.checked) {
+				inputEl.checked = ''
+				wrapperEl.classList.remove('active-color')// 去掉勾
+			} else {
+				inputEl.checked = 'checked'
+				wrapperEl.classList.add('active-color')// 打上勾
+			}
+		}
   },
   mounted() {
     setInterval(() => {
@@ -1402,7 +1445,16 @@ export default {
         this.fetchData(1);
         this.showDialog = false;
       }
-    }
+    },
+		'param.type_code'() {
+			clearAllActives()// 去掉颜色的选中状态
+		},
+		closeBet(val) {
+			if (!val) {
+				// 如果封盘了，则清空玩法的选中状态
+				clearAllActives()
+			}
+		}
   }
 };
 </script>
@@ -1446,13 +1498,21 @@ export default {
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft,
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft,
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft,
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft,
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft {
+	top: 0px !important;
+}
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft {
-  top: 0px !important;
+  top: 6px !important;
 }
 .markSix #marksix_nav_15 li:nth-child(1) .marksixNavLeft,
-.markSix #marksix_nav_16 li:nth-child(1) .marksixNavLeft {
-  top: 32px !important;
+.markSix #marksix_nav_16 li:nth-child(1) .marksixNavLeft{
+	top: 47px !important;
+}
+.markSix #marksix_nav_15 li:nth-child(1) .marksixNavLeft > div,
+.markSix #marksix_nav_16 li:nth-child(1) .marksixNavLeft > div,
+.markSix #marksix_nav_17 li:nth-child(1) .marksixNavLeft > div,
+.markSix #marksix_nav_34 li:nth-child(1) .marksixNavLeft > div{
+	margin-top: -5px;
 }
 /*#marksix_nav_17 li:nth-child(1) div:first-child,#marksix_nav_17 li:nth-child(2) div:first-child,*/
 #marksix_nav_15 li:nth-child(1) div:first-child,
@@ -1501,7 +1561,7 @@ export default {
 #marksix_nav_15 li:nth-child(2) div,
 #marksix_nav_16 li:nth-child(1) div,
 #marksix_nav_16 li:nth-child(2) div {
-  width: 50%;
+  width: 48%;
 }
 
 .markSix li:nth-child(2) .marksixNav,
@@ -1715,15 +1775,16 @@ export default {
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(4),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(3),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(4),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(4),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(3),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(4),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(3),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
-  top: 32px;
+  top: 33px;
 }
-
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(3),
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(4){
+	top: 34px;
+}
 .markSix li:nth-child(1) .marksixNav div:nth-child(5),
 .markSix li:nth-child(1) .marksixNav div:nth-child(6),
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(5),
@@ -1740,8 +1801,6 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(5),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(6),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(5),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(5),
@@ -1750,13 +1809,19 @@ export default {
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(5),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(6),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(5),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(5),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
-  top: 64px;
+  top: 66px;
+}
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(5),
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(6){
+	top: 67px;
+}
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(5),
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(6){
+	top: 68px;
 }
 .markSix li:nth-child(1) .marksixNav div:nth-child(7),
 .markSix li:nth-child(1) .marksixNav div:nth-child(8),
@@ -1774,8 +1839,6 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(7),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(8),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(7),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(7),
@@ -1784,15 +1847,20 @@ export default {
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(7),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(8),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(7),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(7),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
-  top: 96px;
+  top: 99px;
 }
-
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(7),
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(8){
+	top: 101px;
+}
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(7),
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(8){
+	top: 102px;
+}
 .markSix li:nth-child(1) .marksixNav div:nth-child(9),
 .markSix li:nth-child(1) .marksixNav div:nth-child(10),
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(9),
@@ -1809,8 +1877,6 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(9),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(10),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(9),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(9),
@@ -1819,13 +1885,19 @@ export default {
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(9),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(10),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(9),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(9),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
-  top: 128px;
+  top: 132px;
+}
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(9),
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(10){
+	top: 134px;
+}
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(9),
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(10){
+	top: 136px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(11),
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(12),
@@ -1841,8 +1913,6 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(12),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(11),
@@ -1851,13 +1921,19 @@ export default {
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(12),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_15 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
-  top: 160px;
+  top: 165px;
+}
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(11),
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(12){
+	top: 168px;
+}
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(11),
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(12){
+	top: 170px;
 }
 /*.markSix ul li:nth-child(1) .marksixNav,*/
 .markSix ul li:nth-child(1) .marksixNavLeft,
@@ -1973,7 +2049,6 @@ export default {
   color: #000;
   font-weight: 600;
 }
-
 /*绿波：05 ,06 ,11 ,16 ,17 ,21 ,22 ,27 ,28 ,32 ,33 ,38 ,39 ,43 ,44 ,49*/
 .lhc_ball_num_5,
 .lhc_ball_num_6,
@@ -2006,7 +2081,7 @@ export default {
     color:#000;
 }
 .tm_ball_红波 {
-   background: red!important; 
+   background: red!important;
    color:#fff!important;
 }
 
@@ -2073,7 +2148,7 @@ export default {
   margin-bottom: 10px;
 }
 .markSix #marksix_nav_14 .banbo {
-  top: 30px;
+  top: 37px;
 }
 .markSix #marksix_nav_14 .banbo div {
   line-height: 28px;
@@ -2225,16 +2300,45 @@ background-color: #3e80d4!important;
   border-right: none;
 }
 .markSix li:first-child div {
-  width: 20%;
-  float: left;
+	float: left;
+	width: 18%;
+	margin: 2px 1% 0;
+	padding: 2px 3px;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.markSix li:first-child .banbo div{
+	margin-top: 5px;
+}
+#marksix_nav_1 li:first-child div,
+#marksix_nav_2 li:first-child div{
+	margin-top:2px;
+	margin-bottom: 2px;
+}
+#marksix_nav_17 li:first-child div{
+	padding: 4px 0;
+}
+#marksix_nav_27 li:first-child div{
+	padding: 4px 0;
+}
+#marksix_nav_15 li:first-child div:not(.game_title),
+#marksix_nav_16 li:first-child div:not(.game_title){
+	margin-top: 2px;
+}
+.markSix li:first-child div span:first-child {
+	margin-top: 2px;
 }
 .bet-area .game:first-child .game_title {
   /*margin: 0 -20px 3px -20px;*/
-  margin-left: -20px !important;
+  /*margin-left: -20px !important;*/
   margin-right: -20px !important;
+}
+.banbo .markSix li div{
+	margin-top: 6px;
 }
 .markSix li div.game_title {
   width: 100%;
+	margin: 0;
 }
 .markSixSubNav li button.active,
 .markSixSubNav li button.isred {
@@ -2257,9 +2361,17 @@ background-color: #3e80d4!important;
   /*line-height: 22px;*/
   text-align: center;
 }
-.markSix ul li:first-child span:nth-child(2),
+.markSix ul li:first-child span:nth-child(2){
+	margin-top: 4px;
+}
+.marksixNavLeft span,
+.marksixNav span,
+.banbo span,
+.six_lm_ball span{
+	font-size: 12px!important;
+}
 .markSix ul li:first-child input {
-  margin-top: 6px;
+  margin-top: 5px;
 }
 .six_lm_ball li span {
   width: 24px;
@@ -2269,14 +2381,14 @@ background-color: #3e80d4!important;
 }
 
 .six_lm_ball li {
-  width: 20%;
+  width: 18%;
+	margin: 2px 1%;
   display: inline-block;
   cursor: pointer;
 }
 .six_lm_ball li:last-child {
-  width: 34%;
-  text-align: left;
-  margin-left: 6%;
+	text-align: center;
+	margin-right: 21%;
 }
 .lm_title {
   text-align: left;
@@ -2327,11 +2439,24 @@ ul#marksix_nav_619 {
   line-height: 20px;*/
 }
 #marksix_nav_34 .closeBet,
-#marksix_nav_35 .closeBet, 
-#marksix_nav_36 .closeBet, 
-#marksix_nav_37 .closeBet, 
+#marksix_nav_35 .closeBet,
+#marksix_nav_36 .closeBet,
+#marksix_nav_37 .closeBet,
 #marksix_nav_38 .closeBet,
 #marksix_nav_39 .closeBet{
   width: 10%;
+}
+
+#marksix_nav_34 label > span:first-child,
+#marksix_nav_35 label > span:first-child,
+#marksix_nav_36 label > span:first-child,
+#marksix_nav_37 label > span:first-child,
+#marksix_nav_38 label > span:first-child,
+#marksix_nav_39 label > span:first-child{
+	color: white!important;
+}
+
+.markSix #marksix_nav_15 li:last-child div span:first-child{
+	color: white!important;
 }
 </style>

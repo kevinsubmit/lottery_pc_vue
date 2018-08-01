@@ -114,9 +114,9 @@ export default {
           .catch(e => {});
         return;
       } else {
-        
+
         let params = {};
-        
+
         if (this.title == "捕鱼"||this.title=='体育') {
           params.transfer_io = this.radio;
         }
@@ -161,25 +161,38 @@ export default {
                 })
               .then(function(response) {})
               .catch(e => {});
-              
+
           }else if (res.data.msg == 2006) {
             loadingInstance.close();
             this.reset();
             if (this.radio == 1) {
-              this.$swal({
-                text: `彩票成功转入${this.title}额度` + params.amount + "元",
-                type: "success",
-                timer: 1200
-              })
-                .then(function(response) {})
-                .catch(e => {});
+							if (this.transferApi.indexOf('PrepareCreditOrder') > -1) {
+            		// 棋牌有单独的提示样式
+								this.$swal({
+									title: '转换成功！',
+									html: '<p>请登录棋牌APP进行游戏</p><p>（使用彩票登录账密即可）</p>',
+									type: "success",
+									onOpen: () => {
+										const style = document.getElementById('swal2-content').style
+										style.fontSize = '14px'
+										style.width = '350px'
+									},
+								})
+							} else {
+            		// 其它的则是常规的提示
+								this.$swal({
+									text: `彩票成功转入${this.title}额度` + params.amount + "元",
+									type: "success",
+									timer: 1200
+								})
+							}
               this.$emit("transferSuccess");
             } else if (this.radio == 0) {
               loadingInstance.close();
               this.$swal({
                 text: `${this.title}额度成功转入彩票` + params.amount + "元",
                 type: "success",
-                timer: 1200
+                // timer: 1200
               })
                 .then(function(response) {})
                 .catch(e => {});

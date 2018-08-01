@@ -1,0 +1,66 @@
+*{margin:0;padding:0;}
+.cl{clear:both;}
+ul,ol li{list-style: none;}
+
+
+.main{width:100%;min-height: 750px;overflow:scroll !important;background:url(/static/images/yiteng/beijing.jpg)center top no-repeat;overflow: hidden;background-size: auto 100%;}
+.header{width:1080px;margin:0px auto;padding:15px 0;}
+.logo{width:30%;float:left;}
+
+.headernav{margin-top: 30px;float: right;width: 68%;padding: 0 20px 0 21px;height: 32px;line-height: 32px;font-size: 14px;color: #fff;}
+.headernav ul{width:100%;background:url(/static/images/yiteng/1.png)no-repeat;background-size:100%;}
+.headernav ul li{width:15.5%;float:left;height:30px;line-height: 30px;text-align: right;}
+.headernav ul li a{color:#fff;}
+.headernav ul li a:hover{color:#ff0;}
+.headernav ul li a:hover{text-decoration:blink;}
+/*.headernav ul li a:focus{text-decoration: none!important;}*/
+
+
+.register{width: 920px;margin: 0 auto;padding: 30px 0;clear: both;min-height: 485px;height: auto;overflow: hidden;}
+.login{float:right;width:300px;background:rgba(23,38,133,0.5);}
+.loginmain{padding:20px;}
+.loginheader h3{color:#fff;font-size:18px;display: inline-block;margin-right:30px;font-weight:800;}
+.loginheader a img{height:70px;}
+
+.logininp{width:100%;height:40px;background:#fff;border-radius:10px;margin-bottom: 10px;}
+.logininp img{display:inline-block;margin-left: 10px;}
+.logininp input{border:none;width:60%;outline: none;height:40px;}
+
+.loginbut button{width:46%;border-radius:10px;outline: none;border:none;height:40px;color:#fff;line-height: 40px;}
+.loginok{background:#2b8900;}
+.loginqx{background:#2091f7;float:right;}
+
+.ykcg{width: 100%;background:#081681;text-align: center;margin-top: 10px;padding:5px 20px;}
+.ykcg a{color:#fff;display:inline-block;width:100%;border-radius: 10px;background:#d40e0d;height:40px;line-height: 40px;}
+
+.footer{width:900px;margin:0 auto;position:relative;margin-top: 116px;}
+
+.footer1 ul li{float:left;width:150px;text-align: center;}
+.footer1 ul li img{width:70%;}
+
+.footer2{text-align: center;;}
+.footer3{height: 76px;width: 100%;text-align: center;color: #fff;font-size: 12px;}
+.footer3 img{height:30px;}
+.footer1 li a:hover img{opacity: 0.9}
+
+.mask{width:100%;height:100%;top:0;position: absolute;background:rgba(0,0,0,0.4);display:none;}
+#kaihu{position:fixed;z-index: 1001;width:330px;background:#fff;top:20%;left:36%;border-radius:10px;}
+.popup-title {background-color: #e1e2ee;height: 35px;line-height: 35px;text-align: left;padding: 0 20px;border-top-left-radius: 8px;border-top-right-radius: 8px;font-size: 16px;color: #666;position: relative;margin-top:0;}
+.popup-title .el-icon-circle-close-outline {cursor: pointer;position: absolute;right: -30px;top: -30px;font-size: 30px;color: #e8e8e8;}
+.popup-body {padding: 20px 30px 30px;}
+.row {border-bottom: 1px solid #ddd;position: relative;height: 50px;}
+.ico-my-user {background: url(/static/images/yiteng/ico-my-user.png);}
+.ico {width: 30px;height: 30px;display: inline-block;transition: all .5s ease;}
+.row .ico {position: absolute;left: 0;top: 18px;}
+.row .ico+input {padding-left: 40px;width: 85%!important;}
+.row input {border: none;background: #fff; padding-top: 17px!important;outline:none;}
+input, select {vertical-align: middle;}
+.ico-my-pwd {background: url(/static/images/yiteng/ico-my-pwd.png);}
+.ico-my-pwd-re {background: url(/static/images/yiteng/ico-my-pwd-re.png);}
+.ico-my-name {background: url(/static/images/yiteng/ico-my-name.png);}
+.ico-my-pwd-pay {background: url(/static/images/yiteng/ico-my-pwd-pay.png);}
+.payPwd .pay-pwd{margin-left: -60px;}
+.payPwd select{border: none;background-color: #f1f3f8;height: 30px;width: 40px;border-radius: 5px;text-align: center;color: #999;margin: 10px 0;}
+.btn-form {margin-top: 20px;}
+#btn-bind-form button, #btn-login-form button, .btn-form button {border: none;width: 100%;border-radius: 30px;margin-bottom: 10px;height: 35px;line-height: 35px;}
+.btn-blue {background-color: #1c4fa8;box-shadow: 2px 2px 5px #a29bbf;outline: none;cursor: pointer;color: #fff;}

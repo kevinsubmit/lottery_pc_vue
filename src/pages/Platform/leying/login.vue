@@ -155,6 +155,14 @@ export default {
             sessionStorage.setItem("im_username", res.data.username);
             sessionStorage.setItem("im_realname", res.data.realname);
             sessionStorage.setItem("im_token", res.data.oid);
+            // 重新加载赔率
+            if (
+              localStorage.getItem('odds_version') &&
+              res.data.rate_version != localStorage.getItem('odds_version')
+            ) {
+              localStorage.clear()
+            }
+            localStorage.setItem('odds_version', res.data.rate_version)
             this.$store.commit('setToken', res.data.oid)
             sessionStorage.setItem("im_telphone", res.data.telphone);
           } else {

@@ -9,8 +9,21 @@
         text-align: left;
     }
     .line-item {
-        width:20%;
+        width:18%;
+				margin: 0 1% 0;
+				padding: 3px;
+				box-sizing: border-box;
+				border-radius: 4px;
     }
+		.bjk8-view .bet-area .game_title{
+				margin-bottom: 16px;
+		}
+		.bjk8-view .line-item{
+			margin-top: -6px
+		}
+		.game_info ul li input{
+				padding-left: 0;
+		}
     .bjk8-view .lebel-ball{
         width: 24px;
         height: 24px;
@@ -33,10 +46,10 @@
     .game_info .tab-ctx-1 ul li span:first-child {
         width: 55px;
     }
-    .game li {
+    /*.game li {
         padding-top: 0px;
         padding-bottom: 0px;
-    }
+    }*/
 </style>
 
 <template>
@@ -48,7 +61,7 @@
         </div>
         <!-- 下注弹窗 -->
         <bet-dialog v-if="showDialog" :betArr="betArr" :game_code="game_code" :type_code="type_code" :round="round"  v-on:child-say="listenToMyBoy"></bet-dialog>
-         
+
         <nav class="top-nav">
             <ul class="clearfix">
               <li v-for="(itmek, indexNav) in navDatas"  @click="changeNav(itmek,indexNav)" :class="itmek.active ? 'active' : ''">{{itmek.name}}</span></li>
@@ -65,70 +78,75 @@
                                         <h3>总和、总和过关</h3>
                                     </div>
                                     <ul class="line-item-wp">
-                                        <li v-for='(item, j) in list.total' class="line-item">
-                                            <label>
+                                        <li v-for='(item, j) in list.total' class="line-item hover-color" @click="togglePlay($event)" style="cursor: pointer">
+                                            <!--<label>-->
                                                 <span style='cursor:pointer;'>{{item.name}}</span>
-                                                <span @click='confirms("总和、总和过关", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>
-                                                <input ref='kuang' :id="item.key" :name="item.name" title="总和、总和过关" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
-                                                <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                            </label>
+                                                <!--<span @click='confirms("总和、总和过关", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>-->
+                                                <span style='cursor:pointer;'>{{item.odds}}</span>
+                                                <input ref='kuang' :id="item.key" :name="item.name" title="总和、总和过关" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event, ite)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
+                                                <input v-else readonly value="封盘" class="closeBet">
+                                            <!--</label>-->
                                         </li>
                                     </ul>
                                     <div class="game_title">
                                         <h3>前后和</h3>
                                     </div>
                                     <ul class="line-item-wp">
-                                        <li v-for='(item, j) in list.front_behind'  class="line-item">
-                                            <label>
+                                        <li v-for='(item, j) in list.front_behind'  class="line-item hover-color" @click="togglePlay($event)" style="cursor: pointer">
+                                            <!--<label>-->
                                                 <span style='cursor:pointer;'>{{item.name}}</span>
-                                                <span @click='confirms("前后和", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>
-                                                <input ref='kuang' :id="item.key" :name="item.name" title="前后和" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
-                                                <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                            </label>
+                                                <!--<span @click='confirms("前后和", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>-->
+                                                <span style='cursor:pointer;'>{{item.odds}}</span>
+                                                <input ref='kuang' :id="item.key" :name="item.name" title="前后和" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event, ite)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
+                                                <input v-else readonly value="封盘" class="closeBet">
+                                            <!--</label>-->
                                         </li>
                                     </ul>
                                     <div class="game_title">
                                         <h3>单双和</h3>
                                     </div>
                                     <ul class="line-item-wp">
-                                        <li v-for='(item, j) in list.odd_even' class="line-item">
-                                            <label>
+                                        <li v-for='(item, j) in list.odd_even' class="line-item hover-color" @click="togglePlay($event)" style="cursor: pointer">
+                                            <!--<label>-->
                                                 <span style='cursor:pointer;'>{{item.name}}</span>
-                                                <span @click='confirms("单双和", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>
-                                                <input ref='kuang' :id="item.key" :name="item.name" title="单双和" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
-                                                <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                            </label>
+                                                <!--<span @click='confirms("单双和", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>-->
+                                                <span style='cursor:pointer;'>{{item.odds}}</span>
+                                                <input ref='kuang' :id="item.key" :name="item.name" title="单双和" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event, ite)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
+                                                <input v-else readonly value="封盘" class="closeBet">
+                                            <!--</label>-->
                                         </li>
                                     </ul>
                                     <div class="game_title">
                                          <h3>五行</h3>
                                     </div>
                                     <ul class="line-item-wp">
-                                        <li v-for='(item, j) in list.five' class="line-item">
-                                            <label>
+                                        <li v-for='(item, j) in list.five' class="line-item hover-color" @click="togglePlay($event)" style="cursor: pointer">
+                                            <!--<label>-->
                                                 <span style='cursor:pointer;'>{{item.name}}</span>
-                                                <span @click='confirms("五行", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>
-                                                <input ref='kuang' :id="item.key" :name="item.name" title="五行" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
-                                                <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                            </label>
+                                                <!--<span @click='confirms("五行", item.key ,JSON.stringify(item))' style='cursor:pointer;'>{{item.odds}}</span>-->
+                                                <span style='cursor:pointer;'>{{item.odds}}</span>
+                                                <input ref='kuang' :id="item.key" :name="item.name" title="五行" :data-obj="JSON.stringify(item)" @input="chkInput()"  @focus="inputFocus($event, ite)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
+                                                <input v-else readonly value="封盘" class="closeBet">
+                                            <!--</label>-->
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="tab-ctx-2" v-if="navDatas[1].active">               
+                                <div class="tab-ctx-2" v-if="navDatas[1].active">
                                     <ul class="line-item-wp" v-if="list.length > 0">
                                         <template  v-for='(items) in bolls80Array' >
-                                            <li v-for="(val, j) in items" class="line-item">
-                                                <label>
+                                            <li v-for="(val, j) in items" class="line-item hover-color" @click="togglePlay($event)" style="cursor: pointer">
+                                                <!--<label>-->
                                                     <span class="lebel-ball" :class=" (val > 40) ? 'ball-t-blue-f' : 'ball-t-gray-f'"  style="cursor:pointer;">{{val}}</span>
-                                                    <span @click='confirms("正码", list[val-1].key ,JSON.stringify(list[val-1]))' style='cursor:pointer;'>{{list[val-1].odds}}</span>
-                                                    <input ref='kuang' :id="list[val-1].key" :name="list[val-1].title" title="正码" :data-obj="JSON.stringify(list[val-1])" @input="chkInput()"  @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
-                                                    <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                                </label>
+                                                    <!--<span @click='confirms("正码", list[val-1].key ,JSON.stringify(list[val-1]))' style='cursor:pointer;'>{{list[val-1].odds}}</span>-->
+                                                    <span style='cursor:pointer;'>{{list[val-1].odds}}</span>
+                                                    <input ref='kuang' :id="list[val-1].key" :name="list[val-1].title" title="正码" :data-obj="JSON.stringify(list[val-1])" @input="chkInput()"  @focus="inputFocus($event, ite)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')"  maxlength="7"/>
+                                                    <input v-else readonly value="封盘" class="closeBet">
+                                                <!--</label>-->
                                             </li>
                                         </template >
                                     </ul>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                     <div class="btn-bet">
@@ -140,10 +158,10 @@
                 </div>
                 <!-- 露珠组件  -->
                 <lu-zhu :game_code="game_code"></lu-zhu>
+
             </div>
-            <!-- 长龙组件  -->
+            <!-- 长龙组件 -->
             <chang-long :game_code="game_code"></chang-long>
-           
         </div>
     </div>
 </template>
@@ -154,6 +172,7 @@
     import changLong from "../../components/changlong";
     import luZhu from '../../components/luzhu';
     import {cacheGame} from "@/utils";
+		import { togglePlayActive, clearAllActives } from '../../utils/common'
     export default {
             data() {
             return {
@@ -220,13 +239,13 @@
                 return this.navDatas[0].active && Object.prototype.toString.call(this.list) == '[object Object]';
             }
         },
-        created (){  
+        created (){
             this.oid = sessionStorage.getItem('im_token');
             this.changeNav(this.navDatas[0]);
             this.fetchData();
         },
         mounted (){
-            
+
         },
         components:{
             lotteryArea,
@@ -245,6 +264,10 @@
                 if(this.quickyMoney==""){
                     sessionStorage.removeItem('quickyMoney')
                 }
+
+							// 将预设的金额赋值到选中玩法的金额
+							const presetPrice = this.quickyMoney
+							Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
             },
             fetchData(i) {
                 let _this = this;
@@ -254,9 +277,9 @@
                 this.$http.post('/getinfo/game', JSON.stringify(params)).then(res => {
                     if (res.data.msg == 4001) {
                         this.$swal({
-                            text: "账户已下线，请重新登陆", 
+                            text: "账户已下线，请重新登陆",
                             type: "error",
-                            timer: 1200, 
+                            timer: 1200,
                         })
                         .then(function (response) {
                         }).catch(e => {
@@ -318,6 +341,8 @@
                 return this.$http.post('/getinfo/odds', JSON.stringify(params));
             },
             changeNav(item){
+							  clearAllActives()// 去掉颜色的选中状态
+
                 let _this = this;
                 for(let i = 0; i < this.navDatas.length; i++) {
                     this.navDatas[i].active = false;
@@ -336,7 +361,7 @@
                                 _this.cachedOddsData.sumData = res.data[0].list;
                             }
                         }).catch((res) => {
-                            console.log(res);  
+                            console.log(res);
                         });
                     break;
                     case  2:
@@ -351,7 +376,7 @@
                                 _this.cachedOddsData.zhengData = res.data[0].list;
                             }
                         }).catch((res) => {
-                            console.log(res);  
+                            console.log(res);
                         });
                     break;
                     default:
@@ -371,8 +396,8 @@
                 this.betArr = [];
                 let ites = JSON.parse(ite)
                 ites.title = title
-                ites.money = this.quickyMoney          
-                this.betArr.push(ites) 
+                ites.money = this.quickyMoney
+                this.betArr.push(ites)
                 if (this.betArr.length == 0) {
                     this.$swal({
                         text: "请选择下注项目！",
@@ -392,7 +417,7 @@
                         timer: 1200,
                     })
                     .then(function (response) {
-                    
+
                     }).catch(e => {
                         console.log(e)
                     })
@@ -436,18 +461,19 @@
                     }
                 }
             },
-            inputFocus(key){
-                let quickyMoney = sessionStorage.getItem("quickyMoney");
+					  inputFocus (event, item) {
+							  event.target.value = sessionStorage.getItem("quickyMoney") || ''
+                /*let quickyMoney = sessionStorage.getItem("quickyMoney");
                 if(quickyMoney>0){
-                    key.target.value = quickyMoney;        
+                    key.target.value = quickyMoney;
                 } else {
                     return false
-                }
+                }*/
             },
             saveMoneyBlur (quickyMoney) {
                 if (quickyMoney <= 0 || quickyMoney === '') {
                     this.isSaveMoney = false
-                    sessionStorage.removeItem('quickyMoney')        
+                    sessionStorage.removeItem('quickyMoney')
                 }
                 if (quickyMoney > 0 && this.isSaveMoney === true) {
                     sessionStorage.removeItem('quickyMoney')
@@ -467,12 +493,21 @@
             reset(){
                 if (this.$refs.kuang) {
                     for (let i = 0; i < this.$refs.kuang.length; i++) {
-                        this.$refs.kuang[i].value = "";
+											let el = this.$refs.kuang[i]
+											el.value = "";
+											el.parentNode.classList.remove('active-color')
                     }
                 }
-            }
             },
-            mounted() {
+						// 切换玩法的选中状态
+						togglePlay(event) {
+							if (!this.closeBet) return// 封盘不能切换
+							if (event.target.tagName === 'INPUT') return// input标签不触发切换
+
+							togglePlayActive(event, this.quickyMoney)
+						}
+				},
+				mounted() {
             setInterval(() => {
                 if (this.endtime > 0) {
                     this.endtime--;
@@ -492,7 +527,13 @@
                     this.fetchData(1);
                     this.showDialog = false;
                 }
-            }
+            },
+						closeBet(val) {
+							if (!val) {
+								// 如果封盘了，则清空玩法的选中状态
+								clearAllActives()
+							}
+						}
         }
     }
 </script>

@@ -1,11 +1,11 @@
-<template> 
-<div class="content history-page history-page-1" ref='kuan' style="padding-top:0;margin-left:0"> 
+<template>
+<div class="content history-page history-page-1" ref='kuan' style="padding-top:0;margin-left:0">
   <div class="history common-content">
     <el-tabs v-model="activeName" @tab-click="handleClick">
 
       <el-tab-pane label="未结明细" name="weijie">
         <el-table
-           
+
           :data="weijie"
           stripe
           style="width: 100%">
@@ -19,7 +19,7 @@
           label="下注时间"
           prop="BetTime"
           width="220">
-          </el-table-column> 
+          </el-table-column>
 
           <el-table-column
           label="球类"
@@ -47,10 +47,10 @@
           prop="Gwin"
           width="180">
           </el-table-column>
-                 
+
           </el-table>
 
-          <div class="page"> 
+          <div class="page">
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChangeWeijie"
@@ -59,13 +59,13 @@
               :page-size="16"
               layout="total, prev, pager, next, jumper"
               :total="allnumb">
-            </el-pagination> 
+            </el-pagination>
           </div>
         </el-tab-pane>
 
       <el-tab-pane label="今日已结" name="yijie">
         <el-table
-          
+
           :data="yijie"
           stripe
           style="width: 100%">
@@ -79,7 +79,7 @@
           label="下注时间"
           prop="BetTime"
           width="220">
-          </el-table-column> 
+          </el-table-column>
 
           <el-table-column
           label="球类"
@@ -100,11 +100,11 @@
           label="输赢金额"
           width="200"
           prop="M_Result">
-          </el-table-column>   
+          </el-table-column>
 
         </el-table>
 
-        <div class="page"> 
+        <div class="page">
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChangeYijie"
@@ -113,12 +113,12 @@
             :page-size="16"
             layout="total, prev, pager, next, jumper"
             :total="allnumb2">
-          </el-pagination> 
+          </el-pagination>
         </div>
 
       </el-tab-pane>
 
-      <el-tab-pane label="历史汇总" name="all" v-if="!isDemo"> 
+      <el-tab-pane label="历史汇总" name="all" v-if="!isDemo">
 
         <!-- <h5 class="hasClosedTitle" ><span>ALL</span>全部游戏&nbsp;未结</h5> -->
         <h5 class="hasClosedTitle" ><span>ALL</span>全部游戏</h5>
@@ -135,7 +135,7 @@
           <el-table-column
           label="下注金额"
           prop="BetScore">
-          </el-table-column>  
+          </el-table-column>
 
           <el-table-column
           label="交易日期"
@@ -151,12 +151,12 @@
           label="有效投注"
           prop="VGOLD">
           </el-table-column>
- 
+
           <tr>
             <td>总计</td>
             <td>0</td>
             <td>0</td>
-          </tr>     
+          </tr>
         </el-table>
 
         <!-- <h5><span>ALL</span>全部游戏&nbsp;已结</h5>
@@ -189,13 +189,13 @@
           <el-table-column
           label="退水金额"
           prop="allCut">
-          </el-table-column>        
+          </el-table-column>
         </el-table> -->
 
       </el-tab-pane>
-    </el-tabs> 
+    </el-tabs>
   </div>
-    
+
 </div>
 </template>
 
@@ -230,7 +230,7 @@ export default {
       this.activeName = 'weijie';
       this.getWeijie(1,16);
     } else {
-      // this.getTotalData();      
+      // this.getTotalData();
       this.getWeijie(1,16);
     }
   },
@@ -276,16 +276,16 @@ export default {
     },
     getTotalData() {
       let params={};
-      
-      
+
+
       params.pc = 1;
       params.is_total = 1;
       this.$http.post('/SportFunction/getBetInfo', JSON.stringify(params)).then(res => {
           if (res.data.msg === 4001) {
             this.$swal({
-              text: "账户已下线，请重新登陆", 
+              text: "账户已下线，请重新登陆",
               type: "error",
-              timer: 1200, 
+              timer: 1200,
             })
             .then(function (response) {
             }).catch(e => {
@@ -299,19 +299,19 @@ export default {
             for(let i in this.his){
               this.allUnSettlement =  this.his[i].content;
             }
-              
+
             this.allnumb = parseInt(res.data.total);
             this.currentPage = parseInt(res.data.page);
-            this.numb = parseInt(res.data.number);   
-  
+            this.numb = parseInt(res.data.number);
+
           }
       })
     },
     getWeijie(page,number,date) {
       let today = new Date().getTime()
       let params={};
-      
-      
+
+
       params.page = page;
       params.number = number;
       params.pc = 1;
@@ -323,27 +323,30 @@ export default {
 		  params.date = betTime;
       this.$http.post('/SportFunction/getBetInfo', JSON.stringify(params)).then(res => {
         console.log(res.data)
-           if (res.data.msg == 4001) {
+
+				  if (res.data.msg == 4001) {
+					  if (sessionStorage.getItem('im_username') === '游客') return// 游客点击“下注记录-体育游戏”不会退出到登录页面
+
             this.$router.push({
               path: '/home'
             })
           }
           if (res.data.msg == 2006) {
             this.weijie = res.data.data
-              
+
             this.allnumb = parseInt(res.data.total);
             // this.currentPage = parseInt(res.data.page.page);
-            // this.numb = parseInt(res.data.page.number);   
-  
-          } 
+            // this.numb = parseInt(res.data.page.number);
+
+          }
         // }).catch(function(){
-        //   console.log('服务端连接异常！');  
+        //   console.log('服务端连接异常！');
       })
     },
-    getYijie(page,number,data) { 
+    getYijie(page,number,data) {
       let params={};
-      
-      
+
+
       params.pc = 1;
       params.type = 1;
        params.page = page;
@@ -355,21 +358,22 @@ export default {
 		  params.date = betTime;
       this.$http.post('/SportFunction/getBetInfo', JSON.stringify(params)).then(res => {
          if (res.data.msg === 4001) {
+					 if (sessionStorage.getItem('im_username') === '游客') return// 游客点击“下注记录-体育游戏-今日已结”不会退出到登录页面
           this.$router.push({
             path: '/home'
           })
-        } 
+        }
          if (res.data.msg == 2006) {
             this.weijie = res.data.data
-              
+
             // this.allnumb = parseInt(res.data.total);
             // this.currentPage = parseInt(res.data.page.page);
-            // this.numb = parseInt(res.data.page.number);   
-  
+            // this.numb = parseInt(res.data.page.number);
+
           }
-          
+
       }).catch(function(){
-        console.log('服务端连接异常！');  
+        console.log('服务端连接异常！');
       })
     },
     handleClick(tab) {
@@ -381,7 +385,7 @@ export default {
       } else if (tab.name === "yijie") {
         this.getYijie(1,16);
       } else if (tab.name === "all") {
-      this.getTotalData(); 
+      this.getTotalData();
       }
     },
     handleSizeChange(val) {
@@ -391,7 +395,7 @@ export default {
     },
     handleCurrentChangeWeijie(val) {
       if (this.$route.query.time) {
-        this.$router.replace({name: 'HistoryXZ', query: {page: val, time: this.$route.query.time}})        
+        this.$router.replace({name: 'HistoryXZ', query: {page: val, time: this.$route.query.time}})
       } else {
         this.$router.replace({name: 'HistoryXZ', query: {page: val}})
       }
@@ -399,7 +403,7 @@ export default {
     handleCurrentChangeYijie(val) {
       // console.log(`当前页: ${val}`);
       if (this.$route.query.time) {
-        this.$router.replace({name: 'HistoryXZ', query: {pages: val, time: this.$route.query.time}})        
+        this.$router.replace({name: 'HistoryXZ', query: {pages: val, time: this.$route.query.time}})
       } else {
         this.$router.replace({name: 'HistoryXZ', query: {pages: val}})
       }
@@ -409,12 +413,12 @@ export default {
     $route () {
       setTimeout(()=>{
         if (this.$route.query.pages) {
-          this.getYijie(this.$route.query.pages, 16, this.$route.query.time)          
+          this.getYijie(this.$route.query.pages, 16, this.$route.query.time)
         } else {
-          this.getWeijie(this.$route.query.page, 16)          
+          this.getWeijie(this.$route.query.page, 16)
         }
       },600)
-      
+
     }
   }
 }

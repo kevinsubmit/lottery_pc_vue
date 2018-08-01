@@ -40,7 +40,7 @@
 						<div class="grid-content zh">转换金额</div>
 					</el-col>
 					<el-col :span="6">
-						<div class="grid-content"><input type="" v-model='shu' name="" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+						<div class="grid-content"><input type="" autocomplete="off" v-model='shu' name="" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
 					</el-col>
 					<el-col :span="15">
 						<div class="grid-content">

@@ -202,8 +202,8 @@ export default {
     },
     getTotalData() {
       let params = {};
-      
-      
+
+
       this.$http
         .post("/getinfo/getSummaryBet", JSON.stringify(params))
         .then(res => {
@@ -301,8 +301,8 @@ export default {
     getWeijie(page, number, date) {
       let today = new Date().getTime();
       let params = {};
-      
-      
+
+
       params.page = page;
       params.number = number;
       // params.time=date/1000
@@ -313,6 +313,7 @@ export default {
         .post("/getinfo/getMissedOrHasClosedBet", JSON.stringify(params))
         .then(res => {
           if (res.data.msg == 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$router.push({
               path: "/home"
             });
@@ -332,8 +333,8 @@ export default {
       // console.log(date)
       let today = Date.parse(new Date());
       let params = {};
-      
-      
+
+
       params.page = page;
       params.number = number;
       // params.time=date/1000
@@ -348,6 +349,7 @@ export default {
       this.$http
         .post("/getinfo/getMissedOrHasClosedBet", JSON.stringify(params))
         .then(res => {
+					if (sessionStorage.getItem("im_username") === "游客") return
           if (res.data.msg === 4001) {
             this.$router.push({
               path: "/home"

@@ -33,7 +33,7 @@
                   <span class="btn-blue" @click="closeDialog">取消</span>
                 </div>
               </div>
-        </div>
+        <!-- </div> -->
       </div>
   <!-- </transition> -->
 </template>
@@ -68,7 +68,6 @@ export default {
     }
   },
   created() {
-    // console.log('betArr', this.betArr);
     this.sendPost ();
   },
   beforeUpdate(){
@@ -76,7 +75,6 @@ export default {
   methods: {
     getBalance () {
       let params={};
-      
       getApiName()=='hg'?params.sports = 1:'';
       this.$http.post('/getinfo/money', JSON.stringify(params)).then(res => {
         if (res.data.msg == "4001") {
@@ -99,10 +97,7 @@ export default {
     sendPost () {
       this.betInfo = this.betArr;
       for (let i = 0; i < this.betInfo.length; i++) {
-        // console.log(this.betInfo[i].number)
         let ballLength = parseInt(this.betInfo[i].number.length);
-         // console.log(this.betInfo[i].typecode)
-         // console.log(ballLength,222)
         switch (Number(this.betInfo[i].typecode)) {
 
           case 2032:
@@ -162,9 +157,8 @@ export default {
 
         }
         this.betInfo[i].number = this.betInfo[i].number.join()
-        // this.betInfo[i].number = this.betInfo[i].number.join()
-
       }
+      
     },
     kadun(m, s) {
       function factorial(n) {
@@ -177,7 +171,6 @@ export default {
     },
     submit() {
       this.betInfo = this.betArr;
-
       if (!(parseInt(this.inputMoney) > 0)) {
         this.$swal({
           text: "请输入正确的下注金额！",
@@ -192,10 +185,6 @@ export default {
       for (let j = 0; j < this.betInfo.length; j++) {
         this.betInfo[j].betmoney = parseInt(this.inputMoney);
       }
-
-      // let headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // console.log(this.betInfo)
       let loadingInstance = Loading.service({background:'rgba(0, 0, 0, 0.5)'});
       this.$http.post('/inup', JSON.stringify(this.betInfo[0])).then(res => {
           loadingInstance.close();

@@ -12,7 +12,7 @@
               <span>{{username}}</span>
             </p>
             <!-- <p>账户状态：<span>{{level}}</span>&nbsp;&nbsp;<span style="color:#3e80d4;">已启用</span></p> -->
-            <p>彩票余额：
+            <p>彩票余额.：
               <span style="color:#eb6877;">￥{{banlance}}</span>
             </p>
             <p v-show="getApiName !== 'klc'&& getApiName != 'fulicai'">AG余额：
@@ -48,8 +48,8 @@
               </el-tab-pane>
               <el-tab-pane :label="labelTransfer" name="transfer" v-if="!isAgAccount&&getApiName !='fulicai'">
                 <div class="tads">
-                  <div class="taw" :class="{activ:$index==activ}" v-for="(item,$index) in tabs" @click="toggleTab(item.tab,$index)">
-                    <a>{{item.name}}</a>
+                  <div class="taw" v-if="!(getApiName=='ly'&&item.tab=='cpTy')" :class="{activ:$index==activ}" v-for="(item,$index) in tabs" @click="toggleTab(item.tab,$index)">
+                    <a>{{item.name}}1</a>
                   </div>
                 </div>
                 <Transfer :is="currentTab" keep-alive v-on:child-money="money1" v-on:chessSuccess='chessSuccess' v-on:agSuccess="agSuccess" v-on:sportSuccess="sportSuccess"></Transfer>
@@ -72,35 +72,42 @@
 
 
 <script>
-import { formatDate } from "../../assets/js/date.js";
-import Deposit from "./deposit";
-import Transfer from "./transfer";
-import Withdraw from "./withdraw";
-import cpTy from "./cpTy";
-import cpQp from "./cpQp";
-import offlinePay from "./pay_offline";
-import onlinePay from "./pay_online";
+import { formatDate } from '../../assets/js/date.js'
+// import Deposit from './deposit'
+import Transfer from './transfer'
+import Withdraw from './withdraw'
+import cpTy from './cpTy'
+import cpQp from './cpQp'
+/* import offlinePay from './pay_offline'
+import onlinePay from './pay_online' */
+
+const Deposit = ()=>import("./deposit")
+
+const offlinePay = ()=>import("./pay_offline")
+
+const onlinePay = ()=>import("./pay_online")
+
 // import access from './Access';
 export default {
   data() {
     return {
       getApiName: getApiName(),
-      labelDeposit: "我要充值",
-      labelWithdraw: "我要提现",
-      labelTransfer: "额度转换",
+      labelDeposit: '我要充值',
+      labelWithdraw: '我要提现',
+      labelTransfer: '额度转换',
       showAgRecord: false,
       isAgAccount: false,
       agbalance: 0,
       sportbalance: 0.0,
       chessbalance: 0.0,
-      activeNav: "deposit",
+      activeNav: 'deposit',
       active: 1, // step
-      title: "资金管理",
-      username: "试玩账号",
-      banlance: "0",
-      level: "钻石vip",
+      title: '资金管理',
+      username: '试玩账号',
+      banlance: '0',
+      level: '钻石vip',
       xian: true,
-      activeName: "deposit", // 默认显示
+      activeName: 'deposit', // 默认显示
       recordData: [],
       allnumb: 2000, // 当前彩种所有开奖结果历史条数
       currentPage: 1, // 当前页码
@@ -109,15 +116,15 @@ export default {
       isShowDeposit: true,
       isShowOfflinePay: false,
       isShowOnlinePay: false,
-      payType: "",
+      payType: '',
       tabs: [
-        { name: "彩票,AG互转", tab: "transfer" },
-        { name: "彩票,体育互转", tab: "cpTy" }
+        { name: '彩票,AG互转', tab: 'transfer' }
+        // { name: "彩票,体育互转", tab: "cpTy" }
         // {name:'彩票,棋牌互转',tab:'cpQp'},
       ],
-      currentTab: "transfer", //currentTab用于表示当前触发的子组件
+      currentTab: 'transfer', //currentTab用于表示当前触发的子组件
       activ: 0
-    };
+    }
   },
   components: {
     Deposit,
@@ -129,109 +136,123 @@ export default {
     cpQp
   },
   created() {
-    if (this.$route.query.GameName) {
-      this.isAgAccount = true;
-      if (this.$route.query.isFish) {
-        this.labelDeposit = "捕鱼充值";
-        this.labelWithdraw = "捕鱼提现";
-        return;
+    let sort = sessionStorage.getItem('sort')
+    if (sort) {
+      sort = sort.split(',')
+      // if( ! this.inArray('1',sort)){
+      //   this.tabs.push({ name: "彩票,AG互转", tab: "transfer" })
+      // }
+      if (this.inArray('4', sort)) {
+        this.tabs.push({ name: '彩票,体育互转', tab: 'cpTy' })
       }
-      this.labelDeposit = "AG充值";
-      this.labelWithdraw = "AG提现";
-    } else {
-      this.isAgAccount = false;
-      this.labelDeposit = "我要充值";
-      this.labelWithdraw = "我要提现";
     }
-    this.activeName = this.$route.params.id.split(":")[1];
-    this.username = sessionStorage.im_username;
-    this.banlance = this.$store.state.lotteryMoney;
+    if (this.$route.query.GameName) {
+      this.isAgAccount = true
+      if (this.$route.query.isFish) {
+        this.labelDeposit = '捕鱼充值'
+        this.labelWithdraw = '捕鱼提现'
+        return
+      }
+      this.labelDeposit = 'AG充值'
+      this.labelWithdraw = 'AG提现'
+    } else {
+      this.isAgAccount = false
+      this.labelDeposit = '我要充值'
+      this.labelWithdraw = '我要提现'
+    }
+    this.activeName = this.$route.params.id.split(':')[1]
+    this.username = sessionStorage.im_username
+    this.banlance = this.$store.state.lotteryMoney
     // this.getRecodeData(1,30);
-    this.getAgBalance();
-    this.getSportBalance();
-    this.getChessBalance();
+    this.getAgBalance()
+    this.getSportBalance()
+    this.getChessBalance()
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
+    inArray(str = '', arr = []) {
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == str) {
+          return true
+        }
+      }
+      return false
+    },
     toggleTab: function(tab, index) {
-      this.currentTab = tab; //tab为触发当前标签页的组件名
-      this.activ = index;
+      this.currentTab = tab //tab为触发当前标签页的组件名
+      this.activ = index
     },
     getAgBalance() {
-      
-      let params = {};
-      
-      this.$http.post("/aginfo/getAgInfo", JSON.stringify(params)).then(res => {
-        console.log(res.data.balance);
+      let params = {}
+
+      this.$http.post('/aginfo/getAgInfo', JSON.stringify(params)).then(res => {
+        console.log(res.data.balance)
         if (res.data.msg === 2006) {
-          this.agbalance = res.data.balance.agBalance.toFixed(2);
-          this.banlance = res.data.balance.userBalance;
+          this.agbalance = res.data.balance.agBalance.toFixed(2)
+          this.banlance = res.data.balance.userBalance
         }
-      });
+      })
     },
     getSportBalance() {
-      
-      let params = {};
-      
+      let params = {}
+
       this.$http
-        .post("/user/getSportsBalance", JSON.stringify(params))
+        .post('/user/getSportsBalance', JSON.stringify(params))
         .then(res => {
-          this.sportbalance = res.data.balance || "0.00";
+          this.sportbalance = res.data.balance || '0.00'
           if (res.data.msg === 2006) {
-            this.banlance = res.data.balance.userBalance;
-            this.sportbalance = res.data.balance || "0.00";
+            this.banlance = res.data.balance.userBalance
+            this.sportbalance = res.data.balance || '0.00'
           }
-        });
+        })
     },
     getChessBalance() {
-      
-      let params = {};
-      
-      this.$http
-        .post("/Wh_H5_Api/getWhInfo", JSON.stringify(params))
-        .then(res => {
-          console.log(res);
-          this.chessbalance = res.data.balance.whBalance;
-          if (res.data.msg === 2006) {
-            this.banlance = res.data.balance.userBalance;
-            this.chessbalance = res.data.balance.whBalance;
-          }
-        });
+      let params = {}
+
+      // this.$http
+      //   .post("/Wh_H5_Api/getWhInfo", JSON.stringify(params))
+      //   .then(res => {
+      //     console.log(res);
+      //     this.chessbalance = res.data.balance.whBalance;
+      //     if (res.data.msg === 2006) {
+      //       this.banlance = res.data.balance.userBalance;
+      //       this.chessbalance = res.data.balance.whBalance;
+      //     }
+      //   });
     },
     money1(i) {
-      if (i == "change") {
+      if (i == 'change') {
         // console.log(1111);
-        this.active = 3;
-        
-        let params = {};
-        
-        getApiName() == "hg" ? (params.sports = 1) : "";
-        this.$http.post("/getinfo/money", JSON.stringify(params)).then(res => {
-          this.banlance = res.data.money;
-          this.$store.commit("updatelotteryMoney", res.data.money);
-        });
-      } else if (i == "change1") {
-        this.active = 2;
+        this.active = 3
+
+        let params = {}
+
+        getApiName() == 'hg' ? (params.sports = 1) : ''
+        this.$http.post('/getinfo/money', JSON.stringify(params)).then(res => {
+          this.banlance = res.data.money
+          this.$store.commit('updatelotteryMoney', res.data.money)
+        })
+      } else if (i == 'change1') {
+        this.active = 2
       }
     },
     handleClick(tab, event) {
-      this.xian = true;
+      this.xian = true
       // console.log(tab.label);
-      if (tab.name == "deposit") {
+      if (tab.name == 'deposit') {
         // this.active=0;
         // this.showAgRecord = false
-      } else if (tab.name == "withdraw" || tab.name == "transfer") {
-        this.active = 1;
-        this.showAgRecord = false;
-      } else if (tab.name == "record") {
-        this.xian = false;
-        this.showAgRecord = false;
+      } else if (tab.name == 'withdraw' || tab.name == 'transfer') {
+        this.active = 1
+        this.showAgRecord = false
+      } else if (tab.name == 'record') {
+        this.xian = false
+        this.showAgRecord = false
         // this.getRecodeData(1,30);
-      } else if (tab.name == "agRecord") {
-        this.showAgRecord = true;
+      } else if (tab.name == 'agRecord') {
+        this.showAgRecord = true
       }
-      if (tab.name === "deposit") {
+      if (tab.name === 'deposit') {
         // this.isShowDeposit = true
         // this.isShowOfflinePay = false
         // this.isShowOnlinePay = false
@@ -245,82 +266,85 @@ export default {
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`);
       setTimeout(() => {
-        this.getRecodeData(val, 20);
-      }, 600);
+        this.getRecodeData(val, 20)
+      }, 600)
     },
     childStep(o) {
-      if (o == "step") {
-        this.active = 3;
-      } else if (o == "step1") {
-        this.active = 2;
+      if (o == 'step') {
+        this.active = 3
+      } else if (o == 'step1') {
+        this.active = 2
       }
     },
     agSuccess(msg) {
-      if (msg === "agSuccess") {
-        this.getAgBalance();
+      if (msg === 'agSuccess') {
+        this.getAgBalance()
       }
     },
     sportSuccess(msg) {
-      if (msg === "sportSuccess") {
-        this.getSportBalance();
+      if (msg === 'sportSuccess') {
+        this.getSportBalance()
       }
     },
     chessSuccess(msg) {
-      if (msg === "chessSuccess") {
-        this.getChessBalance();
+      if (msg === 'chessSuccess') {
+        this.getChessBalance()
       }
     },
     payTypeOrder(type) {
-      this.active = 1;
-      this.payType = type;
+      this.active = 1
+      this.payType = type
       if (
-        type === "unionPayOffline" ||
-        type === "aliPayOffline" ||
-        type === "wechatPayOffline" ||
-        type === "jdPayOffline"
+        type === 'unionPayOffline' ||
+        type === 'aliPayOffline' ||
+        type === 'wechatPayOffline' ||
+        type === 'jdPayOffline' ||
+        type === 'bankPayOffline' ||
+        type === 'tenPayOffline'
       ) {
-        this.isShowDeposit = false;
-        this.isShowOfflinePay = true;
+        this.isShowDeposit = false
+        this.isShowOfflinePay = true
       } else if (
-        type === "unionPayOnline" ||
-        type === "yunPay" ||
-        type === "scanPay" ||
-        type === "aliPayOnline" ||
-        type === "wechatPayOnline" ||
-        type === "tenPayOnline" ||
-        type === "jdPayOnline"
+        type === 'unionPayOnline' ||
+        type === 'yunPay' ||
+        type === 'scanPay' ||
+        type === 'aliPayOnline' ||
+        type === 'wechatPayOnline' ||
+        type === 'tenPayOnline' ||
+        type === 'jdPayOnline' ||
+        type === 'bankPayOnline'
       ) {
-        this.isShowDeposit = false;
-        this.isShowOfflinePay = false;
-        this.isShowOnlinePay = true;
+        this.isShowDeposit = false
+        this.isShowOfflinePay = false
+        this.isShowOnlinePay = true
       }
     }
   },
   watch: {
     $route(to, from) {
-      this.isShowDeposit = true;
-      this.isShowOfflinePay = false;
-      this.isShowOnlinePay = false;
-      this.showAgRecord = false;
-      this.activeName = to.params.id.split(":")[1]; // 对路由变化作出响应...
+      this.isShowDeposit = true
+      this.isShowOfflinePay = false
+      this.isShowOnlinePay = false
+      this.showAgRecord = false
+      this.activeName = to.params.id.split(':')[1] // 对路由变化作出响应...
 
       if (this.$route.query.GameName) {
-        this.isAgAccount = true;
+        this.isAgAccount = true
         if (this.$route.query.isFish) {
-          this.labelDeposit = "捕鱼充值";
-          this.labelWithdraw = "捕鱼提现";
-          return;
+          this.labelDeposit = '捕鱼充值'
+          this.labelWithdraw = '捕鱼提现'
+          return
         }
-        this.labelDeposit = "AG充值";
-        this.labelWithdraw = "AG提现";
+        this.labelDeposit = 'AG充值'
+        this.labelWithdraw = 'AG提现'
       } else {
-        this.isAgAccount = false;
-        this.labelDeposit = "我要充值";
-        this.labelWithdraw = "我要提现";
+        this.isAgAccount = false
+        this.labelDeposit = '我要充值'
+        this.labelWithdraw = '我要提现'
       }
     }
   }
-};
+}
 </script>
 <style scoped>
 .tads {

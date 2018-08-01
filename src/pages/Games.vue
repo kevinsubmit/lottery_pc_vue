@@ -10,7 +10,8 @@
     <bigChat/>
     <miniChat/>
     <!-- <miniChat/> -->
-    <float-right></float-right>
+    <float-right v-if="$getApiName!='yiteng'"></float-right>
+    <verticalSideMenu v-else></verticalSideMenu>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import Sidebar from "@/components/sidebar";
 import floatRight from "@/components/floatRight";
 import miniChat from '@/components/miniChat';
 import bigChat from '@/components/bigChat';
+import verticalSideMenu from '../components/verticalSideMenu'
 export default {
   data() {
     return {
@@ -60,7 +62,9 @@ export default {
         this.$alert(arr[index], {
           confirmButtonText: "确定",
           callback: action => {
-            _this.infiniteAlert(arr, index + 1);
+            setTimeout(() => {
+              _this.infiniteAlert(arr, index + 1);
+            }, 500)
           }
         });
       }
@@ -77,7 +81,8 @@ export default {
     Sidebar,
     miniChat,
     bigChat,
-    floatRight
+    floatRight,
+    verticalSideMenu
   }
 };
 </script>

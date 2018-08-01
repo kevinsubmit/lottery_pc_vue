@@ -3,27 +3,6 @@
     <div class="history common-content">
       <el-tabs v-model="activeName" @tab-click="handleClick">
 
-        <el-tab-pane label="历史汇总" name="all" v-if="!isDemo">
-
-          <h5>
-            <span>ALL</span>全部游戏&nbsp;已结</h5>
-          <el-table :data="allHasClose" @row-click="redirectYijie" stripe style="width: 100%;" class='hui'>
-
-            <el-table-column label="交易日期" prop="cur_day">
-            </el-table-column>
-
-            <el-table-column label="注单笔数" prop="numbers">
-            </el-table-column>
-
-            <el-table-column label="总有效金额" prop="allValid">
-            </el-table-column>
-
-            <el-table-column label="总投注金额" prop="allWin">
-            </el-table-column>
-
-          </el-table>
-
-        </el-tab-pane>
         <el-tab-pane label="今日已结" name="yijie">
           <el-table :data="yijie" stripe style="width: 100%">
 
@@ -47,6 +26,28 @@
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChangeYijie" :current-page="currentPage2" :page-sizes="[16, 32, 64]" :page-size="16" layout="total, prev, pager, next, jumper" :total="allnumb2">
             </el-pagination>
           </div>
+
+        </el-tab-pane>
+
+        <el-tab-pane label="历史汇总" name="all" v-if="!isDemo">
+
+          <h5>
+            <span>ALL</span>全部游戏&nbsp;已结</h5>
+          <el-table :data="allHasClose" @row-click="redirectYijie" stripe style="width: 100%;" class='hui'>
+
+            <el-table-column label="交易日期" prop="cur_day">
+            </el-table-column>
+
+            <el-table-column label="注单笔数" prop="numbers">
+            </el-table-column>
+
+            <el-table-column label="总有效金额" prop="allValid">
+            </el-table-column>
+
+            <el-table-column label="总投注金额" prop="allWin">
+            </el-table-column>
+
+          </el-table>
 
         </el-tab-pane>
 
@@ -92,7 +93,7 @@ export default {
     redirectYijie(data) {
       console.log(data.cur_day);
       let newDate = data.dateTime;
-      let queryDate = new Date(newDate).getTime();
+      let queryDate = new Date(newDate).getTime().toString().substr(0,10);
       this.activeName = "yijie";
       this.getYijie(1, 16, queryDate);
       this.$router.replace({
@@ -102,8 +103,8 @@ export default {
     },
     getTotalData(page, number, date) {
       let params = {};
-      
-      
+
+
       params.page = page;
       params.number = number;
       params.type = 0;
@@ -112,6 +113,7 @@ export default {
         .post("/getinfo/getAGHunterBill", JSON.stringify(params))
         .then(res => {
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$swal({
               text: "账户已下线，请重新登陆",
               type: "error",
@@ -133,23 +135,23 @@ export default {
     getYijie(page, number, date) {
       let today = Date.parse(new Date());
       let params = {};
-      
-      
       params.page = page;
       params.number = number;
       params.type = 1;
-      params.time = new Date().getTime();
+      params.time = new Date().getTime().toString().substr(0,10);
       params.type = 1; // 1 已结
       params.hunter = 1;
       this.$http
         .post("/getinfo/getAGHunterBill", JSON.stringify(params))
         .then(res => {
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$router.push({
               path: "/home"
             });
           } else {
             this.yijie = res.data.list;
+            console.log(this.yijie)
             this.allnumb2 = parseInt(res.data.count);
             this.currentPage2 = parseInt(res.data.page.page);
             this.numb2 = parseInt(res.data.number);

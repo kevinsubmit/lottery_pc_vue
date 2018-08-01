@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="overlay-float" v-if="isShowPannel" @click="closePannel"></div>
-    <div :class="`float-left_${getApiName}`" style='cursor:pointer;' v-if='show'>
+    <div :class="`float-left_${getApiName}`" style='cursor:pointer;position:fixed;left:0;bottom:26px;' v-if='show'>
       <div @click.prevent='$router.push({name: "activity"})' style="background:url('/static/images/common/activitysmall.png') no-repeat;width:194px;height:129px;"></div>
       <p @click="isshow()" style='z-index:99999;right:0;top:0;font-size:15px;position:absolute;display:inline-block;color:gray;background:#fff;border-radius:100%;padding:0 2px 1px'>×</p>
     </div>
-    <div v-show="$store.state.siderMenuShow" class="game-right-menu-box" :class="{isshow:Showsmall,'menu-box-active':!!siderMenuActiveIndex}">
+    <div class="game-right-menu-box" :class="{isshow:Showsmall,'menu-box-active':!!siderMenuActiveIndex}">
       <ul class="game-right-menu-list">
-        <li class="cs " @click="openService" title="聊天室" :class="{'menu-active triangle_top':siderMenuActiveIndex==1}">
+        <li class="cs " @click="openChatRoom(true)" title="聊天室" :class="{'menu-active triangle_top':siderMenuActiveIndex==1}">
           <img src="/static/images/common/icon/ico-right-cs.png" alt="">
           <div v-show="siderMenuActiveIndex==1">
             聊天室
           </div>
         </li>
-        <li class="weixin" @click="openServices" title="在线客服" :class="{'menu-active triangle_top':siderMenuActiveIndex==2}">
+        <li class="weixin" @click="openCustomerService" title="在线客服" :class="{'menu-active triangle_top':siderMenuActiveIndex==2}">
           <img src="/static/images/common/icon/ico-right-call.png" alt="">
           <div v-show="siderMenuActiveIndex==2">
             客服
@@ -88,19 +88,29 @@ export default {
       betNumber: 0
     };
   },
-  watch: {
-    "$store.state.siderMenuShow": function(isShowSiderMenu) {
-      if (isShowSiderMenu) {
-        // this.openService()
-      }
-    }
-  },
   methods: {
     isshow() {
       this.show = false;
     },
-    openService() {
-      if (this.getApiName == "uc") {
+    openChatRoom(isClick) {
+      try{
+        chat.load();
+        this.siderMenuActiveIndex = this.siderMenuActiveIndex == 1 ? 0 : 1;
+        this.isShowPannel = false;
+        if (document.querySelector("#chatObject")) {
+          if (this.siderMenuActiveIndex) {
+            document.querySelector("#chatObject").style.display = "block";
+          } else {
+            document.querySelector("#chatObject").style.display = "none";
+          }
+        }
+      }
+      catch (err){
+        if(isClick){
+          alert("敬请期待！");
+        }
+      }
+      /* if (this.getApiName == "uc"||this.getApiName == "618cp") {
         this.siderMenuActiveIndex = this.siderMenuActiveIndex == 1 ? 0 : 1;
         this.isShowPannel = false;
         if (document.querySelector("#chatObject")) {
@@ -113,9 +123,9 @@ export default {
         chat.load();
       } else {
         alert("敬请期待！");
-      }
+      } */
     },
-    openServices() {
+    openCustomerService() {
       this.siderMenuActiveIndex = 0;
       this.isShowPannel = false;
 
@@ -149,8 +159,8 @@ export default {
     },
     getWeijie(page, number) {
       let params = {};
-      
-      
+
+
       params.page = page;
       params.number = number;
       this.$http
@@ -188,10 +198,8 @@ export default {
     }
   },
   created() {
-    if (getApiName() == "uc") {
-      this.show = true;
-    } else {
-      this.$store.commit("setSideMenuShow", true);
+    if (getApiName() == "uc"||getApiName() == "618cp") {
+      this.openChatRoom()
     }
     if (sessionStorage.getItem("serviceUrl")) {
       this.csUrl = sessionStorage.getItem("serviceUrl");
@@ -485,5 +493,8 @@ export default {
 }
 .game_ico_s_280 {
   background-image: url("/static/images/common/icon/icon-jlk3-s.png");
+}
+.game_ico_s_220 {
+  background-image: url("/static/images/common/icon/ico-fc3d-s.png");
 }
 </style>

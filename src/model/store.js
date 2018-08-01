@@ -1,5 +1,5 @@
 import Vuex from "vuex";
-function getImToken() {
+function getImToken () {
 	let imToken = sessionStorage.getItem("im_token") || '',
 		matched = imToken.match(/\"/g);
 	if (matched !== null && matched.length == 2) {
@@ -9,23 +9,27 @@ function getImToken() {
 }
 export default new Vuex.Store({
 	state: {
-		siderMenuShow: false,
+		chatOpenStatus: false,
 		availWinHeight: 0,
 		lotteryMoney: "",
-		token: getImToken()
+		token: getImToken(),
+		confirmShow: false,
 	},
 	mutations: {
-		setSideMenuShow(state, bool) {
-			state.siderMenuShow = bool;
+		openChatFunc (state, bool) {
+			state.chatOpenStatus = bool;
 		},
-		setAvailWindowHeight(state, height) {
+		setAvailWindowHeight (state, height) {
 			state.availWinHeight = height;
 		},
-		updatelotteryMoney(state, money) {
+		updatelotteryMoney (state, money) {
 			state.lotteryMoney = money;
 		},
-		setToken(state, token) {
+		setToken (state, token) {
 			state.token = token;
+		},
+		setConfirmShow (state, bool) {
+			state.confirmShow = bool;
 		}
 	}
 });

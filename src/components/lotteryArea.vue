@@ -10,7 +10,7 @@
       </div>
       <div class="closeTime f-l" :class="`closeTime${game_code}`">
         <!-- {{closetime}} -->
-        <div class="clock1" style='width:90%'>
+        <div class="clock1" :style="{width:time==='待定'?'auto':'90%'}">
           <div class="clock11" v-if='!closeBet'>
             <!-- 已封盘 -->
             <div>
@@ -35,7 +35,8 @@
           <span>{{lotteryObj.next.round&&closeBet ? `${m}` : `00`}}</span>:
           <span>{{lotteryObj.next.round&&closeBet ? `${s}` : `00`}}</span>
         </div>
-        <div class='kaijiangtimes' style='line-height:20px;width:90%'>
+        <!--<div class='kaijiangtimes' style='line-height:20px;width:90%'>-->
+        <div class='kaijiangtimes' style='line-height:20px;'>
           <span style='font-size:16px'>开奖时间:</span>
           <span v-if="game_code==69">{{time}}</span>
           <span v-show="game_code!=69" style='font-size:16px'>{{lotteryObj.next.round ? `${myfilter(endtime, endtime-fentime)}` : `00:00`}}</span>
@@ -48,7 +49,7 @@
         <div class="round f-l">
           <p class="last-round">{{lotteryObj.last.round}}期</p>
           <p>
-            <a :href="kaijiangwang" v-if="getApiName!='ct'&&getApiName!='agcai'&&getApiName!='tt'&&getApiName!='crown'&&getApiName!='yile'&&getApiName!='fulicai'" target="_blank">>&nbsp;官方开奖</a>
+            <a :href="kaijiangwang" v-if="getApiName!='ct'&&getApiName!='agcai'&&getApiName!='tt'&&getApiName!='crown'&&getApiName!='yile'&&getApiName!='fulicai'&&getApiName!='618cp'&&getApiName!='yy'&&getApiName!='ylh'&&getApiName!='letian'" target="_blank">>&nbsp;官方开奖</a>
             <router-link :to="`/result:${k}`">>&nbsp;开奖走势</router-link>
           </p>
         </div>
@@ -113,7 +114,7 @@
           </div>
 
           <!--广东快乐十分-->
-          <div class="nums" style="display:inline-block" v-show="gdklsf==true">
+          <div class="nums" style="display:inline-block" v-show="gdklsf==true&&game_code!='220'">
             <span>总和:</span>
             <span>{{kjzh}}</span>
             <span>{{pkyhgdx}}</span>
@@ -125,6 +126,16 @@
             <span>{{pktwo}}</span>
             <span>{{pkthree}}</span>
             <span>{{pkfour}}</span>
+          </div>
+          
+          <!--广东快乐11选5-->
+          <div class="nums" style="display:inline-block" v-show="game_code==133">
+            <span>总和:</span>
+            <span>{{kjzh}}</span>
+            <span>{{pkyhgdx}}</span>
+            <span>{{pkyghds}}</span>
+            <span class="habi">尾大小:</span>
+            <span class="habi1">{{wdx}}</span>
           </div>
           <!--重庆幸运农场-->
           <div class="nums" v-show="cqxync==true">
@@ -251,15 +262,17 @@
                       <span v-show='haoma' :class="`ten_result_${j}`" v-for='j in  lhckj(resultHistory && resultHistory[i-1].number.split(","))'>{{j}}</span>
                   </template>
                   <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")'  v-if="game_code==180" :class="j <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j>40?'大':"小"}}</span>
-                  <span v-show='danshuang' class="feiche" v-for='j in resultHistory && resultHistory[i-1].number.split(",")'v-if="game_code==180" :class="j % 2 == 0 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j%2?'单':'双'}}</span>  
+                  <span v-show='danshuang' class="feiche" v-for='j in resultHistory && resultHistory[i-1].number.split(",")'v-if="game_code==180" :class="j % 2 == 0 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j%2?'单':'双'}}</span>
 
                   <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>=6?"background:#f9982e":"background:#7f8ab0" ' v-if="game_code==51||game_code==171||game_code==210||game_code==240||game_code==260" :class="`result-ball result-ball_${i}`">{{j>=6?'大':"小"}}</span>
                   <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e":"background:#7f8ab0" ' v-if="game_code==51||game_code==171||game_code==210||game_code==240||game_code==260" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
-
+                  
+                  <!-- 广东11选5 -->
+                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>5?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==133" :class="`result-ball result-ball_${i}`">{{j>5?'大':"小"}}</span>
                   <!-- cqssc -->
                   <!-- <span v-show='haoma' :class="`ten_result_${j}`" v-for='j in  resultHistory[i].number.split(",")'>{{j}}</span> -->
                   <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>4?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250" :class="`result-ball result-ball_${i}`">{{j>4?'大':"小"}}</span>
-                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
+                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250||game_code==133" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
 
                   <!-- haapyten -->
                   <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>10?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==3" :class="`result-ball result-ball_${i}`">{{j>10?'大':"小"}}</span>
@@ -377,9 +390,10 @@ export default {
       this.game_code == 210 ||
       this.game_code == 46 ||
       this.game_code == 240 ||
-      this.game_code == 270 || 
+      this.game_code == 270 ||
       this.game_code == 180 ||
-      this.game_code == 280
+      this.game_code == 280 ||
+      this.game_code == 220
         ? (this.cptips = !this.cptips)
         : "";
     },
@@ -392,7 +406,9 @@ export default {
         this.game_code == 46 ||
         this.game_code == 270 ||
         this.game_code == 180 ||
-        this.game_code == 280
+        this.game_code == 280 ||
+        this.game_code == 220||
+        this.game_code == 133
       ) {
         return;
       }
@@ -544,6 +560,8 @@ export default {
             parseInt(this.lotteryObj.last.number[7]);
           if (this.kjzh >= 85) {
             this.pkyhgdx = "大";
+          } else if (this.kjzh == 84) {
+            this.pkyhgdx = "和";
           } else {
             this.pkyhgdx = "小";
           }
@@ -665,7 +683,9 @@ export default {
             parseInt(this.lotteryObj.last.number[7]);
           if (this.kjzh >= 85) {
             this.pkyhgdx = "大";
-          } else {
+          } else if (this.kjzh == 84) {
+            this.pkyhgdx = "和";
+          }  else {
             this.pkyhgdx = "小";
           }
           if (this.kjzh % 2 == 0) {
@@ -679,6 +699,66 @@ export default {
             this.wdx = "尾大";
           } else {
             this.wdx = "尾小";
+          }
+          if (
+            parseInt(this.lotteryObj.last.number[0]) >
+            parseInt(this.lotteryObj.last.number[7])
+          ) {
+            this.pkone = "龙";
+          } else {
+            this.pkone = "虎";
+          }
+          if (
+            parseInt(this.lotteryObj.last.number[1]) >
+            parseInt(this.lotteryObj.last.number[6])
+          ) {
+            this.pktwo = "龙";
+          } else {
+            this.pktwo = "虎";
+          }
+          if (
+            parseInt(this.lotteryObj.last.number[2]) >
+            parseInt(this.lotteryObj.last.number[5])
+          ) {
+            this.pkthree = "龙";
+          } else {
+            this.pkthree = "虎";
+          }
+          if (
+            parseInt(this.lotteryObj.last.number[3]) >
+            parseInt(this.lotteryObj.last.number[4])
+          ) {
+            this.pkfour = "龙";
+          } else {
+            this.pkfour = "虎";
+          }
+          break;
+          case "133":
+          this.gd11x5 = true;
+          this.kjzh =
+            parseInt(this.lotteryObj.last.number[0]) +
+            parseInt(this.lotteryObj.last.number[1]) +
+            parseInt(this.lotteryObj.last.number[2]) +
+            parseInt(this.lotteryObj.last.number[3]) +
+            parseInt(this.lotteryObj.last.number[4])
+          if (this.kjzh >= 85) {
+            this.pkyhgdx = "大";
+          } else if (this.kjzh == 84) {
+            this.pkyhgdx = "和";
+          }  else {
+            this.pkyhgdx = "小";
+          }
+          if (this.kjzh % 2 == 0) {
+            this.pkyghds = "双";
+          } else {
+            this.pkyghds = "单";
+          }
+          if (
+            this.kjzh.toString().substr(this.kjzh.toString().length - 1) >= 5
+          ) {
+            this.wdx = "大";
+          } else {
+            this.wdx = "小";
           }
           if (
             parseInt(this.lotteryObj.last.number[0]) >
@@ -904,7 +984,7 @@ export default {
     getResultData(page, numb) {
       this.onff = true;
       this.onoff =
-        this.game_code == 69 || this.game_code == 172 || this.game_code == 270 || this.game_code == 280;
+        this.game_code == 69 || this.game_code == 172 || this.game_code == 270 || this.game_code == 280 || this.game_code == 220;
       let params = {};
       params.game_code = this.game_code;
       params.page = page;
@@ -948,9 +1028,9 @@ export default {
       }
     },
     getBalance() {
-      
+
       let params = {};
-      
+
       getApiName() == "hg" ? (params.sports = 1) : "";
       this.$http.post("/getinfo/money", JSON.stringify(params)).then(res => {
         if (res.data.msg == "4001") {
@@ -993,7 +1073,6 @@ export default {
     }
   },
   created() {
-  
     // this.$refs.audio.play();
     if (sessionStorage.getItem("im_username") === "游客"||sessionStorage.getItem("im_realname")=='11') {
       this.shiwan1 = false;
@@ -1076,12 +1155,17 @@ export default {
         this.game_code == 46 ||
         this.game_code == 270 ||
         this.game_code == 180 ||
-        this.game_code == 280
+        this.game_code == 280 ||
+        this.game_code == 220||
+        this.game_code == 133
       ) {
         return "noclick";
       }
     },
     time() {
+      if(!this.endtime){
+        return '待定'
+      }
       let date = new Date(new Date().getTime() + this.endtime * 1000);
       let Y = date.getFullYear() + "-";
       let M =
@@ -1194,6 +1278,14 @@ export default {
   background: url("@{public_img}/images/common/icon-top-jlk3.png") left center
     no-repeat;
 }
+
+.ico_game_133 {
+  background: url("@{public_img}/images/common/icon-top-11x5.png") left center
+}
+.ico_game_220 {
+  background: url("@{public_img}/images/common/icon-top-fc3d.png") left center
+    no-repeat;
+}
 .video {
   background-image: url("@{public_img}/images/common/icon/pc-auto.png?v=3434");
   background-repeat: no-repeat;
@@ -1248,7 +1340,7 @@ export default {
   animation-duration: 1.3s;
 }
 
-.ten_result_ +  { 
+.ten_result_ +  {
   color: red;
 }
 .activ1e {
@@ -1263,7 +1355,7 @@ export default {
   background-color: #000;
   /* opacity: 0.5; */
   z-index: 888;
-  background: rgba(0, 0, 0, .5); 
+  background: rgba(0, 0, 0, .5);
 }
 .ten-content {
   position: fixed;
@@ -1749,6 +1841,24 @@ export default {
   float: left;
   line-height: 32px;
   box-shadow: none;
+}
+
+.gd11x5 .balls span{
+  border-radius: 50%;
+  background:url('../../static/images/common/blue_ball.png') no-repeat center center;
+  background-size: 100%;
+  color: black;
+  font-size: 16px;
+}
+
+.gd11x5 .openData .nums .habi1{
+  width: 10px;
+}
+
+#ten_result_133  .time+td span:not(.feiche){
+  background:url('../../static/images/common/blue_ball.png') no-repeat center center;
+  background-size: 100%;
+  color: black
 }
 
 </style>

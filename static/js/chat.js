@@ -36,6 +36,9 @@ if (getApiName()) {
 		case "ali":
 			websiteCode = "45f46fa5a0371dc655d17e99fcfe5c68";
 			break;
+		case "618cp":
+			websiteCode = "db5bc06fea53b0f352445c1c708defdf";
+			break;
 	}
 }
 

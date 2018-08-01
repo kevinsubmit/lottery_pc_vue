@@ -77,7 +77,7 @@ export default {
   methods: {
     getBalance () {
       let params={};
-      
+
       getApiName()=='hg'?params.sports = 1:'';
       this.$http.post('/getinfo/money', JSON.stringify(params)).then(res => {
         if (res.data.msg == "4001") {
@@ -138,7 +138,7 @@ export default {
       for (let j = 0; j < this.betInfo.length; j++) {
         this.betInfo[j].betmoney = parseInt(this.inputMoney);
       }
-    
+
       let loadingInstance = Loading.service({background:'rgba(0, 0, 0, 0.5)'});
        delete this.betInfo[0].number1;
       this.$http.post('/inup', JSON.stringify(this.betInfo[0])).then(res => {
@@ -152,7 +152,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -164,7 +164,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -175,7 +175,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -186,7 +186,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -197,7 +197,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -208,7 +208,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -219,7 +219,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -230,7 +230,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -241,7 +241,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -252,7 +252,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -263,7 +263,7 @@ export default {
               timer: 1200,
             })
             .then(function (response) {
-              
+
             }).catch(e => {
                 console.log(e)
             })
@@ -296,7 +296,9 @@ export default {
 }
 .modal-content ul {
     padding: 10px;
+		min-height: 90px;
     max-height: 280px;
+		overflow-x: hidden;
     overflow-y: auto;
 }
 .modal-content .btnbetOrder {

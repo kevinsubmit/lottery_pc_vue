@@ -67,4 +67,12 @@ export default {
     opacity: 1;
   }
 }
+/*选中玩法时的颜色*/
+#app .active-color{
+	background-color: #ffd194;
+}
+/*悬停玩法时的颜色*/
+.hover-color:hover{
+	background-color: #e1e1e1;
+}
 </style>

@@ -8,7 +8,7 @@ Vue.component(
 );
 // 6686富豪平台的入口页面
 Vue.component(
-	"sd-ag-game", (resolve) => {
+	"sd-ag-game", () => {
 		return import("../pages/Platform/sd/ag");
 	}
 );
@@ -22,7 +22,7 @@ Vue.component(
 
 // 6686富豪平台的世界杯体育游戏入口
 Vue.component(
-	"sd-sport-game", (resolve) => {
+	"sd-sport-game", () => {
 		return import("../pages/Platform/sd/worldCup");
 	}
 );
@@ -39,5 +39,27 @@ Vue.component(
 Vue.component(
 	"sd-fish-game", () => {
 		return import("../pages/Platform/sd/fish");
+	}
+);
+
+
+// 弹出层
+Vue.component(
+	"mask-layer", () => {
+		return import("../components/common/maskLayer.vue");
+	}
+);
+
+// confirm组件
+Vue.component(
+	"confirm", () => {
+		return import("../components/common/confirm.vue");
+	}
+);
+
+// 数字输入框组件
+Vue.component(
+	"input-number", () => {
+		return import("../components/common/inputNumber.vue");
 	}
 );

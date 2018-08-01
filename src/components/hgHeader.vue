@@ -5,14 +5,14 @@
         <router-link to="/home"></router-link>
       </h1>
       <ul class="nav f-l clearfix">
-        <li v-show="getApiName!='ly'" :style="item.title=='真人视讯'?{color:'#fff!important',fontWeight:700}:''" v-for="(item,index) in gameNavs" v-if="(getApiName=='ct'||getApiName=='agcai')&&item.title=='官方开奖'?false:(getApiName=='hg'&&item.title=='存取记录')||(getApiName=='hg'&&item.title=='真人视讯')?false:true" @click="goAddress(item.gamePath)" :class='{active:(pathRoute.indexOf("Games") >= 0 && item.gamePath.indexOf("Games") >= 0)==1||(pathRoute.indexOf("notice") >= 0 && item.gamePath.indexOf("notice") >= 0)==1||(pathRoute.indexOf("record") >= 0 && item.gamePath.indexOf("record") >= 0)==1||item.gamePath==pathRoute}'>
+        <li v-show="getApiName!='ly'&&getApiName!='yiteng'" :style="item.title=='真人视讯'?{color:'#fff!important',fontWeight:700}:''" v-for="(item,index) in gameNavs" v-if="(getApiName=='ct'||getApiName=='agcai')&&item.title=='官方开奖'?false:(getApiName=='hg'&&item.title=='存取记录')||(getApiName=='hg'&&item.title=='真人视讯')?false:true" @click="goAddress(item.gamePath)" :class='{active:(pathRoute.indexOf("Games") >= 0 && item.gamePath.indexOf("Games") >= 0)==1||(pathRoute.indexOf("notice") >= 0 && item.gamePath.indexOf("notice") >= 0)==1||(pathRoute.indexOf("record") >= 0 && item.gamePath.indexOf("record") >= 0)==1||item.gamePath==pathRoute}'>
           {{item.title}}
         </li>
-        <li v-show="getApiName=='ly'" :style="item.title=='真人视讯'?{color:'#fff!important',fontWeight:700}:''" v-for="(item,index) in gameNavs" v-if="(getApiName=='ct'||getApiName=='agcai')&&item.title=='官方开奖'?false:(getApiName=='hg'&&item.title=='存取记录')||(getApiName=='hg'&&item.title=='真人视讯')?false:true" @click="goAddress(item.gamePath)" :class='{active:(pathRoute.indexOf("Games") >= 0 && item.gamePath.indexOf("Games") >= 0)==1||(pathRoute.indexOf("notice") >= 0 && item.gamePath.indexOf("notice") >= 0)==1||(pathRoute.indexOf("record") >= 0 && item.gamePath.indexOf("record") >= 0)==1||item.gamePath==pathRoute}'>
+        <li v-show="getApiName=='ly'||getApiName=='yiteng'" :style="item.title=='真人视讯'?{color:'#fff!important',fontWeight:700}:''" v-for="(item,index) in gameNavs" v-if="(getApiName=='ct'||getApiName=='agcai')&&item.title=='官方开奖'?false:(getApiName=='hg'&&item.title=='存取记录')||(getApiName=='hg'&&item.title=='真人视讯')?false:true" @click="goAddress(item.gamePath)" :class='{active:(pathRoute.indexOf("Games") >= 0 && item.gamePath.indexOf("Games") >= 0)==1||(pathRoute.indexOf("notice") >= 0 && item.gamePath.indexOf("notice") >= 0)==1||(pathRoute.indexOf("record") >= 0 && item.gamePath.indexOf("record") >= 0)==1||item.gamePath==pathRoute}'>
           {{item.title}}
         </li>
-        <li v-show="getApiName=='ly'&&moreNavs.length">
-          <el-dropdown style="color:#FBA117!important" trigger="click" @command="handleMoreClick">
+        <li v-show="(getApiName=='ly'||getApiName=='yiteng')&&moreNavs.length">
+          <el-dropdown :style="setDropDownColor()" trigger="click" @command="handleMoreClick">
             <span class="el-dropdown-link">
               更多
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -151,11 +151,40 @@ export default {
       sportUrl: "",
       mgUrl: "",
       moreNavs: [],
-      navs: []
-      // gameNavs1:
+      navs: [],
+      gameNavs1  :{
+        260: "/Games/race",                   
+        270:"/Games/jslh",
+        240:"/Games/jssc",
+        250:"/Games/jsssc",
+        210: "/Games/veniceRowing",
+        46: "/Games/roma",
+        51:"/Games/pk10",
+        2:"/Games/cqssc",
+        69:"/Games/markSix",                   
+        160:"/Games/pcegg",
+        171:"/Games/luckyAirship",
+        3:"/Games/happyTen",
+        47:"/Games/luckFarm",
+        172: "/Games/jsks",
+        180:"/Games/bjkl8",
+        280:"/Games/jlk3",
+        4:"sport",
+        5:"fish",
+        1:"ag",
+        7:"mg"
+    }, 
+    sorts:[],   
     };
   },
   created() {
+    // if(sessionStorage.getItem("im_token")){
+    //   let sorts = sessionStorage.getItem("sort")
+    //   let sor = sorts.split(",")
+    //   this.sorts = this.gameNavs1[sor[0]]
+    //   let so = "/#"+this.sorts
+    //   console.log(so)
+    // }
     // this.oid_all();
     // this.getBalance();
     this.getApiName == "sd" &&
@@ -192,6 +221,12 @@ export default {
       if(this.getApiName == 'tt'){
         this.gameNavs.splice(1, 7);
       }
+      if(this.getApiName == '618cp'){
+        this.gameNavs.push({ title: "在线客服", gamePath: "serv" });
+      }
+      if(this.getApiName == 'yiteng'){
+        this.gameNavs.splice(1, 1);
+      }
       /*
       // 所有入口先去掉 游戏大厅入口  20180523 by 华少
       if(this.getApiName == "uc"){
@@ -204,10 +239,10 @@ export default {
         this.gameNavs = navs;
         this.gameNavs.splice(0, 7);
         this.gameNavs.splice(8, 1);
-        if (this.getApiName == "agcai" || this.getApiName == "ct"||this.getApiName == "yile" || this.getApiName == "fulicai"||this.getApiName == "crown" ) {
+        if (this.getApiName == "agcai" || this.getApiName == "ct"||this.getApiName == "yile" || this.getApiName == "fulicai"||this.getApiName == "crown"||this.getApiName == "618cp"||this.getApiName == "ylh"||this.getApiName == "yy"||this.getApiName == "yiteng"||this.getApiName == "letian" ) {
           this.gameNavs.splice(-2, 1);
         }
-        if (this.getApiName == "tt" || this.getApiName == "gd"||this.getApiName == "fulicai" || this.getApiName == "yile"||this.getApiName == "crown") {
+        if (this.getApiName == "tt" || this.getApiName == "gd"||this.getApiName == "fulicai" || this.getApiName == "yile"||this.getApiName == "crown"||this.getApiName == "618cp"||this.getApiName == "ylh"||this.getApiName == "yy"||this.getApiName == "yiteng") {
           this.gameNavs.push({ title: "游戏规则", gamePath: "/rules" });
         }
       } else {
@@ -218,10 +253,10 @@ export default {
           this.gameNavs.push({ title: "抢红包雨", gamePath: "/bonus" });
           this.gameNavs.push({ title: "充值返水", gamePath: "/returnWater" });
         }
-        if (this.getApiName == "gd") {
-          this.gameNavs.push({ title: "游戏规则", gamePath: "/rules" });
-        }
-         if (this.getApiName == "agcai" || this.getApiName == "ct"||this.getApiName == "yile" || this.getApiName == "fulicai"||this.getApiName == "crown" ) {
+        // if (this.getApiName == "gd") {
+        //   this.gameNavs.push({ title: "游戏规则", gamePath: "/rules" });
+        // }
+         if (this.getApiName == "agcai" || this.getApiName == "ct"||this.getApiName == "yile" || this.getApiName == "fulicai"||this.getApiName == "crown"||this.getApiName == "618cp"||this.getApiName == "ylh"||this.getApiName == "yy"||this.getApiName == "letian") {
           this.gameNavs.splice(-2, 1);
         }
         if (this.getApiName == "yiren") {
@@ -233,23 +268,25 @@ export default {
             this.gameNavs.push({ title: "加盟合作", gamePath: "/agent" });
           // this.gameNavs.push({ title: "在线客服", gamePath: "/sevie" });
         }
-        if (this.getApiName == "tt" || this.getApiName == "gd"||this.getApiName == "fulicai" || this.getApiName == "yile"||this.getApiName == "crown" ) {
+        if (this.getApiName == "tt" || this.getApiName == "gd"||this.getApiName == "fulicai" || this.getApiName == "yile"||this.getApiName == "crown"||this.getApiName == "618cp"||this.getApiName == "ylh"||this.getApiName == "yy"||this.getApiName == "yiteng" ) {
+          console.log('debug gameNavs=', this.gameNavs);
           this.gameNavs.push({ title: "游戏规则", gamePath: "/rules" });
+          console.log('debug gameNavs1=', this.gameNavs);
         }
         if (this.getApiName == "ly") {
-          var theuser = [
-            "hugo111",
-            "hugo555",
-            "xiaowen",
-            "xiaocao111",
-            "xiaoxuan001",
-            "xiaoxuan002"
-          ];
           this.gameNavs.push(
             { title: "游戏规则", gamePath: "/rules" },
             { title: "优惠活动", gamePath: "/notice:notices" },
             // { title: "在线客服", gamePath: "call" },
-            { title: "加盟合作", gamePath: "/agent" }
+            { title: "加盟合作", gamePath: "/agent" },
+            { title: "DNS教程", gamePath: "dns" }
+          );
+        }
+        if(this.getApiName=="yiteng"){
+          this.gameNavs.push(
+            { title: "优惠活动", gamePath: "/notice:notices" },
+            { title: "加盟合作", gamePath: "/agent" },
+            { title: "DNS教程", gamePath: "dns" }
           );
         }
       }
@@ -274,7 +311,7 @@ export default {
     }
 
     //乐盈单独处理
-    if (this.getApiName == "ly") {
+    if (this.getApiName == "ly"||this.getApiName=="yiteng") {
       this.gameNavs.forEach((item, index) => {
         if (item.title === "首页") {
           this.gameNavs.splice(index, 1);
@@ -287,7 +324,6 @@ export default {
       }
     }
     this.pathRoute = this.$route.path;
-
     if (sessionStorage.getItem("serviceUrl")) {
       this.csUrl = sessionStorage.getItem("serviceUrl");
     } else {
@@ -325,11 +361,24 @@ export default {
       if (this.$router.path != "/home") {
         this.$router.push({
           path: "/Games/race"
+          // path: this.sorts
         });
       }
     }
   },
   methods: {
+    setDropDownColor(){
+      /* 设置下拉更多的字体颜色 */
+      if(this.getApiName=='ly'){
+        return {
+          color:'#FBA117'
+        }
+      }else{
+        return {
+          color:'white'
+        }
+      }
+    },
     handleMoreClick(path) {
       this.goAddress(path);
     },
@@ -417,6 +466,14 @@ export default {
             sessionStorage.setItem("im_username", res.data.username);
             sessionStorage.setItem("im_realname", res.data.realname);
             sessionStorage.setItem("im_telphone", res.data.telphone);
+            // 重新加载赔率
+            if (
+              localStorage.getItem('odds_version') &&
+              res.data.rate_version != localStorage.getItem('odds_version')
+            ) {
+              localStorage.clear()
+            }
+            localStorage.setItem('odds_version', res.data.rate_version)
             this.$store.commit('setToken', res.data.oid);
             this.$store.commit("updatelotteryMoney", res.data.money);
           } else {
@@ -512,11 +569,14 @@ export default {
       }
     },
     listenAgree(msg) {
+      console.log(this.sorts)
       if (msg === "agree") {
         this.isShowAgreement = false;
         this.agree = true;
         sessionStorage.setItem("agree", "true");
         sessionStorage.getItem("im_username") === "游客"
+          // ? this.$router.push(this.sorts)
+          // : (this.$window.location.href = "/#/Games/race");
           ? this.$router.push("/Games/race")
           : (this.$window.location.href = "/#/Games/race");
       } else if (msg === "disagree") {
@@ -574,6 +634,14 @@ export default {
             "im_token"
           )}`
         );
+        return;
+      }
+      if (path == "dns") {
+        window.open('/ios.html');
+        return;
+      }
+      if (path == "serv") {
+        window.open('https://static.meiqia.com/dist/standalone.html?_=t&eid=105102');
         return;
       }
       if (path == "kaijiang") {
@@ -956,6 +1024,10 @@ header {
 }
 .ico-my-phone {
   background: url("@{public_img}/images/common/icon/ico-my-phone.png");
+}
+.ico-my-union {
+  background: url("@{public_img}/images/common/icon/ico-my-yl.png");
+  background-size: 100% 100%;
 }
 .ico-my-news {
   background: url("@{public_img}/images/common/icon/ico-my-news.png") no-repeat;

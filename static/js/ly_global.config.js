@@ -7,6 +7,6 @@
     return "乐盈彩票";
   };
   g.getKaijiangwang = function() {
-     return "https://www.87111.com/";
+     return "http://www.87111.com/";
   };
 })(window);

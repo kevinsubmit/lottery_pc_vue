@@ -13,55 +13,55 @@
             :picker-options="pickerOptions">
         </el-date-picker>
         </h3>
-    </nav>    
+    </nav>
     <div class="resultHistory common-content">
         <div class="bj" @click='hideTitle'>
             <div class="header-is-active toop">
                 <div class="header-modal-content" :class="{a:true}">
-                    <el-tabs v-model="select" @tab-click="changUrl">
+                    <el-tabs v-model="select" @tab-click="changUrl" ref="elTabs">
                     <el-tab-pane v-for="(value,index) in navdata" :label="gameNav[value].name" :key="index" :name="value"></el-tab-pane>
                     </el-tabs>
                 </div>
             </div>
-            
+
             <div class="biao">
                 <table class="result-new" v-if = "iswating">
                     <tr>
                     <th>开奖时间</th> 
                     <th>开奖期数</th> 
-                    <th v-if ="urlId==69||urlId==270||urlId==172||urlId==280">开奖号码</th>
-                    <th v-if ="urlId!=69&&urlId!=270&&urlId!=172&&urlId!=280">
+                    <th v-if ="urlId==69||urlId==270||urlId==172||urlId==280||urlId==220">开奖号码</th>
+                    <th v-if ="urlId!=69&&urlId!=270&&urlId!=172&&urlId!=280&&urlId!=220">
                         <span @click='haoma1' :class='{active:haoma}'  class="tb-tab-bar"  style='' >显示号码</span>
                         <span @click='daxiao1' :class='{active:daxiao}' class="tb-tab-bar" style='margin:0 20px'>显示大小</span>
                         <span @click='danshuang1' :class='{active:danshuang}' class="tb-tab-bar" style=''>显示单双</span>
                         <span @click="tabTotalHandler" v-if="urlId==180" :class='{active:tbTotal}' class="tb-tab-bar" style='margin:0 20px'>总和</span>
                         <span @click="tabNumberHandler" v-if="urlId==180" :class='{active:tbRateNum}' class="tb-tab-bar" >比数量</span>
-                    </th> 
+                    </th>
                     <!-- <th v-if = "urlId==160">和值</th>
                     <th v-if = "urlId==160">特码</th> -->
                     <!-- 北京赛车 -->
-                    <th v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260">冠亚和</th> 
-                    <th v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260">1-5球</th> 
+                    <th v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260">冠亚和</th>
+                    <th v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260">1-5球</th>
 
                     <!-- 重庆时时彩 -->
-                    <th v-if = "urlId==2||urlId==46||urlId==250">总和</th> 
-                    <th v-if = "urlId==2||urlId==46||urlId==250">龙虎</th> 
+                    <th v-if = "urlId==2||urlId==46||urlId==250||urlId==133">总和</th> 
+                    <th v-if = "urlId==2||urlId==46||urlId==250||urlId==133">龙虎</th> 
 
                     <!-- 广东快乐十分 -->
-                    <th v-if = "urlId==3||urlId==47">总和</th> 
-                    <th v-if = "urlId==3||urlId==47">尾大小</th> 
-                    <th v-if = "urlId==3||urlId==47">1-4球</th> 
+                    <th v-if = "urlId==3||urlId==47">总和</th>
+                    <th v-if = "urlId==3||urlId==47">尾大小</th>
+                    <th v-if = "urlId==3||urlId==47">1-4球</th>
 
                     <!-- 香港彩 -->
-                    <th v-if = "urlId==69||urlId==270">总分</th> 
-                    <th v-if = "urlId==69||urlId==270">生肖</th> 
+                    <th v-if = "urlId==69||urlId==270">总分</th>
+                    <th v-if = "urlId==69||urlId==270">生肖</th>
 
                     <!-- PC蛋蛋 -->
-                    <th v-if = "urlId==160">和值</th>  
+                    <th v-if = "urlId==160">和值</th>
 
                     <!-- 江苏骰宝(快3) -->
-                    <th v-if = "urlId==172||urlId==280">总和</th> 
-                    <th v-if = "urlId==172||urlId==280">鱼虾蟹</th> 
+                    <th v-if = "urlId==172||urlId==280">总和</th>
+                    <th v-if = "urlId==172||urlId==280">鱼虾蟹</th>
 
                     </tr>
                     <tr v-for='(item,index) in lotteryList' :class="urlId==270?'game_69':`game_${urlId}`">
@@ -81,18 +81,21 @@
                             <span class="pd-lr-20">{{frontBehind(item.number.split(','))}}</span>
                             <span class="pd-lr-20">{{singleDoubleSum(item.number.split(','))}}</span>
                         </span>
-                        <span v-show='danshuang' class="result-ball" v-for='i in isNuber(item.number)' v-if = "urlId==180" :class="i % 2 == 0 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{i%2?'单':'双'}}</span>  
-                      
+                        <span v-show='danshuang' class="result-ball" v-for='i in isNuber(item.number)' v-if = "urlId==180" :class="i % 2 == 0 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{i%2?'单':'双'}}</span>
+
                         <!-- pk10 feiting -->
                         <span v-show='haoma' class='feiche' v-for='i in isNuber(item.number)' v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260" :class="`result-ball result-ball_${i}`">{{i}}</span>
                         <span v-show='daxiao' class='feiche' v-for='i in isNuber(item.number)' :style='i>=6?"background:#f9982e":"background:#7f8ab0" ' v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260" :class="`result-ball result-ball_${i}`">{{i>=6?'大':"小"}}</span>
                         <span v-show='danshuang' class='feiche' v-for='i in isNuber(item.number)' :style='i%2?"background:#f9982e":"background:#7f8ab0" ' v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260" :class="`result-ball result-ball_${i}`">{{i%2?'单':'双'}}</span>
                         <!-- cqssc -->
-                        <span v-show='haoma' v-for='i in isNuber(item.number)'  v-if = "urlId==2||urlId==46||urlId==250" :class="`result-ball result-ball_${i}`">{{i}}</span>
-                        <span v-show='daxiao' v-for='i in isNuber(item.number)' :style='i>4?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if = "urlId==2||urlId==46||urlId==250" :class="`result-ball result-ball_${i}`">{{i>4?'大':"小"}}</span>
-                        <span v-show='danshuang' v-for='i in isNuber(item.number)' :style='i%2?"background:#f9982e!important":"background:#7f8ab0!important"'  v-if = "urlId==2||urlId==46||urlId==250" :class="`result-ball result-ball_${i}`">{{i%2?'单':'双'}}</span>
+                        <span v-show='haoma' v-for='i in isNuber(item.number)'  v-if = "urlId==2||urlId==46||urlId==250||urlId==133" :class="`result-ball result-ball_${i}`">{{i}}</span>
+                        <span v-show='daxiao' v-for='i in isNuber(item.number)' :style='i>4?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if = "urlId==2||urlId==46||urlId==250" :class="`result-ball daxiao result-ball_${i}`">{{i>4?'大':"小"}}</span>
+                        <!-- 广东11选5 -->
+                        <span v-show='daxiao' v-for='i in isNuber(item.number)' :style='i>5?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if = "urlId==133" :class="`result-ball daxiao result-ball_${i}`">{{i>5?'大':"小"}}</span>
+                        <span v-show='danshuang' v-for='i in isNuber(item.number)' :style='i%2?"background:#f9982e!important":"background:#7f8ab0!important"'  v-if = "urlId==2||urlId==46||urlId==250||urlId==133" :class="`result-ball danshuang result-ball_${i}`">{{i%2?'单':'双'}}</span>
                         <!-- haapyten -->
                         <span v-show='haoma'  v-for='i in isNuber(item.number)'  v-if = "urlId==3" :class="`result-ball result-ball_${i}`">{{i}}</span>
+                        <span v-show='haoma'  v-for='i in isNuber(item.number)'  v-if = "urlId==220" :class="`result-ball result-ball_${i}`">{{i}}</span>
                         <span  v-show='daxiao' v-for='i in isNuber(item.number)' :style='i>10?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if = "urlId==3" :class="`result-ball result-ball_${i}`">{{i>10?'大':"小"}}</span>
                         <span v-show='danshuang' v-for='i in isNuber(item.number)' :style='i%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if = "urlId==3" :class="`result-ball result-ball_${i}`">{{i%2?'单':'双'}}</span>
                         <!-- lunckfarm -->
@@ -110,7 +113,7 @@
                         <span  v-show='danshuang'  v-for='i in isNuber(item.number)' :style='i%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if = "urlId==160" :class="`result-ball result-ball_${i}`">{{i%2?'单':'双'}}</span>
                         <!-- <span  v-if = "urlId==160" :class="`result-ball result-ball_${i}`">{{isSum(item)}} </span> -->
                         <span  v-for='i in isNuber(item.number)' v-if = "urlId==172||urlId==280" :class="`result-ball result-ball_${i}`">{{i}}</span>
-                    </td>                    
+                    </td>
                     <!-- 北京赛车 -->
                     <td v-if = "urlId==51||urlId==171||urlId==210||urlId==240||urlId==260">
                         <ul>
@@ -128,27 +131,27 @@
                         <li>{{parseInt(isNuber(item.number)[4])>parseInt(isNuber(item.number)[5])?'龙':'虎'}}</li>
                         </ul>
                     </td>
-                    
+
                     <!-- 重庆时时彩 -->
-                    <td v-if = "urlId==2||urlId==46||urlId==250">
+                    <td v-if = "urlId==2||urlId==46||urlId==250||urlId==133">
                         <ul>
                             <li>{{isSum(item)}}</li>
                             <li>{{isSum(item)%2=='0'?'双':'单'}}</li>
                             <li>{{isSum(item)>=23?'大':'小'}}</li>
                         </ul>
                     </td>
-                    <td v-if = "urlId==2||urlId==46||urlId==250">
+                    <td v-if = "urlId==2||urlId==46||urlId==250||urlId==133">
                         <ul>
                         <li>{{ssche(isNuber(item.number)[0],isNuber(item.number)[4])}}</li>
                         </ul>
                     </td>
-                    
+
                     <!-- 广东快乐十分 -->
                     <td v-if = "urlId==3||urlId==47">
                         <ul>
                             <li>{{isSum(item)}}</li>
                             <li>{{isSum(item)%2=='0'?'双':'单'}}</li>
-                            <li>{{isSum(item)>=85?'大':'小'}}</li>
+                            <li>{{isSum(item)>=85?'大':isSum(item)==84?'和':'小'}}</li>
                         </ul>
                     </td>
                     <td v-if = "urlId==3||urlId==47">
@@ -164,7 +167,7 @@
                         <li>{{isNuber(item.number)[3]>isNuber(item.number)[4]?'龙':'虎'}}</li>
                         </ul>
                     </td>
-                    
+
                     <!-- 香港彩 -->
                     <td v-if = "urlId==69||urlId==270">
                         <ul>
@@ -178,7 +181,7 @@
                             <li>{{xgcsx(isNuber(item.number)[2], item.round)}}</li>
                             <li>{{xgcsx(isNuber(item.number)[3], item.round)}}</li>
                             <li>{{xgcsx(isNuber(item.number)[4], item.round)}}</li>
-                            <li>{{xgcsx(isNuber(item.number)[5], item.round)}}</li>  
+                            <li>{{xgcsx(isNuber(item.number)[5], item.round)}}</li>
                             <li>{{xgcsx(isNuber(item.number)[6], item.round)}}</li>
 
                         </ul>
@@ -212,7 +215,7 @@
                 </table>
                 <div style='width:1030px;height:678px;' v-show="!iswating">数据加载中...</div>
 
-                <div class="page"> 
+                <div class="page">
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
@@ -221,14 +224,14 @@
                     :page-size="20"
                     layout="total, prev, pager, next, jumper"
                     :total="allnumb">
-                </el-pagination> 
+                </el-pagination>
                 </div>
             </div>
-           
+
         </div>
-        
-    </div>  
-     
+
+    </div>
+
 </div>
 </template>
 
@@ -246,17 +249,17 @@ export default {
       isday:false,
       haoma:true,
       daxiao:false,
-      danshuang:false,   
+      danshuang:false,
       tbTotal:false,
       tbRateNum:false,
-      flag:true,  
+      flag:true,
       show_title: false,    // 显示下拉菜单
       dateyes:'',
       allnumb: 2000, // 当前彩种所有开奖结果历史条数
       currentPage: 1, // 当前页码
       numb: 20, // 每页的数量
       l:null,
-      gameNav: { 
+      gameNav: {
         270:{name:'极速六合彩',code:270,page:'jslh'},
         260:{name:'88赛马',code:260,page:'race'},
         240:{name:'极速赛车',code:240,page:'jssc'},
@@ -272,7 +275,9 @@ export default {
         47:{name:'重庆幸运农场',code:47,page:'luckFarm'},
         172:{name:'江苏骰宝(快3)',code:172,page:'jsks'},
         180: { name: "北京快乐8", code: 180, page: "bjkl8" },
-        280: { name: "吉林快3", code: 280, page: "jlk3" }              
+        280: { name: "吉林快3", code: 280, page: "jlk3" },
+        220: { name: "福彩3D", code: 220, page: "fucai3D" },
+        133: { name: "广东11选5", code: 133, page: "gd11x5" }              
       },
       navdata:null,
       lotteryList: [],
@@ -300,7 +305,7 @@ export default {
             if(sort[i] in this.gameNav){
               a.push(sort[i])
             }
-          } 
+          }
           this.navdata=a;
       });
     },
@@ -339,9 +344,9 @@ export default {
       event.stopPropagation()
     },
     //切换每页显示的数据
-    handleSizeChange(val) { 
+    handleSizeChange(val) {
       this.iswating=false;
-      this.lotteryList =null;  
+      this.lotteryList =null;
       this.getData (val,1,this.pcDate);
        event.stopPropagation()
     },
@@ -401,25 +406,25 @@ export default {
           sixnumber.forEach((element, i) => {
           if(element.numbers.indexOf(sx) != -1){
               zodiac = element.animal;
-            }        
+            }
           });
         }
         else
         {
-          this.$http.post("/user/getMarkSixNumbers").then(res => {  
+          this.$http.post("/user/getMarkSixNumbers").then(res => {
             if(res.data) {
               cacheGame('sixnumber', res.data);
             }
             res.data.forEach((element, i) => {
                 if(element.numbers.indexOf(sx) != -1){
                   zodiac = element.animal;
-                }        
+                }
             });
-          })          
+          })
         }
-        return zodiac;  
+        return zodiac;
       }
-      
+
     },
     isSum(item){
         // console.log(item.number)
@@ -436,7 +441,7 @@ export default {
       if (sum >= 764 && sum <= 855) return '水';
       if (sum >= 856 && sum <= 923) return '火';
       if (sum >= 924 && sum <= 1410) return '土';
-      
+
     },
     frontBehind(nums) {
       if (!nums) return '';
@@ -493,16 +498,16 @@ export default {
       let arr_t=item.number.split(',')
       let last_te= arr_t.pop()
       return last_te;
-    },    
+    },
     showTitle(){
-        this.show_title = !this.show_title;        
+        this.show_title = !this.show_title;
     },
     // 点击任意地方隐藏下拉框
     hideTitle(){
       this.show_title = false;
     },
     isNuber(numberList){
-      return numberList.split(',')      
+      return numberList.split(',')
     },
     getLocalTime(nS) {
       return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
@@ -516,7 +521,7 @@ export default {
         this.danshuang=false;
         this.tbRateNum = false;
         this.tbTotal = false;
-        this.urlId=tab.name  
+        this.urlId=tab.name
         this.getData (20,1)
     },
     getData (number,page,date) {
@@ -525,13 +530,13 @@ export default {
        params.number = number;
        params.page = page;
        params.date = date;
-       this.$http.post(`/user/getResult`, JSON.stringify(params)).then(res => {         
+       this.$http.post(`/user/getResult`, JSON.stringify(params)).then(res => {
          if (res.data.msg == 4001) {
           this.$swal({
-            text: "账户已下线，请重新登陆", 
+            text: "账户已下线，请重新登陆",
             type: "error",
-            timer: 1200, 
-          })        
+            timer: 1200,
+          })
           this.$router.push({path: '/home'})
           return
         }
@@ -541,15 +546,15 @@ export default {
               text: '今日暂未开奖，请选择相应的日期查询',
               type: "error",
               timer: 1200,
-            })           
+            })
          }
           this.allnumb = parseInt(res.data.allnumb);
           this.currentPage = parseInt(res.data.page);
-          this.numb = parseInt(res.data.numb);  
+          this.numb = parseInt(res.data.numb);
           for (let i = 0; i < this.lotteryList.length; i++) {
             this.lotteryList[i].endtime = formatDate(new Date(this.lotteryList[i].endtime * 1000), 'yyyy-MM-dd hh:mm');
           }
-         this.iswating = true 
+         this.iswating = true
        })
     }
   },
@@ -560,7 +565,12 @@ export default {
     this.select = this.urlId
     console.log(this.select)
     this.getData (20,1);
-  }
+  },
+	mounted() {
+		setTimeout(() => {
+			this.$refs.elTabs.$refs.nav.scrollToActiveTab()
+		}, 500)
+	}
 }
 </script>
 
@@ -575,8 +585,8 @@ export default {
 .jsks .ksball_4,
 .jsks .ksball_5,
 .jsks .ksball_6 {
-  background-image: url('/static/images/ct/ico-dice.png');  
-} 
+  background-image: url('/static/images/ct/ico-dice.png');
+}
 #ten_result_172 .ten_result_1,
 .game_172 .result-ball_1,
 #ten_result_280 .ten_result_1,
@@ -633,7 +643,7 @@ export default {
   width:70px;
   background:#b9b9b9;
   border-radius:5px;
-  color:#fff; 
+  color:#fff;
   cursor: pointer;
   height:25px;
   line-height:25px;
@@ -692,7 +702,7 @@ span.plus_tm{
   }
   .bj {
     background-color: #fff;
-    color: #333; 
+    color: #333;
   }
   .header-modal-content ul {
     text-align: left;
@@ -704,18 +714,18 @@ span.plus_tm{
     border-radius: 4px;
     /*height: 25px;*/
     /*line-height: 25px;*/
-    padding: 3px 12px; 
+    padding: 3px 12px;
     color: #333;
     cursor: pointer;
     transition: all ease .5s;
   }
-  table.result-new { 
+  table.result-new {
     width: 100%;
     border: 1px solid #ddd;
-    border-radius: 5px;  
+    border-radius: 5px;
   }
   table.result-new td,
-  table.result-new th { 
+  table.result-new th {
     text-align: center;
     padding: 0 8px!important;
     color: #666;
@@ -727,10 +737,10 @@ span.plus_tm{
     background: rgb(80, 81, 95)!important;
   }
   table.result-new th:first-child {
-    border-top-left-radius: 5px;    
+    border-top-left-radius: 5px;
   }
   table.result-new th:last-child {
-    border-top-right-radius: 5px;    
+    border-top-right-radius: 5px;
   }
   table.result-new tr:nth-child(odd) td {
     background-color: #f8f9fb;
@@ -750,7 +760,7 @@ span.plus_tm{
   }
 .resultHistory .result-ball {
   width: 28px;
-  height: 28px; 
+  height: 28px;
   line-height: 28px;
   font-size: 18px;
   text-align: center;
@@ -766,7 +776,7 @@ span.plus_tm{
   position: absolute;
   right: 45px;
   top: 0;
-}  
+}
 .game_172 .result-ball,.game_280 .result-ball {
   width: 22px;
   height: 22px;
@@ -774,7 +784,7 @@ span.plus_tm{
   font-size: 0;
   border-radius: 5px;
   border: 1px solid #3e80d4;
-} 
+}
 .game_69 .result-ball {
   border-radius: 50%;
 }
@@ -783,11 +793,26 @@ table.result-new .game_172 td li,table.result-new .game_280 td li {
     /*text-align: left;*/
     width: 80px;
 }
-table.result-new .game_171 td li { 
+table.result-new .game_171 td li {
     width: auto;
-} 
+}
 .box-circle {
     border-radius: 50%!important;
     box-shadow: 2px 2px 4px 0px rgba(16, 15, 15, 0.8);
+}
+.game_133 .result-ball {
+  border-radius:50%;
+  background:url('../../static/images/common/blue_ball.png') no-repeat center center;
+  background-size:100% 100%;
+  color:black;
+  font-size:16px;
+}
+
+.game_133 .daxiao{
+  color:white
+}
+
+.game_133 .danshuang{
+  color:white  
 }
 </style>

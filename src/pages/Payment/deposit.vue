@@ -7,16 +7,16 @@
     <div class="pay-methods">
       <el-row :gutter="20">
         <el-col :span="6">
-          <div @click="unionPayOnline?payType('unionPayOnline'):unionPayOffline?payType('unionPayOffline'):''" class="grid-content bg-purple" id="unionPay" style="cursor:pointer;">
+          <div @click="bankPayOnline?payType('bankPayOnline'):bankPayOffline?payType('bankPayOffline'):''" class="grid-content bg-purple" id="unionPay" style="cursor:pointer;">
             <img :src="$getPublicImg('/images/common/icon/withdraw-unionpay.png')" class="ico">
-            <h5>银联支付</h5>
+            <h5>网银支付</h5>
           </div>
           <div class="btn-unionPay">
-            <button @click="payType('unionPayOnline')" v-if="unionPayOnline">网银支付</button>
-            <button class="closed" v-else="unionPayOnline">网银支付</button>
+            <button @click="payType('bankPayOnline')" v-if="bankPayOnline">网银支付</button>
+            <button class="closed" v-else="bankPayOnline">网银支付</button>
 
-            <button @click="payType('unionPayOffline')" v-if="unionPayOffline">银行转账</button>
-            <button class="closed" v-else="unionPayOffline">银行转账</button>
+            <button @click="payType('bankPayOffline')" v-if="bankPayOffline">银行转账</button>
+            <button class="closed" v-else="bankPayOffline">银行转账</button>
 
           </div>
         </el-col>
@@ -77,7 +77,7 @@
           </div>
         </el-col>
 
-        <el-col v-show="getApiName == 'agcai'" :span="6">
+        <el-col v-show="getApiName == 'agcai'||getApiName == 'yiteng'||getApiName == 'ly'" style="display:block" :span="6">
           <div @click="jdPayOnline?payType('jdPayOnline'):jdPayOffline?payType('jdPayOffline'):''" class="grid-content bg-purple" id="wechatPay" style="background-color:#bd282e ;cursor:pointer;">
             <img :src="$getPublicImg('/images/common/icon/withdraw-jdpay.png')" class="ico">
             <h5>京东支付</h5>                        
@@ -90,6 +90,21 @@
             <button class="closed" v-else="jdPayOffline">京东线下</button>
           </div>
         </el-col>
+
+        <el-col v-show="getApiName == 'agcai'||getApiName == 'yiteng'||getApiName == 'ly'" style="display:block" :span="6">
+          <div @click="unionPayOnline?payType('unionPayOnline'):unionPayOffline?payType('unionPayOffline'):''" class="grid-content bg-purple" id="wechatPay" style="background-color:#3e6798 ;cursor:pointer;">
+            <img :src="$getPublicImg('/images/common/icon/withdraw-yinlian.png')" class="ico">
+            <h5>银联支付</h5>                        
+          </div>
+          <div class="btn-wechatPay">
+            <button @click="payType('unionPayOnline')"  v-if="unionPayOnline">银联支付</button>
+            <button class="closed" v-else="unionPayOnline">银联支付</button>
+
+            <button @click="payType('unionPayOffline')"  v-if="unionPayOffline">银联线下</button>
+            <button class="closed" v-else="unionPayOffline">银联线下</button>
+          </div>
+        </el-col>
+
       </el-row>
     </div>
     <div class="tips">
@@ -108,18 +123,22 @@ export default {
     return {
       getApiName: getApiName(),
       active: 0,
-      unionPayOnline: false,
-      unionPayOffline: false,
+      bankPayOnline: false,
+      bankPayOffline: false,
       aliPayOnline: false,
       aliPayOffline: false,
       wechatPayOnline: false,
       jdPayOnline: false,
+      unionPayOnline:false,
       wechatPayOffline: false,
       jdPayOffline: false,
+      unionPayOffline: false,
       tenPayOnline: false,
       tenPayOffline: false,
       yunPay: false,
-      scanPay: false
+      scanPay: false,
+      pay_ps:'',
+      pay_off:''
     };
   },
   created() {
@@ -150,7 +169,7 @@ export default {
       let oid_info = sessionStorage.getItem("im_token");
       params.oid = oid_info;
 
-      this.$http.post("/user/payin", JSON.stringify(params)).then(res => {
+      this.$http.post("/user/newPayin", JSON.stringify(params)).then(res => {
         if (res.data.msg == "4001") {
           this.$swal({
             text: "账户已下线，请重新登陆",
@@ -164,85 +183,79 @@ export default {
           });
           return;
         }
-
-        if (
-          res.data.online_unionpayU != undefined &&
-          res.data.online_unionpayU.length != 0
-        ) {
-          this.scanPay = true;
+        let pay_online = res.data.online_pay_limit;
+        let pay_onoff = res.data.linedown_pay_limit;
+        for (let i = 0; i < pay_online.length; i++) {
+          this.pay_ps = pay_online[i].pay_type
+          switch (this.pay_ps) {
+            //网银
+            case '0':
+              this.bankPayOnline = true;
+              break;
+            //支付宝
+            case '1':
+              this.aliPayOnline = true;
+              break;
+            //微信
+            case '2':
+              this.wechatPayOnline = true;
+              break;
+            //财付通
+            case '3':
+              this.tenPayOnline = true;
+              break;
+            //快捷
+            case '4':
+              this.yunPay = true;
+              break;
+            //银联
+            case '6':
+              this.unionPayOnline = true;
+              break;
+            //京东
+            case '7':
+              this.jdPayOnline = true;
+              break;
+            default:
+              break;
+          }
         }
-
-        if (
-          res.data.online_quickpay != undefined &&
-          res.data.online_quickpay.length != 0
-        ) {
-          this.yunPay = true;
-        }
-        if (
-          res.data.alipay_array != undefined &&
-          res.data.alipay_array.length != 0
-        ) {
-          this.aliPayOffline = true;
-        }
-
-        if (
-          res.data.wechat_array != undefined &&
-          res.data.wechat_array.length != 0
-        ) {
-          this.wechatPayOffline = true;
-        }
-
-        if (
-          res.data.jdpay_array != undefined &&
-          res.data.jdpay_array.length != 0
-        ) {
-          this.jdPayOffline = true;
-        }
-
-        if (
-          res.data.bankpay_array != undefined &&
-          res.data.bankpay_array.length != 0
-        ) {
-          this.unionPayOffline = true;
-        }
-
-        if (res.data.cft_array != undefined && res.data.cft_array.length != 0) {
-          this.tenPayOffline = true;
-        }
-
-        if (
-          res.data.online_bankU != undefined &&
-          res.data.online_bankU.length != 0
-        ) {
-          this.unionPayOnline = true;
-        }
-
-        if (
-          res.data.online_alipayU != undefined &&
-          res.data.online_alipayU.length != 0
-        ) {
-          this.aliPayOnline = true;
-        }
-
-        if (
-          res.data.online_wechatU != undefined &&
-          res.data.online_wechatU.length != 0
-        ) {
-          this.wechatPayOnline = true;
-        }
-
-        if (
-          res.data.online_jdpayU != undefined &&
-          res.data.online_jdpayU.length != 0
-        ) {
-          this.jdPayOnline = true;
-        }
-
-        if (
-          res.data.online_cftU != undefined &&
-          res.data.online_cftU.length != 0
-        ) {
-          this.tenPayOnline = true;
+        //线下
+        for (let i = 0; i < pay_onoff.length; i++) {
+          this.pay_off = pay_onoff[i].pay_type
+          console.log(this.pay_off)
+          switch (this.pay_off) {
+            //网银
+            case '0':
+              this.bankPayOffline = true;
+              break;
+            //支付宝
+            case '1':
+              this.aliPayOffline = true;
+              break;
+            //微信
+            case '2':
+              this.wechatPayOffline = true;
+              break;
+            //财付通
+            case '3':
+              this.tenPayOffline = true;
+              break;
+            //快捷
+            case '4':
+              this.scanPay = true;
+              break;
+            //银联
+            case '6':
+              this.unionPayOffline = true;
+              break;
+            //京东
+            case '7':
+              this.jdPayOffline = true;
+              break;
+            default:
+              break;
+          }
         }
       });
     },
@@ -252,7 +265,7 @@ export default {
       let oid_info = sessionStorage.getItem("im_token");
       params.oid = oid_info;
 
-      this.$http.post("/user/payin", JSON.stringify(params)).then(res => {
+      this.$http.post("/user/newPayin", JSON.stringify(params)).then(res => {
         if (res.data.msg == "4001") {
           this.$router.push({
             path: "/home"

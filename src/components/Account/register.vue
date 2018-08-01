@@ -217,6 +217,12 @@
                 setTimeout(() => {
                   this.isHao = false
                 }, 600);
+              }else if(res.data.msg == 2011) {
+                this.showCurtion = false
+                this.$message(res.data.resmsg);
+                setTimeout(() => {
+                  this.isHao = false
+                }, 600);
               }  else if(res.data.msg == 2003) {
                 this.showCurtion = false
                 // this.title = "注册失败"
@@ -293,6 +299,14 @@
                       this.$store.commit('updatelotteryMoney',res.data.money)
                       sessionStorage.setItem('im_username',res.data.username)
                       sessionStorage.setItem('im_realname',res.data.realname)
+                      // 重新加载赔率
+                      if (
+                        localStorage.getItem('odds_version') &&
+                        res.data.rate_version != localStorage.getItem('odds_version')
+                      ) {
+                        localStorage.clear()
+                      }
+                      localStorage.setItem('odds_version', res.data.rate_version)
                       this.$store.commit('setToken', res.data.oid)
                       this.$emit('doClose', 'sucess');
                       this.isShowAgree ();

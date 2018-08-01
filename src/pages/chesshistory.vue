@@ -4,48 +4,69 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
 
         <el-tab-pane label="历史汇总" name="all" v-if="!isDemo">
+          <h5><span>ALL</span>全部游戏&nbsp;已结</h5>
+          <el-table :data="list" stripe style="width: 100%;" class='hui' @row-click="redirectYijie">
 
-          <h5>
-            <span>ALL</span>全部游戏&nbsp;已结</h5>
-          <el-table :data="list" stripe style="width: 100%;" class='hui'>
+            <!--<el-table-column label="注单号" prop="uid">
+            </el-table-column>-->
 
-            <el-table-column label="游戏名称" prop="gname">
+						<!--<el-table-column label="游戏名称" prop="gname">
+						</el-table-column>-->
+
+						<el-table-column label="交易日期" prop="date">
+						</el-table-column>
+
+            <el-table-column label="游戏总局数" prop="num">
             </el-table-column>
 
-            <el-table-column label="游戏总局数" prop="nums">
+            <el-table-column label="输赢总额">
+							<template slot-scope="scope">
+								<span :class="{'red': scope.row.inc_total < 0}">{{ scope.row.total }}</span>
+							</template>
             </el-table-column>
 
-            <el-table-column label="总输赢" prop="inc_total">
-            </el-table-column>
-
-            <el-table-column label="总抽税" prop="inc_rev">
+            <el-table-column label="总抽税" prop="rev">
             </el-table-column>
 
           </el-table>
 
+					<div v-if="list.length" class="page">
+						<el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="16" layout="total, prev, pager, next, jumper" :total="allnumb">
+						</el-pagination>
+					</div>
         </el-tab-pane>
+
         <el-tab-pane label="今日已结" name="yijie">
           <el-table :data="yijie" stripe style="width: 100%">
 
-            <el-table-column label="游戏名称" prop="gname">
-            </el-table-column>
+						<el-table-column label="游戏局数编号" prop="id">
+						</el-table-column>
 
-            <el-table-column label="注单时间" prop="time">
-            </el-table-column>
+						<el-table-column label="游戏名称" prop="gname">
+						</el-table-column>
 
-            <el-table-column label="抽税金额" prop="rev">
-            </el-table-column>
+						<el-table-column label="下注时间" prop="time">
+						</el-table-column>
 
-            <el-table-column label="结算金额" prop="inc">
-            </el-table-column>
+						<!--<el-table-column label="游戏总局数" prop="id">
+						</el-table-column>-->
+
+						<el-table-column label="输赢结果" prop="inc">
+							<template slot-scope="scope">
+								<span :class="{'red': scope.row.inc < 0}">{{ scope.row.inc }}</span>
+							</template>
+						</el-table-column>
+
+						<el-table-column label="抽税金额" prop="rev">
+						</el-table-column>
 
           </el-table>
 
-          <div class="page">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChangeYijie" :current-page="currentPage2" :page-sizes="[16, 32, 64]" :page-size="16" layout="total, prev, pager, next, jumper" :total="allnumb2">
+          <div v-if="yijie.length" class="page">
+            <!--<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChangeYijie" :current-page="currentPage2" :page-size="20" layout="total, prev, pager, next, jumper" :total="allnumb2">-->
+            <el-pagination @current-change="handleCurrentChangeYijie" :current-page.sync="currentPage2" :page-size="16" layout="total, prev, pager, next, jumper" :total="allnumb2">
             </el-pagination>
           </div>
-
         </el-tab-pane>
 
       </el-tabs>
@@ -56,6 +77,8 @@
 
 
 <script>
+import moment from 'moment'
+
 export default {
   data() {
     return {
@@ -73,49 +96,54 @@ export default {
       weijie: [],
       yijie: [],
       histroywj: [],
-      list: []
+      list: [],
+			selectedDate: '',// "历史汇总"跳到"今日已结"所选择的日期
     };
   },
   created() {
     if (sessionStorage.getItem("im_username") === "游客") {
       this.isDemo = true;
-      this.activeName = "weijie";
-      this.getYijie(1, 16);
+      this.activeName = "yijie";
+      // this.getYijie(1, 16);
+			this.getTotalData()
     } else {
-      this.getYijie(1, 16);
+      // this.getYijie(1, 16);
+			this.getTotalData()
     }
   },
   methods: {
     dianji() {
       // alert(111)
     },
+		// 跳转到对应日期的已结账单
     redirectYijie(data) {
-      let newDate = data.dateTime;
+      let newDate = data.date;
       newDate = newDate.split("-")[0];
       // console.log( new Date(data.dateTime).getTime())
       this.activeName = "yijie";
-      this.getYijie(1, 16, queryDate);
-      this.$router.replace({
+      this.getYijie(1, 16, data.date);
+      /*this.$router.replace({
         name: "chesshistory",
-        query: { pages: 1, time: queryDate / 1000 }
-      });
+        query: { pages: 1}
+      });*/
     },
+		// 历史汇总
     getTotalData() {
       let params = {};
-      
-      
+
+
       params.is_total = 1;
       this.$http
-        .post("/Wh_H5_Api/SearchGameRecord", JSON.stringify(params))
+        .post("/Wh_APP_Api/SearchGameRecord", JSON.stringify(params))
         .then(res => {
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$swal({
               text: "账户已下线，请重新登陆",
               type: "error",
               timer: 1200
             })
-              .then(function(response) {})
-              .catch(e => {});
+
             this.$router.push({
               path: "/home"
             });
@@ -125,11 +153,19 @@ export default {
             // arys1=riqi.split('-');     //日期为输入日期，格式为 2013-3-10
             // var ssdate=new Date(arys1[0],parseInt(arys1[1]-1),arys1[2]);
             // ssdate.getDay()  //就是你要的星期几
-            this.allHasClose = res.data.data;
-            for (let i in this.allHasClose) {
-              this.list = res.data.data[i].content;
+						let records = res.data.data
+            this.allHasClose = records;
+						// 手动累加计算总局数，输赢金额，抽税金额的值
+						records.forEach(item => {
+							item.total = _.reduce(item.content, (sum, obj) => sum + obj.inc_total, 0)
+							item.rev = _.reduce(item.content, (sum, obj) => sum + obj.inc_rev, 0)
+							item.num = _.reduce(item.content, (sum, obj) => sum + obj.nums, 0)
+						})
+						this.list = records
+            /*for (let i in this.allHasClose) {
+              this.list = res.data.data;
               console.log(this.list);
-            }
+            }*/
 
             // console.log(this.histroywj)
             this.allHasClose.map(item => {
@@ -164,13 +200,11 @@ export default {
               }
             });
           } else {
-            this.$swal({
+            /*this.$swal({
               text: "获取数据失败，请重试！",
               type: "error",
               timer: 1200
-            })
-              .then(function(response) {})
-              .catch(e => {});
+            })*/
           }
           this.loading = false;
         })
@@ -178,35 +212,41 @@ export default {
           console.log("服务端连接异常！");
         });
     },
-    getYijie(page, number, date) {
+    getYijie(page = 1, number = 16, date) {
+    	this.selectedDate = date// 将选择的日期保存起来，分页获取数据时需要用到
       // console.log(date)
       let today = Date.parse(new Date());
       let params = {};
-      
-      
+
       params.page = page;
       params.number = number;
-      // params.time=date/1000
-      // date ? params.time=date/1000 : params.time=today/1000;
-      if (this.$route.query.time) {
-        params.time = this.$route.query.time;
-      } else {
-        date ? (params.time = date / 1000) : (params.time = today / 1000);
-      }
+
+			if (date) {
+				params.stime = moment(date).format('YYYY-MM-DD 00:00:00')
+				params.etime = moment(date).format('YYYY-MM-DD 23:59:59')
+			} else {
+				params.stime = moment().format('YYYY-MM-DD 00:00:00')
+				params.etime = moment().format('YYYY-MM-DD 23:59:59')
+			}
+
+
       // console.log(params.time)
-      params.type = 1; // 1 已结
+      // params.type = 1; // 1 已结
+			params.is_total = 0
+			// params.time = 1530374400
       this.$http
-        .post("/Wh_H5_Api/SearchGameRecord", JSON.stringify(params))
+        .post("/Wh_APP_Api/SearchGameRecord", JSON.stringify(params))
         .then(res => {
           console.log(res);
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$router.push({
               path: "/home"
             });
           }
           if (res.data.msg == 2006) {
             this.yijie = res.data.data || [];
-            this.allnumb2 = res.data.data.length;
+            this.allnumb2 = res.data.page.totalcnt;
             this.numb2 = parseInt(res.data.number);
           }
         });
@@ -216,6 +256,7 @@ export default {
         this.$router.replace({ name: "chesshistory", query: { pages: 1 } });
       }
       if (tab.name === "yijie") {
+      	this.yijie = []// 切换到“今日已结”时先清空列表
         this.getYijie(1, 16);
       } else if (tab.name === "all") {
         this.getTotalData();
@@ -226,6 +267,9 @@ export default {
       //   this.getWeijie(1,val);
       this.getYijie(1, val);
     },
+		handleCurrentChange(val) {
+			this.getCurrentPageData(val, 1);
+		},
     handleCurrentChangeYijie(val) {
       // console.log(`当前页: ${val}`);
       /* if (this.$route.query.time) {
@@ -236,33 +280,43 @@ export default {
       } else {
         this.$router.replace({ name: "chesshistory", query: { pages: val } });
       } */
-      this.getCurrentPageData(val);
+      this.getCurrentPageData(val, 0);
     },
-    formatTableParams({ page, number = 16, type = 2 }) {
+    formatTableParams({ page, number = 16, is_total = 0 }) {
       let params = {
         page,
         number,
-        time: Date.parse(new Date()) / 1000,
-        type
+        // time: Date.parse(new Date()) / 1000,
+				is_total
       };
       return params;
     },
-    getCurrentPageData(pageNum) {
-      let params = this.formatTableParams({ page: pageNum });
-      console.log(params);
+    getCurrentPageData(pageNum, is_total) {
+      let params = this.formatTableParams({ page: pageNum, is_total: is_total });
+
+			if (this.selectedDate) {
+				params.stime = moment(this.selectedDate).format('YYYY-MM-DD 00:00:00')
+				params.etime = moment(this.selectedDate).format('YYYY-MM-DD 23:59:59')
+			} else {
+				params.stime = moment().format('YYYY-MM-DD 00:00:00')
+				params.etime = moment().format('YYYY-MM-DD 23:59:59')
+			}
+
       this.$http
-        .post("/Wh_H5_Api/SearchGameRecord", JSON.stringify(params))
+        .post("/Wh_APP_Api/SearchGameRecord", JSON.stringify(params))
         .then(res => {
           console.log(res);
           if (res.data.msg === 4001) {
+						if (sessionStorage.getItem("im_username") === "游客") return
             this.$router.push({
               path: "/home"
             });
           }
           if (res.data.msg == 2006) {
-            this.yijie = res.data.data || [];
-            this.allnumb2 = res.data.data.length;
-            this.numb2 = parseInt(res.data.number);
+						this.$set(this, 'yijie', res.data.data)
+            // this.yijie = res.data.data || [];
+            // this.allnumb2 = res.data.data.length;
+            // this.numb2 = parseInt(res.data.number);
           }
         });
       // {"oid":"5b9512f0da6bc1501d7c0c80c21c837f","page":1,"number":16,"time":1525269287,"type":1}
@@ -328,5 +382,8 @@ export default {
 }
 .common-content {
   padding: 5px 20px 20px 20px;
+}
+.red{
+	color: red
 }
 </style>

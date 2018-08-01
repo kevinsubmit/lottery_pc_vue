@@ -38,13 +38,14 @@
                                       <div class="game_title">
                                           <h3>{{item.name}}</h3>
                                       </div>
-                                      <div class="clearfix" v-for='(ite,i,j) in item.list'>
-                                        <label>
+                                      <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click="togglePlay($event, ite)" style="cursor: pointer">
+                                        <!--<label>-->
                                           <span :class="`ten_farm_ball_${ite.name}`" style='cursor:pointer;'>{{ite.name}}</span>
-                                          <span class="jsks_odds" @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>
-                                          <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
-                                          <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                        </label>
+                                          <!--<span class="jsks_odds" @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                                          <span class="jsks_odds" style='cursor:pointer;'>{{ite.odds}}</span>
+                                          <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
+                                          <input v-else readonly value="封盘" class="closeBet">
+                                        <!--</label>-->
                                       </div>
                                   </li>
                               </ul>
@@ -69,10 +70,10 @@
                       </ul>
                       <div class="lm_ball">
                         <ul class="">
-                          <li v-for = "i in [1,6,11,16,2,7,12,17,3,8,13,18,4,9,14,19,5,10,15,20]">
-                            <label>
+                          <li v-for = "i in [1,6,11,16,2,7,12,17,3,8,13,18,4,9,14,19,5,10,15,20]" @click.prevent="toggleCheckbox">
+                            <label class="hover-color">
                               <span :class="`lm_ball_${i}`">{{i}}</span>
-                              <input type="checkbox" v-if = "param.type_code===9" :value="i" ref="check" :disabled="!closeBet"  @click="chkBox()">
+                              <input type="checkbox" v-if = "param.type_code===9" :value="i" ref="check" :disabled="!closeBet"  @click.stop="chkBox">
                             </label>
                           </li>
                         </ul>
@@ -104,6 +105,7 @@ import betDialog from '../../components/betDialog'
 import lmDialog from '../../components/lmDialog'
 import changLong from '../../components/changlong'
 import luZhu from '../../components/luzhu'
+import { togglePlayActive, clearAllActives } from '../../utils/common'
 export default {
     data () {
         return {
@@ -166,21 +168,25 @@ export default {
           this.quickyMoney = ''
         }
          if(this.quickyMoney==""){
-        
+
            sessionStorage.removeItem('quickyMoney')
         }
+
+				// 将预设的金额赋值到选中玩法的金额
+				const presetPrice = this.quickyMoney
+				Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
       },
       fetchData(i) {
         let params = {};
-        
+
         params.game_code = 47;
         // console.log(params)
          this.$http.post('/getinfo/game', JSON.stringify(params)).then(res => {
            if (res.data.msg == 4001) {
               this.$swal({
-                text: "账户已下线，请重新登陆", 
+                text: "账户已下线，请重新登陆",
                 type: "error",
-                timer: 1200, 
+                timer: 1200,
               })
               .then(function (response) {
               }).catch(e => {
@@ -211,9 +217,9 @@ export default {
                this.$http.post('/getinfo/odds', JSON.stringify(this.param)).then(res => {
                 if (res.data.msg == 4001) {
                   this.$swal({
-                    text: "账户已下线，请重新登陆", 
+                    text: "账户已下线，请重新登陆",
                     type: "error",
-                    timer: 1200, 
+                    timer: 1200,
                   })
                   .then(function (response) {
                   }).catch(e => {
@@ -268,7 +274,7 @@ export default {
             this.LimitMax=6;
             break;
         }
-        
+
       },
       confirms (name, key, ite) {
         if (!this.closeBet) {
@@ -282,8 +288,8 @@ export default {
         this.betArr = [];
         let ites = JSON.parse(ite)
         ites.title = name
-        ites.money = this.quickyMoney          
-        this.betArr.push(ites) 
+        ites.money = this.quickyMoney
+        this.betArr.push(ites)
         if (this.betArr.length == 0) {
           this.$swal({
             text: "请选择下注项目！",
@@ -313,7 +319,7 @@ export default {
           return
         }
         if (this.type_code === 9) { // 连码下注
-          this.chkBox ();
+          // this.chkBox ();
           let betnumber = [];
           this.betArr.length = [];
 
@@ -395,14 +401,22 @@ export default {
         }
       },
       chkBox () {
-        this.showLmDialog = false;
+				let inputEl = event.target
+				let wrapperEl = inputEl.parentNode
+				if (wrapperEl.classList.contains('active-color')) {
+					wrapperEl.classList.remove('active-color')// 去掉勾
+				} else {
+					wrapperEl.classList.add('active-color')// 打上勾
+				}
+
+        /*this.showLmDialog = false;
         let cboxLength = 0;
         for (let i = 0; i < this.$refs.check.length; i++) {
           if (this.$refs.check[i].checked) {
             cboxLength ++;
           }
         }
- 
+
           if (cboxLength === 0) {
             return
           }
@@ -415,7 +429,7 @@ export default {
             });
             this.showLmDialog = false;
             return
-          }
+          }*/
 
         // if (cboxLength > this.LimitMax-1) {
         //   for (let i = 0; i < this.$refs.check.length; i++) {
@@ -428,18 +442,19 @@ export default {
         //   return
         // }
       },
-      inputFocus (key) {
-        let quickyMoney = sessionStorage.getItem("quickyMoney");
+      inputFocus (event, item) {
+				event.target.value = sessionStorage.getItem("quickyMoney") || ''
+        /*let quickyMoney = sessionStorage.getItem("quickyMoney");
         if(quickyMoney > 0) {
-          key.target.value = quickyMoney;        
+          key.target.value = quickyMoney;
         } else {
           return false
-        }
+        }*/
       },
       saveMoneyBlur (quickyMoney) {
         if (quickyMoney <= 0 || quickyMoney === '') {
           this.isSaveMoney = false
-          sessionStorage.removeItem('quickyMoney')        
+          sessionStorage.removeItem('quickyMoney')
         }
         if (quickyMoney > 0 && this.isSaveMoney === true) {
           sessionStorage.removeItem('quickyMoney')
@@ -459,14 +474,20 @@ export default {
       reset(){
         if (this.type_code === 9) {
           for (let i = 0; i < this.$refs.check.length; i++) {
-            this.$refs.check[i].checked = false;  // 移除checkbox disabled
+						let el = this.$refs.check[i]
+            el.checked = false;  // 移除checkbox disabled
+						el.parentNode.classList.remove('active-color')
           }
         }
         for (let i = 0; i < this.$refs.kuang.length; i++) {
-          this.$refs.kuang[i].value = "";
+					let el = this.$refs.kuang[i]
+					el.value = "";
+					el.parentNode.classList.remove('active-color')
         }
       },
       changeNav(i){
+				clearAllActives()// 去掉颜色的选中状态
+
         i==9?(this.list=null):'';
         this.type_code = i;
         if (i!=10) {
@@ -482,7 +503,7 @@ export default {
           this.type_code = 0;
           this.param.type_code = 0;
           this.$http.post('/getinfo/odds', JSON.stringify(this.param)).then(res => {
-            let p=res.data[0];            
+            let p=res.data[0];
               if(this.list1.length==0){
                 this.list1.push(p)
               }
@@ -490,7 +511,37 @@ export default {
 
           })
         }
-      }
+      },
+			// 切换玩法的选中状态
+			togglePlay(event) {
+				if (!this.closeBet) return// 封盘不能切换
+				if (event.target.tagName === 'INPUT') return// input标签不触发切换
+
+				togglePlayActive(event, this.quickyMoney)
+			},
+			// 切换勾选框对应的颜色
+			toggleCheckbox(event) {
+				if (!this.closeBet) return// 封盘不能切换
+
+				var currentTarget = event.currentTarget
+				var wrapperEl = currentTarget.getElementsByClassName('hover-color')[0] || currentTarget
+				var inputEl = currentTarget.querySelector('input')
+				if (inputEl.type == 'checkbox') {
+					if (inputEl.checked) {
+						inputEl.checked = ''
+						wrapperEl.classList.remove('active-color')// 去掉勾
+					} else {
+						inputEl.checked = 'checked'
+						wrapperEl.classList.add('active-color')// 打上勾
+					}
+				} else {
+					togglePlayActive(event, this.quickyMoney)
+				}
+			},
+			// 清除所有玩法的选中状态
+			clearAllActives() {
+				clearAllActives()
+			}
     },
     mounted() {
       setInterval(() => {
@@ -515,14 +566,24 @@ export default {
           this.fetchData(1);
           this.showDialog = false;
         }
-      }
+      },
+			closeBet(val) {
+				if (!val) {
+					// 如果封盘了，则清空玩法的选中状态
+					this.clearAllActives()
+				}
+			},
+			name() {
+      	this.clearAllActives()
+			}
     }
 }
 </script>
 
 <style socped>
   .lm-title {
-    width: 25%!important;
+    width: 23%!important;
+		margin: 0 1%;
     float: left;
   }
   .cbox,
@@ -542,14 +603,15 @@ export default {
     position: relative;
   }
   .lm_ball li {
-    width: 25%;
+    width: 23%;
+		margin: 2px 1%;
     display: inline-block;
     height: 20px!important;
     cursor: pointer;
   }
-  .lm_ball li:hover {
+  /*.lm_ball li:hover {
     background-color: #f0f0f0;
-  }
+  }*/
   .lm_ball li span {
     width: 20px;
     height: 20px;

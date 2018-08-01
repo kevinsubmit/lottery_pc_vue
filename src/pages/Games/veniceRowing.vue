@@ -28,13 +28,14 @@
                                         <div class="game_title">
                                             <h3>{{item.name}}</h3>
                                         </div>
-                                        <div class="clearfix" v-for='(ite,i,j) in item.list'>
-                                          <label>
+                                        <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click="togglePlay($event, ite)" style="cursor: pointer">
+                                          <!--<label>-->
                                             <span :class='classCode==="0103"?"":`pk_${ite.name}`' style='cursor:pointer;'>{{ite.name}}</span>
-                                            <span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>
-                                            <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
-                                            <input v-else="closeBet" readonly value="封盘" class="closeBet">
-                                          </label>
+                                            <!--<span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                                            <span style='cursor:pointer;'>{{ite.odds}}</span>
+                                            <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7"/>
+                                            <input v-else readonly value="封盘" class="closeBet">
+                                          <!--</label>-->
                                        </div>
                                     </li>
                                 </ul>
@@ -66,6 +67,7 @@ import lotteryArea from '../../components/lotteryArea'
 import betDialog from '../../components/betDialog'
 import changLong from '../../components/changlong'
 import luZhu from '../../components/luzhu'
+import { togglePlayActive, clearAllActives } from '../../utils/common'
 export default {
   data () {
       return {
@@ -122,22 +124,26 @@ export default {
         this.quickyMoney = ''
       }
        if(this.quickyMoney==""){
-        
+
            sessionStorage.removeItem('quickyMoney')
         }
+
+			// 将预设的金额赋值到选中玩法的金额
+			const presetPrice = this.quickyMoney
+			Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
     },
     fetchData(i) {
-      
+
       let params = {};
-      
+
       params.game_code = 210;
       // console.log(params)
       this.$http.post('/getinfo/game', JSON.stringify(params)).then(res => {
          if (res.data.msg == 4001) {
           this.$swal({
-            text: "账户已下线，请重新登陆", 
+            text: "账户已下线，请重新登陆",
             type: "error",
-            timer: 1200, 
+            timer: 1200,
           })
           .then(function (response) {
           }).catch(e => {
@@ -162,7 +168,7 @@ export default {
           this.todayWinLost = parseFloat(res.data.UserResult);
           res.data.next.isclose?this.closeBet=false:this.closeBet=true;
         }
-          
+
        }).catch(function(){
           console.log('网络异常！');
        })
@@ -208,6 +214,8 @@ export default {
        return this.$http.post('/getinfo/odds', JSON.stringify(i))
     },
     changeNav(code){
+			clearAllActives()// 去掉颜色的选中状态
+
       switch(code) {
         case  '0101' :
           if (this.classCode==="0101"){
@@ -261,8 +269,8 @@ export default {
         this.betArr = [];
         let ites = JSON.parse(ite)
         ites.title = name
-        ites.money = this.quickyMoney          
-        this.betArr.push(ites) 
+        ites.money = this.quickyMoney
+        this.betArr.push(ites)
         if (this.betArr.length == 0) {
           this.$swal({
             text: "请选择下注项目！",
@@ -324,18 +332,19 @@ export default {
         }
       }
     },
-    inputFocus (key) {
-      let quickyMoney = sessionStorage.getItem("quickyMoney");
+		inputFocus (event, item) {
+			event.target.value = sessionStorage.getItem("quickyMoney") || ''
+      /*let quickyMoney = sessionStorage.getItem("quickyMoney");
       if(quickyMoney > 0) {
-        key.target.value = quickyMoney;        
+        key.target.value = quickyMoney;
       } else {
         return false
-      }
+      }*/
     },
     saveMoneyBlur (quickyMoney) {
       if (quickyMoney <= 0 || quickyMoney === '') {
         this.isSaveMoney = false
-        sessionStorage.removeItem('quickyMoney')        
+        sessionStorage.removeItem('quickyMoney')
       }
       if (quickyMoney > 0 && this.isSaveMoney === true) {
         sessionStorage.removeItem('quickyMoney')
@@ -354,9 +363,18 @@ export default {
     },
     reset(){
       for (let i = 0; i < this.$refs.kuang.length; i++) {
-        this.$refs.kuang[i].value = "";
+				let el = this.$refs.kuang[i]
+				el.value = "";
+				el.parentNode.classList.remove('active-color')
       }
-    }
+    },
+		// 切换玩法的选中状态
+		togglePlay(event) {
+			if (!this.closeBet) return// 封盘不能切换
+			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+
+			togglePlayActive(event, this.quickyMoney)
+		}
   },
   mounted() {
     setInterval(() => {
@@ -378,7 +396,13 @@ export default {
         this.fetchData(1);
         this.showDialog = false;
       }
-    }
+    },
+		closeBet(val) {
+			if (!val) {
+				// 如果封盘了，则清空玩法的选中状态
+				clearAllActives()
+			}
+		}
   }
 }
 </script>

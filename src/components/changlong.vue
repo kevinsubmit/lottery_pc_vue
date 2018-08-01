@@ -46,7 +46,11 @@ export default {
       let params = {};
       params.game_code = this.game_code;
       this.$http.post('/systems/changlong', JSON.stringify(params)).then(res => {
-        // console.log(res.data.data)
+        let changLongData  = res.data.data
+        /* 对接口返回的数据进行处理 */
+        changLongData.forEach(item=>{
+          item.title = item.title.replace('总和单双-','').replace('总和尾数大小-','').replace('总和大小-','')
+        })
         if ((res.data.data) instanceof Array) {
           this.changlongObj = res.data.data;
         } else {

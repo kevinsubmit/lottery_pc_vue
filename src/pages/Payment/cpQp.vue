@@ -8,7 +8,7 @@
 			  <el-col :span="12"><div class="grid-content bg-purple">
 			  		<!-- <img src="../../../src/assets/images/common/trans2.png"  > -->
 			  </div></el-col>
-			
+
 			</el-row>
 			<el-container class='edu'>
 				<!-- <el-header class='title' style='height:33px'>额度转换
@@ -31,7 +31,7 @@
 				  	 </div>
 				  </div></el-col>
 				</el-row>
-				
+
 		  		<el-row :gutter="20">
 				  <el-col :span="3"><div class="grid-content zh">转换金额</div></el-col>
 				  <el-col :span="6"><div class="grid-content"><input type="" v-model='shu' name="" onkeyup="this.value=this.value.replace(/\D/g,'')"></div></el-col>
@@ -43,11 +43,11 @@
 					</el-row>
 				  </div></el-col>
 				</el-row>
-		  		
+
 				<el-row>
 				  <el-col :span="24"><div class="grid-content ">
 				  			<div class="conmit" >
-				  				
+
 				  				<div @click.stop='submit()'>提交</div>
 				  				<div @click='reset()'>重置</div>
 				  			</div>
@@ -55,7 +55,7 @@
 				  </div></el-col>
 				</el-row>
 		  </el-main>
-		  
+
 		</el-container>
 		<div class="foot">
 		  	 <p>汇款信息提交说明：</p>
@@ -78,7 +78,7 @@ import { Loading } from 'element-ui';
 				list:[100,500,1000,5000,10000,50000],
 				banlance:'',
       };
-    }, 
+    },
     methods: {
       select(item,index){
       	this.$emit('child-money', "change1");
@@ -100,30 +100,31 @@ import { Loading } from 'element-ui';
       submit(){
 	      	if(this.shu<=0||this.shu==''){
 		        this.$swal({
-		          text: '请输入正确的转换金额', 
+		          text: '请输入正确的转换金额',
 		          type: "error",
-		          timer: 1200, 
+		          timer: 1200,
 		        })
 		        .then(function (response) {
 	            }).catch(e => {
 	            })
-	      		return 
+	      		return
 	      	}else{
 
-	      		
+
 		      	let params={};
-		      	
+
 		      	params.type=this.radio;
 						params.amount=this.shu;
 						let loadingInstance = Loading.service({background:'rgba(0, 0, 0, 0.5)'});
                    //彩票体育额度转换的接口
-		      	 this.$http.post('/Wh_H5_Api/PrepareCreditOrder',JSON.stringify(params)).then(res => {
+                   // this.$http.post('/Wh_H5_Api/PrepareCreditOrder',JSON.stringify(params)).then(res => {
+		      	 this.$http.post('/Wh_APP_Api/PrepareCreditOrder',JSON.stringify(params)).then(res => {
               console.log(res)
 		      	 	if(res.data.msg==4001){
 				        this.$swal({
-			                text: "账户已下线，请重新登陆", 
+			                text: "账户已下线，请重新登陆",
 			                type: "error",
-			                timer: 1200, 
+			                timer: 1200,
 			            }).then(function (response) {
 			            }).catch(e => {
 			            })
@@ -132,23 +133,23 @@ import { Loading } from 'element-ui';
 			            })
 			            return
 		      	 	}
-		      	 	if(res.data.msg==7001){ 
+		      	 	if(res.data.msg==7001){
 		      	 		loadingInstance.close();
 				        this.$swal({
-				          text: res.data.info, 
+				          text: res.data.info,
 				          type: "error",
-				          timer: 1200, 
+				          timer: 1200,
 				        })
 				        .then(function (response) {
 			            }).catch(e => {
 			            })
 							 }
-							 else if(res.data.msg==5004){ 
+							 else if(res.data.msg==5004){
 									loadingInstance.close();
 									this.$swal({
-										text: "彩票余额不足", 
+										text: "彩票余额不足",
 										type: "error",
-										timer: 1200, 
+										timer: 1200,
 									})
 									.then(function (response) {
 										}).catch(e => {
@@ -158,21 +159,21 @@ import { Loading } from 'element-ui';
 		      	 		this.reset();
 		      	 		if(this.radio==0){
 					        this.$swal({
-					          text: '彩票成功转入棋牌'+res.data.data.amount+'元', 
+					          text: '彩票成功转入棋牌'+res.data.data.amount+'元',
 					          type: "success",
-					          timer: 1200, 
+					          timer: 1200,
 					        })
 					        .then(function (response) {
 				            }).catch(e => {
 				            })
 					        this.$emit('chessSuccess', 'chessSuccess');
-		      	 		
+
 		      	 		}else if(this.radio==1){
 		      	 			loadingInstance.close();
 					        this.$swal({
-					          text: '棋牌成功转入彩票'+res.data.data.amount+'元', 
+					          text: '棋牌成功转入彩票'+res.data.data.amount+'元',
 					          type: "success",
-					          timer: 1200, 
+					          timer: 1200,
 					        })
 					        .then(function (response) {
 				            }).catch(e => {
@@ -181,12 +182,12 @@ import { Loading } from 'element-ui';
 
 		      	 		}
 		      	 		this.setmoney();
-		      	 		// this.$store.commit('updatelotteryMoney', JSON.stringify(this.balance)) 
+		      	 		// this.$store.commit('updatelotteryMoney', JSON.stringify(this.balance))
 		      	 		this.shu='';
 		      	 	}
-						 })	
+						 })
 	      	}
-		 
+
       }
 
 		}

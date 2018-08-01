@@ -1,288 +1,103 @@
 <template>
   <div class="luzhu">
-    <!-- 北京赛车、幸运飞艇模板 -->
-    <div class="luzhu-box" v-if="isShowPk10">
-      <!-- <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick"> -->
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane name="pk10he" label="冠、亚军和"></el-tab-pane>
-        <el-tab-pane name="pk10dx" label="冠、亚军大小"></el-tab-pane>
-        <el-tab-pane name="pk10ds" label="冠、亚军单双"></el-tab-pane>
+    <div class="luzhu-box">
+      <el-tabs v-model="activeIndex" @tab-click="handleClick">
+        <el-tab-pane :name="`${index}`" :label="tab.title" v-for="(tab,index) in currentLuzhu.tabs" v-bind:key="index"></el-tab-pane>
         <ul class="clearfix">
-          <li v-for="item in luzhuObj">
-            <span v-for="i in item" :class="setLuzhuItemClass(i)" class="luzhu-item">{{ i }}</span>
+          <li v-for="item in luzhuObj" v-bind:key="item.game_code">
+            <span v-for="i in item" :class="setLuzhuItemClass(i)" class="luzhu-item" v-bind:key="i">{{ i }}</span>
           </li>
         </ul>
       </el-tabs>
     </div>
-
-    <!-- 重庆时时彩模板  -->
-    <div class="luzhu-box" v-if="isShowSsc">
-      <!-- <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick"> -->
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane name="ssc1" label="第一球" v-if="game_code!='46'&&game_code!='250'&&game_code!='2'"></el-tab-pane>
-        <el-tab-pane name="sscdx" label="大小"></el-tab-pane>
-        <el-tab-pane name="sscds" label="单双"></el-tab-pane>
-        <el-tab-pane name="ssczhdx" label="总和大小"></el-tab-pane>
-        <el-tab-pane name="ssczhds" label="总和单双"></el-tab-pane>
-        <el-tab-pane name="ssclhh" label="龙虎和"></el-tab-pane>
-        <ul class="clearfix">
-          <li v-for="item in luzhuObj">
-            <span v-for="i in item" :class="setLuzhuItemClass(i)" class="luzhu-item">{{ i }}</span>
-          </li>
-        </ul>
-      </el-tabs>
-    </div>
-
-    <!-- 广东快乐十分、重庆幸运农场模板  -->
-    <div class="luzhu-box" v-if="isShowTen">
-      <!-- <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick"> -->
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane name="tendx" label="总和大小"></el-tab-pane>
-        <el-tab-pane name="tends" label="总和单双"></el-tab-pane>
-        <el-tab-pane name="tenweishu" label="总和尾数大小"></el-tab-pane>
-        <el-tab-pane name="tenlh" label="龙虎"></el-tab-pane>
-        <ul class="clearfix">
-          <li v-for="item in luzhuObj">
-            <span v-for="i in item" :class="setLuzhuItemClass(i)" class="luzhu-item">{{ i }}</span>
-          </li>
-        </ul>
-      </el-tabs>
-    </div>
-
-    <div class="luzhu-box" v-if="isShowBjkl8">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane name="totalNum" label="总和数"></el-tab-pane>
-        <el-tab-pane name="totalSize" label="总和大小"></el-tab-pane>
-        <el-tab-pane name="totalSigleDouble" label="总和单双"></el-tab-pane>
-        <el-tab-pane name="fiveProties" label="五行"></el-tab-pane>
-        <el-tab-pane name="totalFrontBack" label="前后和"></el-tab-pane>
-        <el-tab-pane name="sumSingleDouble" label="单双和"></el-tab-pane>
-        <ul class="clearfix">
-          <li v-for="item in luzhuObj">
-            <span v-for="i in item" :class="setLuzhuItemClass(i)" class="luzhu-item">{{ i }}</span>
-          </li>
-        </ul>
-      </el-tabs>
-    </div>
-
   </div>
 </template>
 
 
 <script>
+import luzhuData from '../config/luzhu.config.json'
 export default {
   data() {
     return {
-      isShowPk10: true,
-      isShowSsc: false,
-      isShowTen: false,
-      isShowBjkl8: false,
-      title: "两面长龙",
-      activeName: "pk10he",
+      activeIndex: 0,
       typecode: 0,
       ctype: 8,
-      tabName: "",
-      luzhuObj: []
-    };
-  },
-  props: {
-    game_code: {
-      type: Number
+      luzhuObj: [],
+      currentLuzhu: {}
     }
   },
+  props: ["game_code"],
   created() {
-    this.checkGameCode();
-    this.getLuZhuData();
+    this.currentLuzhu = this.getCurrentLuzhu(this.game_code,luzhuData)
+    this.getLuZhuData(this.activeIndex)
   },
   methods: {
-    handleClick(tab, event) {
-      this.tabName = tab.name;
-      this.checkGameCode();
-      this.getLuZhuData();
+    handleClick() {
+      let ctype = this.currentLuzhu.tabs[this.activeIndex]
+      this.getLuZhuData()
     },
-    getLuZhuData() {
-      let params = {};
-      params.game_code = this.game_code;
-      params.ctype = this.ctype;
-      params.typecode = this.typecode;
-      this.$http.post("/systems/luzhu", JSON.stringify(params)).then(res => {
-        console.log(res);
-        // 需要处理返回过来的data数据,把繁体字的单双变成简体字的单双;
-        if (res && res.data.length) {
-          for (var i = 0; i < res.data.length; i++) {
-            for (var k = 0; k < res.data[i].length; k++) {
-              if (res.data[i][k] == "單") {
-                res.data[i][k] = "单";
-              }
-              if (res.data[i][k] == "雙") {
-                res.data[i][k] = "双";
-              }
-              if (res.data[i][k] == "龍") {
-                res.data[i][k] = "龙";
-              }
-            }
-          }
+    getCurrentLuzhu(gameCode, luzhuData) {
+      let result = {}
+      luzhuData.forEach(item => {
+        if (item.game_code == gameCode) {
+          result = item
         }
-        this.luzhuObj = (res && res.data) || [];
-      });
+      })
+      return result
     },
-    checkGameCode() {
-      if (
-        this.game_code === 51 ||
-        this.game_code === 171 ||
-        this.game_code === 210 ||
-        this.game_code === 240 ||
-        this.game_code === 260
-      ) {
-        this.isShowPk10 = true;
-        this.isShowSsc = false;
-        switch (this.tabName) {
-          case "pk10he":
-            this.ctype = 8;
-            break;
-          case "pk10dx":
-            this.ctype = 9;
-            break;
-          case "pk10ds":
-            this.ctype = 10;
-            break;
-        }
-        this.typecode = 0;
-        this.activeName = "pk10he";
-      } else if (
-        this.game_code === 2 ||
-        this.game_code === 46 ||
-        this.game_code === 250
-      ) {
-        this.isShowPk10 = false;
-        this.isShowSsc = true;
-        this.ctype = 1;
-        this.typecode = 1;
-        this.activeName = "ssc1";
-        if (
-          this.game_code == "46" ||
-          this.game_code == "250" ||
-          this.game_code == "2"
-        ) {
-          this.ctype = 2;
-          this.activeName = "sscdx";
-        }
-        switch (this.tabName) {
-          case "ssc1":
-            this.ctype = 1;
-            break;
-          case "sscdx":
-            this.ctype = 2;
-            break;
-          case "sscds":
-            this.ctype = 3;
-            break;
-          case "ssczhdx":
-            this.ctype = 4;
-            break;
-          case "ssczhds":
-            this.ctype = 5;
-            break;
-          case "ssclhh":
-            this.ctype = 6;
-            break;
-        }
-        this.typecode = 1;
-        this.activeName = "sscdx";
-      } else if (this.game_code === 47 || this.game_code === 3) {
-        this.isShowPk10 = false;
-        this.isShowSsc = false;
-        this.isShowTen = true;
-        switch (this.tabName) {
-          case "tendx":
-            this.ctype = 8;
-            break;
-          case "tends":
-            this.ctype = 9;
-            break;
-          case "tenweishu":
-            this.ctype = 10;
-            break;
-          case "tenlh":
-            this.ctype = 11;
-            break;
-        }
-        this.activeName = "tendx";
-      } else if(this.game_code === 180) {
-        this.isShowPk10 = false;
-        this.isShowSsc = false;
-        this.isShowTen = false;
-        this.isShowBjkl8 = true;
-        switch (this.tabName) {
-          case "totalNum":
-            this.ctype = 1;
-            break;
-          case "totalSize":
-            this.ctype = 2;
-            break;
-          case "totalSigleDouble":
-            this.ctype = 3;
-            break;
-          case "fiveProties":
-            this.ctype = 4;
-            break;
-          case "totalFrontBack":
-            this.ctype = 5;
-             break;
-          case "sumSingleDouble":
-            this.ctype = 6;
-             break;
-          default :
-            this.ctype = 1;
-            break;
-        }
-        this.activeName = "totalNum";
-      }
+    getLuZhuData(activeIndex) {
+      let params = {}
+      params.game_code = this.game_code
+      params.ctype = this.currentLuzhu.tabs[this.activeIndex].ctype
+      params.typecode = this.currentLuzhu.typecode
+      this.$http.post('/systems/luzhu', JSON.stringify(params)).then(res => {
+        this.luzhuObj = (res && res.data) || []
+      })
     },
     setLuzhuItemClass(item) {
       if (!isNaN(item * 1)) {
         // 当item为数字，或者数字字符串的时候
-        return "";
+        return ''
       }
-      if (item == "大" || item == "双") {
-        return "luzhu-big";
+      if (item == '大' || item == '双') {
+        return 'luzhu-big'
       }
-      if (item == "小" || item == "单") {
-        return "luzhu-small";
+      if (item == '小' || item == '单') {
+        return 'luzhu-small'
       }
-      if (item == "龙") {
-        return "luzhu-long";
+      if (item == '龙') {
+        return 'luzhu-long'
       }
-      if (item == "虎") {
-        return "luzhu-hu";
+      if (item == '虎') {
+        return 'luzhu-hu'
       }
-      if (item == "和") {
-        return "luzhu-he";
+      if (item == '和') {
+        return 'luzhu-he'
       }
       if (item == '前') {
-        return 'luzhu-front'; 
+        return 'luzhu-front'
       }
       if (item == '后') {
-        return 'luzhu-back'; 
+        return 'luzhu-back'
       }
       if (item == '金') {
-        return 'luzhu-gold'; 
+        return 'luzhu-gold'
       }
       if (item == '木') {
-        return 'luzhu-wood'; 
+        return 'luzhu-wood'
       }
       if (item == '水') {
-        return 'luzhu-water'; 
+        return 'luzhu-water'
       }
       if (item == '火') {
-        return 'luzhu-fire'; 
+        return 'luzhu-fire'
       }
       if (item == '土') {
-        return 'luzhu-soil'; 
+        return 'luzhu-soil'
       }
     }
   }
-};
+}
 </script>
 <style>
 .luzhu .el-tabs--border-card > .el-tabs__content {
@@ -405,7 +220,7 @@ export default {
   position: absolute;
   bottom: -1px;
   left: 10px;
-  content: "";
+  content: '';
   width: 0;
   height: 0;
   border-left: 8px solid transparent;

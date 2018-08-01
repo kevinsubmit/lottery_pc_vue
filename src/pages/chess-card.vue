@@ -14,6 +14,9 @@
             <div class="SHARK"></div>
           </div>
           <div style="border-radius:48px;overflow:hidden" class="chesscard_main_bottom">
+						<div class="chesscard_title">
+							<p>请用彩票账户登录棋牌APP进行游戏</p>
+						</div>
             <div class="chesscard_btn_bg">
               <div style="line-height:25px;">
                 <div style="word-break: keep-all;">棋牌游戏余额：</div>
@@ -24,11 +27,27 @@
                 额度转换
               </div>
             </div>
-            <div>
-              <div class="chesscard_intro_p4" @click="getPlayUrl(2)">
-                <!-- <div class="try-to-play" @click="getPlayUrl(1)">
+						<div class="chesscard_qr_wrapper">
+							<div class="chesscard_qr">
+								<img :src="qrImg" alt="">
+							</div>
 
-                  </div> -->
+							<div class="chesscard_btns">
+								<div>
+									<p>扫一扫</p>
+									<p>下载移动应用</p>
+								</div>
+								<button @click="appHelpCode = 1">苹果APP教程</button><br>
+								<button @click="appHelpCode = 2">安卓APP教程</button>
+							</div>
+
+							<app-help v-if="appHelpCode" :code.sync="appHelpCode"></app-help>
+						</div>
+            <!--<div>
+              <div class="chesscard_intro_p4" @click="getPlayUrl(2)">
+                &lt;!&ndash; <div class="try-to-play" @click="getPlayUrl(1)">
+
+                  </div> &ndash;&gt;
                 <div class="start-to-play">
 
                 </div>
@@ -36,7 +55,8 @@
                   开始<br/> 游戏
                 </div>
               </div>
-            </div>
+            </div>-->
+
           </div>
 
         </div>
@@ -45,7 +65,8 @@
     <div class="overlay" v-if="isShowTransfer" @click="closeDialog"></div>
     <div class="ag-page-transfer" v-if="isShowTransfer">
       <div class="cha el-icon-circle-close-outline" @click="closeDialog"></div>
-      <transfer v-on:transferSuccess="transferSuccess" transferApi="/Wh_H5_Api/PrepareCreditOrder" title="棋牌"></transfer>
+      <!--<transfer v-on:transferSuccess="transferSuccess" transferApi="/Wh_H5_Api/PrepareCreditOrder" title="棋牌"></transfer>-->
+      <transfer v-on:transferSuccess="transferSuccess" transferApi="/Wh_APP_Api/PrepareCreditOrder" title="棋牌"></transfer>
     </div>
   </div>
 </template>
@@ -53,13 +74,18 @@
 import Transfer from "./Payment/transfer1";
 import { Message } from "element-ui";
 import HgHeader from "../components/hgHeader";
+import AppHelp from '../components/appHelp'
+
 export default {
   components: {
     Transfer,
-    HgHeader
+    HgHeader,
+		AppHelp
   },
   data() {
     return {
+			qrImg: '',// 二维码图片地址
+			appHelpCode: 0,// 0：关闭APP教程，1：打开苹果APP教程，2：打开安卓APP教程
       agBalance: "",
       isShowTransfer: false,
       windowHeight: "",
@@ -72,6 +98,9 @@ export default {
   computed: {
     // 'windowHeight':this.$window&&(this.$window.innerHeight+'px')
   },
+	created() {
+		this.getQrImg()
+	},
   mounted() {
     let _this = this;
     _this.windowHeight = this.$window.innerHeight;
@@ -84,11 +113,37 @@ export default {
     }
   },
   methods: {
+		// 检测是否创建了棋牌账号,没创建的话就创建账号
+		// 调用棋牌任何接口就会创建，不用再去判断和创建
+		/*isCreatedAccount() {
+			this.$http.post("Wh_APP_Api/is_open", JSON.stringify({oid: sessionStorage.getItem('im_token')})).then(res => {
+				if (!res.data.data.whopen) {
+					// 还没创建账号，开始创建
+					this.createAccount()
+				}
+			})
+		},*/
+		// 创建账号
+		/*createAccount() {
+			this.$http.post("Wh_APP_Api/index", JSON.stringify({oid: sessionStorage.getItem('im_token')})).then(res => {
+				if (!res.data.msg == '2006') {
+					console.log('创建账号成功')
+				} else {
+					console.log('创建账号失败')
+				}
+			})
+		},*/
+		// 获取二维码图片
+  	getQrImg() {
+			this.$http.post("download/wh_app_down").then(res => {
+				this.qrImg = res.data.data.wh_qrcode_url
+			})
+		},
     getPlayUrl(type) {
       if (type == 1) {
-        
+
         let params = {};
-        
+
         //试玩游戏链接
         this.$http
           .post("/aginfo/getAgGameLink/0/6", JSON.stringify(params))
@@ -126,12 +181,13 @@ export default {
           return;
         }
         let winHandler = window.open("", "_blank");
-        
+
         let params = {};
-        
+
         //真钱模式游戏链接
         this.$http
-          .post("/Wh_H5_Api/RedirectLogin", JSON.stringify(params))
+          // .post("/Wh_H5_Api/RedirectLogin", JSON.stringify(params))
+          .post("/Wh_APP_Api/RedirectLogin", JSON.stringify(params))
           .then(res => {
             if (res.status === 200) {
               if (res.data.msg === 2006) {
@@ -150,14 +206,11 @@ export default {
           });
       }
     },
-    getWhBalance() {
-      
-      let params = {};
-      
-      //获取棋牌游戏额度
-      console.log(JSON.stringify(params));
+		//获取棋牌游戏额度
+		getWhBalance() {
       this.$http
-        .post("/Wh_H5_Api/getWhInfo", JSON.stringify(params))
+        // .post("/Wh_H5_Api/getWhInfo", JSON.stringify({oid: sessionStorage.getItem("im_token")}))
+        .post("/Wh_APP_Api/getWhInfo", JSON.stringify({oid: sessionStorage.getItem("im_token")}))
         .then(res => {
           if (res.status === 200) {
             if (res.data.msg === 2006) {
@@ -343,7 +396,7 @@ export default {
 }
 </style>
 
-<style scoped>
+<style lang="less" rel="stylesheet/less" scoped>
 .chesscard_billion_money {
   font-size: 50px;
   color: #feef00;
@@ -421,26 +474,85 @@ export default {
 
 .chesscard_main_bottom {
   display: flex;
-  justify-content: center;
+  /*justify-content: center;*/
   flex-direction: column;
   flex: 1;
   align-items: center;
-  justify-content: space-around;
+  /*justify-content: space-around;*/
   min-height: 300px;
 }
 
-.chesscard_main_bottom > div:last-child {
+.chesscard_title {
+	font-size: 20px;
+	color: #E5FBFB;
+	margin: 30px 0 16px;
+	letter-spacing: 0.6px;
+	line-height: 1.4;
+	text-shadow: 2px 2px 5px #222;
+	font-weight: 500;
+	font-size: 22px;
+	strong{
+		font-size: 36px;
+	}
+	span{
+		font-size: 20px;
+	}
+}
+
+.chesscard_qr_wrapper{
+	display: flex;
+	margin-top: 20px;
+}
+
+.chesscard_qr{
+	width: 130px;
+	height: 130px;
+	padding: 1px 0 0 1px;
+	background-color: white;
+}
+
+.chesscard_qr > img{
+	width: 100%;
+	height: 100%;
+}
+
+.chesscard_btns{
+	line-height: 1.5;
+	margin-left: 20px;
+}
+
+.chesscard_btns > div{
+	margin-bottom: 4px;
+}
+
+.chesscard_btns button{
+	margin-top: 8px;
+	padding: 6px 24px;
+	color: #51C8F1;
+	background: none;
+	border: 1px solid #51C8F1;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.chesscard_btns button:hover{
+	color: white;
+	background-color: #2E92FF;
+	border-color: #2E92FF;
+}
+
+/*.chesscard_main_bottom > div:last-child {
   font-family: "Microsoft Yahei";
   font-weight: bold;
   font-size: 35px;
   width: 100%;
   display: flex;
   justify-content: center;
-}
+}*/
 
 .chesscard_main {
   position: relative;
-  width: 1200px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;

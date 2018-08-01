@@ -15,7 +15,7 @@
             <li v-for="(item,i) in hotLottery" ref='col' :key="i" @click='changecolor(item,i)' :class='{active:item.gamePath==routePath}'>
               <router-link :to="item.gamePath">
                 <div class="menu_item_wrap">
-                  <img :src="item.icoSrc" style="width:56px">
+                  <img :src="item.icoSrc" :class="{'siderbar_small_icon':item.title== '广东11选5'}" style="width:56px">
                   <div class="game_name">
                     <div>{{item.title}}</div>
                     <div>{{item.subtitle}}</div>
@@ -39,7 +39,7 @@
             <li v-for="(item,i) in classicLottery" ref='col' :key="i" @click='changecolor(item,i)' :class='{active:item.gamePath==routePath}'>
               <router-link :to="item.gamePath">
                 <div class="menu_item_wrap">
-                  <img :src="item.icoSrc">
+                  <img :src="item.icoSrc" :class="{'siderbar_small_icon':item.title== '广东11选5'}" style="width:56px">
                   <div class="game_name">
                     <div>{{item.title}}</div>
                     <div>{{item.subtitle}}</div>
@@ -50,48 +50,14 @@
           </ul>
         </div>
       </div>
-      <div  class="game_hot" @click="goToGame('sport')" v-show="getApiName!='fulicai'">
+      <!-- 第三方 -->
+      <div  class="game_hot" @click="goToGame(item.gamePath)" v-for="(item,i) in classLottery">
         <div>
-          <img :src="require(`../../static/images/common/icon/${iconFolder}sidebar-icon7.png`)" alt="">
-          <h3>体育投注</h3>
-          <img class="icon-hot" :src="require(`../../static/images/common/hot.png`)" alt="">
+          <img :src="item.icoSrc" alt="">
+          <h3>{{item.title}}</h3>
+          <img class="icon-hot" :src="item.hotSrc" v-show="item.hotSrc != null" alt="">
         </div>
       </div>
-      <div class="game_hot" @click="goToGame('ag')" v-show="getApiName!='fulicai'">
-        <div>
-          <img :src="require(`../../static/images/common/icon/${iconFolder}sidebar-icon4.png`)" alt="">
-          <h3>真人视讯</h3>
-        </div>
-      </div>
-      <!-- <div class="game_hot" @click="goToGame('chesscard')">
-        <div>
-          <img :src="`../../static/images/common/icon/${iconFolder}sidebar-icon3.png`" alt="">
-          <h3>棋牌竞技</h3>
-        </div>
-      </div> -->
-      <div class="game_hot" v-show="isLogin&&getApiName!='fulicai'" @click="goToGame('fish')">
-        <div>
-          <img :src="require(`../../static/images/common/icon/${iconFolder}sidebar-icon5.png`)" alt="">
-          <h3>{{$getApiName=='ly'?'捕鱼王':'捕鱼游戏'}}</h3>
-        </div>
-      </div>
-      <div class="game_hot" @click="goToGame('mg')" v-show="getApiName!='yiren'&&getApiName!='agcai'&&getApiName!='ly'&&getApiName!='tt' && getApiName!='fulicai' && getApiName!='yile' && getApiName!='crown'">
-        <div>
-          <img :src="require(`../../static/images/common/icon/${iconFolder}sidebar-icon6.png`)" alt="">
-          <h3>电子游艺</h3>
-        </div>
-      </div>
-      <!-- <ul class="game_list" :id="`game_${getApiName}`">
-                <li class="clearfix" v-for="(item,i) in data" ref='col'  @click='changecolor(item,i)' :class='{active:gameNavs[item].gamePath==routePath}'>                    
-                    <router-link :to="gameNavs[item].gamePath">
-                        <div class="ico"><img :src="gameNavs[item].icoSrc"></div>
-                        <div class="game_name">
-                            <div>{{gameNavs[item].title}}</div>
-                            <div>{{gameNavs[item].subtitle}}</div>
-                        </div>
-                    </router-link>
-                </li>
-            </ul> -->
     </div>
   </div>
 </template>
@@ -114,130 +80,11 @@ export default {
       activeIndex: 1,
       hotLottery: [],
       classicLottery: [],
+      classLottery: [],
       isLogin: false,
       unfoldHeight: "",
-      gameNavs: [
-        {
-          title: "88赛马",
-          code: 260,
-          subtitle: "88 RACE",
-          gamePath: "/Games/race",
-          icoSrc: require("../../static/images/common/icon/ico-nav-race.png")
-        },
-        {
-          title: "极速六合彩",
-          code: 270,
-          subtitle: "SPEED MARK SIX",
-          gamePath: "/Games/jslh",
-          icoSrc: require("../../static/images/common/icon/ico-nav-jslh.png")
-        },
-        {
-          title: "极速赛车",
-          code: 240,
-          subtitle: "SPEED PK10",
-          gamePath: "/Games/jssc",
-          icoSrc: require("../../static/images/common/icon/ico-nav-jssc.png")
-        },
-        {
-          title: "极速时时彩",
-          code: 250,
-          subtitle: "SPEED TIMES",
-          gamePath: "/Games/jsssc",
-          icoSrc: require("../../static/images/common/icon/ico-nav-jsssc.png")
-        },
-        {
-          title: "威尼斯赛艇",
-          code: 210,
-          subtitle: "VENICE ROWING",
-          gamePath: "/Games/veniceRowing",
-          icoSrc: require("../../static/images/common/icon/ico-nav-speedShip.png")
-        },
-        {
-          title: "罗马时时彩",
-          code: 46,
-          subtitle: "ROMA LOTTERY",
-          gamePath: "/Games/roma",
-          icoSrc: require("../../static/images/common/icon/ico-nav-roma.png")
-        },
-        {
-          title: "北京赛车",
-          code: 51,
-          subtitle: "BEIJING PK10",
-          gamePath: "/Games/pk10",
-          icoSrc: require("../../static/images/common/icon/ico-nav-pk10.png")
-        },
-        {
-          title: "重庆时时彩",
-          code: 2,
-          subtitle: "COLORED TIMES",
-          gamePath: "/Games/cqssc",
-          icoSrc: require("../../static/images/common/icon/ico-nav-ssc.png")
-        },
-        {
-          title: "香港六合彩",
-          code: 69,
-          subtitle: "HK MARK SIX",
-          gamePath: "/Games/markSix",
-          icoSrc: require("../../static/images/common/icon/ico-nav-six.png")
-        },
-        {
-          title: "PC蛋蛋",
-          code: 160,
-          subtitle: "PC EGG",
-          gamePath: "/Games/pcegg",
-          icoSrc: require("../../static/images/common/icon/ico-nav-pcegg.png")
-        },
-        {
-          title: "幸运飞艇",
-          code: 171,
-          subtitle: "AIR SHIP",
-          gamePath: "/Games/luckyAirship",
-          icoSrc: require("../../static/images/common/icon/ico-nav-luckyship.png")
-        },
-        {
-          title: "广东快乐十分",
-          code: 3,
-          subtitle: "HAPPY 10",
-          gamePath: "/Games/happyTen",
-          icoSrc: require("../../static/images/common/icon/ico-nav-ten.png")
-        },
-        {
-          title: "重庆幸运农场",
-          code: 47,
-          subtitle: "LUCKY FARM",
-          gamePath: "/Games/luckFarm",
-          icoSrc: require("../../static/images/common/icon/ico-nav-xync.png")
-        },
-        {
-          title: "江苏骰宝(快3)",
-          code: 172,
-          subtitle: "JS SIC BO",
-          gamePath: "/Games/jsks",
-          icoSrc: require("../../static/images/common/icon/ico-nav-jsks.png")
-        },
-        {
-          title: "北京快乐8",
-          code: 180,
-          subtitle: "BEIJING HAPPY8",
-          gamePath: "/Games/bjkl8",
-          icoSrc: require("../../static/images/common/icon/ico-nav-bjkl8.png")
-        },
-        {
-          title: "吉林快3",
-          code: 280,
-          subtitle: "JI LIN K3",
-          gamePath: "/Games/jlk3",
-          icoSrc: require("../../static/images/common/icon/ico-nav-jlk3.png")
-        },
-        // {
-        //   title: "福彩3D",
-
-        //   code: 2201,
-        //   subtitle: "FC 3D",
-        //   gamePath: "/Games/Fucai3D",
-        //   icoSrc: require("../../static/images/common/icon/ico-nav-jsks.png")
-        // },
-      ]
+      gameNav:'',
+      gameNavs:'',
     };
   },
   computed: {
@@ -265,11 +112,19 @@ export default {
     goToGame(type) {
       if (type == "fish") {
         this.$router.push("/Gamesfish");
+        if(this.getApiName=='yiteng'){
+          this.$router.push("/ytBuyuGame");
+          return
+        }
       }
       if (type == "ag") {
         // 暂时不上线注释掉
         if(this.getApiName=='ly'){
           this.$router.push("/lyAgGame");
+          return
+        }
+        if(this.getApiName=='yiteng'){
+          this.$router.push("/yitengAgGame");
           return
         }
         this.$router.push("/ag");
@@ -291,30 +146,35 @@ export default {
         this.activeIndex = index;
       }
     },
-    gamesort() {
+    gamesort(){
+      let lists = [];
+      let classic = [];
+      let classlo = [];
       this.$http.post("/systems/game_sort").then(res => {
-        if (res.data.msg == 4003) {
-          this.$router.push({ name: "maintain" });
-        } else {
-          let sort = res.data.sort;
-          let a = [];
-          this.gameNavs.forEach(i => {
-            if (
-              [260, 270, 51, 2, 240, 69, 250, 3, 46, 47, 180].indexOf(i.code) != -1) {
-              this.hotLottery.push(i);
-            } else {
-              this.classicLottery.push(i);
-            }
-          });
-          //筛选出热门彩票:88赛马、极速六合彩、北京赛车、重庆时时彩、极速赛车、香港六合彩、极速时时彩
-          //筛选出经典彩票:威尼斯赛艇、罗马时时彩、PC蛋蛋、广东快乐十分、幸运飞艇、重庆幸运农场、江苏骰宝(快3)
+        setTimeout(()=>{
+          this.setUnFoldMaxHeight()
+        },100)
+        let sort = Array.from(new Set([...res.data.sort,...res.data.tj_sort]))
+        sessionStorage.setItem("sort",sort)
+        for (let i = 0; i < sort.length; i++) {
+          if(typeof this.gameNavs[sort[i]] != "undefined"){
+            if(i < 11){
+              lists.push(this.gameNavs[sort[i]]);
+            }else{
+              classic.push(this.gameNavs[sort[i]]);
+            }  
+          }
+          if(typeof this.gameNav[sort[i]] != "undefined"){
+             classlo.push(this.gameNav[sort[i]]);
+          }
         }
-      });
+      })
+      this.classicLottery = classic;
+      this.hotLottery = lists;
+      this.classLottery = classlo;
     },
     changecolor(item, i) {
       this.code = i;
-      
-      // this.color='red'
     },
     changeNav() {
       this.isOpen = !this.isOpen;
@@ -327,6 +187,153 @@ export default {
     }
   },
   created() {
+    let gameNavs = [];
+    gameNavs[270] = {
+      title: "极速六合彩",
+      subtitle: "SPEED MARK SIX",
+      gamePath: "/Games/jslh",
+      icoSrc: require("../../static/images/common/icon/ico-nav-jslh.png")
+    }
+    gameNavs[260] = {
+      title: "88赛马",
+      subtitle: "88 RACE",
+      gamePath: "/Games/race",
+      icoSrc: require("../../static/images/common/icon/ico-nav-race.png")
+    }
+    gameNavs[240] = {
+      title: "极速赛车",
+      subtitle: "SPEED PK10",
+      gamePath: "/Games/jssc",
+      icoSrc: require("../../static/images/common/icon/ico-nav-jssc.png")
+    }
+    gameNavs[250] = {
+      title: "极速时时彩",
+      subtitle: "SPEED TIMES",
+      gamePath: "/Games/jsssc",
+      icoSrc: require("../../static/images/common/icon/ico-nav-jsssc.png")
+    }
+    gameNavs[46] = {
+      title: "罗马时时彩",
+      subtitle: "ROMA LOTTERY",
+      gamePath: "/Games/roma",
+      icoSrc: require("../../static/images/common/icon/ico-nav-roma.png")
+    }
+    gameNavs[210] = {
+      title: "威尼斯赛艇",
+      subtitle: "VENICE ROWING",
+      gamePath: "/Games/veniceRowing",
+      icoSrc: require("../../static/images/common/icon/ico-nav-speedShip.png")
+    }
+    gameNavs[51] = {
+      title: "北京赛车",
+      subtitle: "BEIJING PK10",
+      gamePath: "/Games/pk10",
+      icoSrc: require("../../static/images/common/icon/ico-nav-pk10.png")
+    }
+    gameNavs[2] = {
+      title: "重庆时时彩",
+      subtitle: "COLORED TIMES",
+      gamePath: "/Games/cqssc",
+      icoSrc: require("../../static/images/common/icon/ico-nav-ssc.png")
+    }
+    gameNavs[69] = {
+      title: "香港六合彩",
+      subtitle: "HK MARK SIX",
+      gamePath: "/Games/markSix",
+      icoSrc: require("../../static/images/common/icon/ico-nav-six.png")
+    }
+    gameNavs[160] = {
+      title: "PC蛋蛋",
+      subtitle: "PC EGG",
+      gamePath: "/Games/pcegg",
+      icoSrc: require("../../static/images/common/icon/ico-nav-pcegg.png")
+    }
+    gameNavs[171] = {
+      title: "幸运飞艇",
+      subtitle: "AIR SHIP",
+      gamePath: "/Games/luckyAirship",
+      icoSrc: require("../../static/images/common/icon/ico-nav-luckyship.png")
+    }
+    gameNavs[3] = {
+      title: "广东快乐十分",
+      subtitle: "HAPPY 10",
+      gamePath: "/Games/happyTen",
+      icoSrc: require("../../static/images/common/icon/ico-nav-ten.png")
+    }
+    gameNavs[47] = {
+      title: "重庆幸运农场",
+      subtitle: "LUCKY FARM",
+      gamePath: "/Games/luckFarm",
+      icoSrc: require("../../static/images/common/icon/ico-nav-xync.png")
+    }
+    gameNavs[172] = {
+      title: "江苏骰宝(快3)",
+      subtitle: "JS SIC BO",
+      gamePath: "/Games/jsks",
+      icoSrc: require("../../static/images/common/icon/ico-nav-jsks.png")
+    }
+    gameNavs[180] = {
+      title: "北京快乐8",
+      subtitle: "BEIJING HAPPY8",
+      gamePath: "/Games/bjkl8",
+      icoSrc: require("../../static/images/common/icon/ico-nav-bjkl8.png")
+    }
+    gameNavs[280] = {
+      title: "吉林快3",
+      subtitle: "JI LIN K3",
+      gamePath: "/Games/jlk3",
+      icoSrc: require("../../static/images/common/icon/ico-nav-jlk3.png")
+    }
+    /* 广东11选5 */
+    gameNavs[133] = {
+      title: "广东11选5",
+      subtitle: "GUANG DONG 11x5",
+      gamePath: "/Games/gd11x5",
+      icoSrc: require("../../static/images/common/icon/ico-nav-gd11x5.png")
+    }
+    gameNavs[220] = {
+      title: "福彩3D",
+      subtitle: "FU CAI 3D",
+      gamePath: "/Games/Fucai3D",
+      icoSrc: require("../../static/images/common/icon/ico-nav-fc3d.png")
+    }
+    this.gameNavs = gameNavs;
+    let gameNav = [];
+    gameNav[4] = {
+      title: "体育游戏",
+      gamePath: "sport",
+      icoSrc: require(`../../static/images/common/icon/${this.iconFolder}sidebar-icon7.png`),
+      hotSrc: require("../../static/images/common/hot.png")
+    }
+    if(this.getApiName == 'ly'){
+        gameNav[5] = {
+        title: "捕鱼王",
+        gamePath: "fish",
+        icoSrc: require(`../../static/images/common/icon/${this.iconFolder}sidebar-icon5.png`),
+      }
+    }else{
+       gameNav[5] = {
+        title: "捕鱼游戏",
+        gamePath: "fish",
+        icoSrc: require(`../../static/images/common/icon/${this.iconFolder}sidebar-icon5.png`),
+      }
+    }
+    gameNav[6] = {
+      title: "棋牌游戏",
+      gamePath: "chesscard",
+      icoSrc: require(`../../static/images/common/icon/${this.iconFolder}sidebar-icon3.png`),
+    }
+    gameNav[1] = {
+      title: "真人视讯",
+      gamePath: "ag",
+      icoSrc: require(`../../static/images/common/icon/${this.iconFolder}sidebar-icon4.png`),
+    }
+    gameNav[7] = {
+      title: "电子游艺",
+      gamePath: "mg",
+      icoSrc: require(`../../static/images/common/icon/${this.iconFolder}sidebar-icon6.png`),
+    }
+    this.gameNav = gameNav;
     if(this.getApiName == "fulicai" || this.getApiName == "crown" || this.getApiName == "yile" ){
       this.gameNavs.splice(-1,1)
     }
@@ -507,6 +514,11 @@ nav.top-nav {
 .second_menu_list .menu_item_wrap img {
   margin-left: -65px;
   transition: all ease 0.3s;
+}
+
+.second_menu_list .menu_item_wrap .siderbar_small_icon{
+  padding: 6px;
+  box-sizing: border-box
 }
 
 .second_menu_list > li {

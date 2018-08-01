@@ -67,8 +67,8 @@ export default {
         this.videoSrc = "/video/jsssc/?channel=pcv750&oid="+oid;
         break;
       case 260: // 88赛马
-        this.videoSrc =
-          "//88horse.hgb168.com/horse/";
+        this.videoSrc = "/video/88horse/?oid="+oid;
+          // "//88horse.hgb168.com/horse/";
         break;
     }
     this.isShowVideo = false;

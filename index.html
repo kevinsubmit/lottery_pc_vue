@@ -1,85 +1,15 @@
-<?php
-if ( ! defined('SERVER_ADMIN'))
-{
-    define('SERVER_ADMIN',trim($_SERVER['SERVER_ADMIN']));
-}
-function getDomain()
-{
-    $domain = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
-    $domain = preg_replace('/^([\w-]+\.)?([\w-]+\.[\w-]+)(\:\d+)?$/',"$2",$domain);
-    return $domain;
-}
-function isMobile()
-{
-    $to_pc = (int) $_GET['toPC'];
-    if ($to_pc)
-    {
-        return FALSE;
-    }
-    $user_agent = $_SERVER['HTTP_USER_AGENT'];
-    $mobile_agents = Array(
-        "240x320", "acer", "acoon",
-        "acs-", "abacho", "ahong", "airness", "alcatel",
-        "amoi", "android", "anywhereyougo.com",
-        "applewebkit/525", "applewebkit/532", "asus",
-        "audio", "au-mic", "avantogo", "becker", "benq",
-        "bilbo", "bird", "blackberry", "blazer", "bleu",
-        "cdm-", "compal", "coolpad", "danger", "dbtel",
-        "dopod", "elaine", "eric", "etouch", "fly ",
-        "fly_", "fly-", "go.web", "goodaccess",
-        "gradiente", "grundig", "haier", "hedy",
-        "hitachi", "htc", "huawei", "hutchison",
-        "inno", "ipad", "ipaq", "ipod", "jbrowser",
-        "kddi", "kgt", "kwc", "lenovo", "lg ", "lg2",
-        "lg3", "lg4", "lg5", "lg7", "lg8", "lg9", "lg-",
-        "lge-", "lge9", "longcos", "maemo", "mercator",
-        "meridian", "micromax", "midp", "mini", "mitsu",
-        "mmm", "mmp", "mobi", "mot-", "moto", "nec-",
-        "netfront", "newgen", "nexian", "nf-browser",
-        "nintendo", "nitro", "nokia", "nook", "novarra",
-        "obigo", "palm", "panasonic", "pantech", "philips",
-        "phone", "pg-", "playstation", "pocket", "pt-",
-        "qc-", "qtek", "rover", "sagem", "sama", "samu",
-        "sanyo", "samsung", "sch-", "scooter", "sec-",
-        "sendo", "sgh-", "sharp", "siemens", "sie-",
-        "softbank", "sony", "spice", "sprint", "spv",
-        "symbian
-            ", "tablet", "talkabout", "tcl-",
-        "teleca", "telit", "tianyu", "tim-", "toshiba",
-        "tsm", "up.browser", "utec", "utstar", "verykool",
-        "virgin", "vk-", "voda", "voxtel", "vx", "wap",
-        "wellco", "wig browser", "wii", "windows ce",
-        "wireless", "xda", "xde", "zte"
-    );
-    $is_mobile = false;
-    foreach ($mobile_agents as $device) {
-        if (stristr($user_agent, $device)) {
-            $is_mobile = true;
-            break;
-        }
-    }
-    return $is_mobile;
-}
-$domain = getDomain();
-if (isMobile())
-{
-    $url = 'http://m.'.$domain;
-    header('Location: '.$url);
-    exit;
-} 
-?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="//jkysxh.cn/img/pc/static/favicon_klc.ico">
     <title>WELCOME</title>
-    <script src="//cdn.bootcss.com/vue/2.5.2/vue.min.js"></script>  
+    <script src="//cdn.bootcss.com/vue/2.5.2/vue.js"></script>
     <script src="//cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
-    <script src="//cdn.bootcss.com/axios/0.17.0/axios.min.js"></script> 
+    <script src="//cdn.bootcss.com/axios/0.17.0/axios.min.js"></script>
     <script src="//cdn.bootcss.com/vuex/3.0.1/vuex.min.js"></script>
-    <link rel="stylesheet" href="static/css/ly.css">
-    <script src="static/js/ly_global.config.js"></script>
+    <link rel="stylesheet" href="static/css/uc.css">
+    <script src="static/js/uc_global.config.js"></script>
   </head>
   <body>
     <div id="app"></div>

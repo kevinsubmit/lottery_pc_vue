@@ -180,10 +180,10 @@ nav.top-nav {
 .btns-before-login span {
   opacity: 1!important;
 }
-footer {
+/* footer {
     color: #666;
     background-color: #333;
-}
+} */
 .lotteryCqssc #ssc_nav_0 div:not(.game_title) span:first-child,
 .lotteryCqssc #ssc_nav_2  li div:not(.game_title) span:first-child, 
 .lotteryCqssc #ssc_nav_3  li div:not(.game_title) span:first-child, 

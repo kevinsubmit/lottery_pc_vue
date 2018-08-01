@@ -1,11 +1,11 @@
 <template>
-<div> 
+<div>
     <div class="overlay"></div>
       <transition name="drop">
         <div class="modal-content">
           <h2 class="title">投注明细</h2>
           <ul>
-            <li class="dialog-title">
+            <li class="dialog-title test5">
               <span>号码</span>
               <span>赔率</span>
               <span>金额</span>
@@ -33,12 +33,12 @@
             <span class="btn-pink" @click="submit">确认</span>
             <span class="btn-blue" @click="closeDialog">取消</span>
           </div>
-        </div> 
+        </div>
       </transition>
   </div>
 </div>
 </template>
-<script> 
+<script>
 export default {
   data() {
     return {
@@ -68,8 +68,8 @@ export default {
     }
   },
   created() {
-    this.betInfo = this.betArr;  
-    for (let i = 0; i < this.betInfo.length; i++) { 
+    this.betInfo = this.betArr;
+    for (let i = 0; i < this.betInfo.length; i++) {
     // console.log(this.betInfo[i].key)
       let s = this.betInfo[i].key;
       this.betParams[s]  = this.betInfo[i].money
@@ -97,7 +97,7 @@ export default {
       this.betParams.game_code = this.game_code;
       this.betParams.type_code = this.type_code;
       this.betParams.round = this.round;
-       
+
 
       this.$http.post('/inup', JSON.stringify(this.betParams)).then(res => {
           // console.log(res.data);
@@ -154,7 +154,7 @@ export default {
   height: 100%;
   opacity: .5;
   filter: alpha(opacity=50);
-  z-index: 66; 
+  z-index: 66;
   left: 0;
   top: 0;
   transition: all ease .8s;
@@ -202,7 +202,7 @@ export default {
   border-bottom: 1px solid #ddd;
 }
 .dialog-total {
-  border-top: 1px solid #ddd;  
+  border-top: 1px solid #ddd;
   margin: 0 10px;
 }
 .modal-content li,
@@ -211,8 +211,8 @@ export default {
 }
 .modal-content li span {
   font-size: 14px;
-  display: inline-block;  
-  color: #000; 
+  display: inline-block;
+  color: #000;
 }
 .dialog-title span,
 .dialog-total span {
@@ -224,7 +224,7 @@ export default {
 }
 .modal-content .el-icon-circle-close-outline {
     font-size: 22px;
-    color: #999;  
+    color: #999;
     vertical-align: middle;
     cursor: pointer;
 }
@@ -236,14 +236,14 @@ export default {
   text-align: left;
 }
 .modal-content li span:nth-child(2) {
-  width: 15%; 
+  width: 15%;
 }
 .modal-content li span:nth-child(3) {
-  width: 20%;  
+  width: 20%;
 }
 .modal-content li span:nth-child(4) {
-  width: 15%;  
+  width: 15%;
 }
 
 </style>
- 
+
