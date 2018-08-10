@@ -152,6 +152,8 @@ export default {
       mgUrl: "",
       moreNavs: [],
       navs: [],
+      sor:[],
+      sort:[],
       gameNavs1  :{
         260: "/Games/race",                   
         270:"/Games/jslh",
@@ -178,15 +180,16 @@ export default {
     };
   },
   created() {
+     this.$http.post("/systems/game_sort").then(res => {
+        this.sort = res.data.sort;
+        this.sorts = this.gameNavs1[this.sort[0]]
+        console.log(this.sorts)
+     })
     // if(sessionStorage.getItem("im_token")){
-    //   let sorts = sessionStorage.getItem("sort")
-    //   let sor = sorts.split(",")
-    //   this.sorts = this.gameNavs1[sor[0]]
-    //   let so = "/#"+this.sorts
-    //   console.log(so)
-    // }
-    // this.oid_all();
-    // this.getBalance();
+    //   this.sort = sessionStorage.getItem("sort")
+    //   this.sor = this.sort.split(",")
+    //   this.sorts = this.gameNavs1[this.sor[0]]
+    //  }
     this.getApiName == "sd" &&
     !sessionStorage.getItem("im_username") &&
     this.$route.path == "/home"
@@ -194,25 +197,18 @@ export default {
       : "";
     let navs = [
       { title: "首页", gamePath: "/home" },
-      // { title: "游戏大厅", gamePath: "/Games/race" },
       { title: "开户注册", gamePath: "zhuce" },
       { title: "优惠活动", gamePath: "/notice:notices" },
-      // { title: "最新优惠", gamePath: "/notice:promo" },
       { title: "游戏规则", gamePath: "/rules" },
       { title: "加盟合作", gamePath: "/agent" },
       { title: "关于我们", gamePath: "/aboutus" },
       { title: "常见问题", gamePath: "/faq" },
-
       { title: "游戏大厅", gamePath: "/Games/race" },
       { title: "下注记录", gamePath: "/historyXZ" },
       { title: "存取记录", gamePath: "/Payment/accessList" },
       { title: "开奖走势", gamePath: "/result:_260" },
       { title: "开奖网", gamePath: "kaijiang" },
-
       { title: "APP下载", gamePath: "/mobile" }
-      // {title: '在线客服', gamePath: '/sevie'},
-      // {title: '真人视讯', gamePath: '/ag'},
-      // {title: '电子游艺', gamePath: '/mg'},
     ];
     if (!sessionStorage.getItem("im_token")) {
       this.gameNavs = navs;
@@ -227,12 +223,6 @@ export default {
       if(this.getApiName == 'yiteng'){
         this.gameNavs.splice(1, 1);
       }
-      /*
-      // 所有入口先去掉 游戏大厅入口  20180523 by 华少
-      if(this.getApiName == "uc"){
-        this.gameNavs.push({ title: "游戏大厅", gamePath: "/Games/race" });
-      }
-      */
     } else {
       this.getBalance()
       if (sessionStorage.getItem("im_username") === "游客") {
@@ -253,9 +243,6 @@ export default {
           this.gameNavs.push({ title: "抢红包雨", gamePath: "/bonus" });
           this.gameNavs.push({ title: "充值返水", gamePath: "/returnWater" });
         }
-        // if (this.getApiName == "gd") {
-        //   this.gameNavs.push({ title: "游戏规则", gamePath: "/rules" });
-        // }
          if (this.getApiName == "agcai" || this.getApiName == "ct"||this.getApiName == "yile" || this.getApiName == "fulicai"||this.getApiName == "crown"||this.getApiName == "618cp"||this.getApiName == "ylh"||this.getApiName == "yy"||this.getApiName == "letian") {
           this.gameNavs.splice(-2, 1);
         }
@@ -266,7 +253,6 @@ export default {
             gamePath: "/notice:notices"
           }),
             this.gameNavs.push({ title: "加盟合作", gamePath: "/agent" });
-          // this.gameNavs.push({ title: "在线客服", gamePath: "/sevie" });
         }
         if (this.getApiName == "tt" || this.getApiName == "gd"||this.getApiName == "fulicai" || this.getApiName == "yile"||this.getApiName == "crown"||this.getApiName == "618cp"||this.getApiName == "ylh"||this.getApiName == "yy"||this.getApiName == "yiteng" ) {
           console.log('debug gameNavs=', this.gameNavs);
@@ -277,7 +263,6 @@ export default {
           this.gameNavs.push(
             { title: "游戏规则", gamePath: "/rules" },
             { title: "优惠活动", gamePath: "/notice:notices" },
-            // { title: "在线客服", gamePath: "call" },
             { title: "加盟合作", gamePath: "/agent" },
             { title: "DNS教程", gamePath: "dns" }
           );
@@ -329,9 +314,6 @@ export default {
     } else {
       this.getServiceUrl();
     }
-    /*  if(sessionStorage.getItem("im_realname") != '11'){
-      this.loginStatue();
-    } */
     this.loginStatue();
   },
   mounted() {
@@ -360,8 +342,8 @@ export default {
       sessionStorage.clear();
       if (this.$router.path != "/home") {
         this.$router.push({
-          path: "/Games/race"
-          // path: this.sorts
+          // path: "/Games/race"
+          path: this.sorts
         });
       }
     }
@@ -456,12 +438,6 @@ export default {
             this.isShowAgreement = true;
             this.listenAgree();
             this.loginStatue();
-            /* setTimeout(() => {
-              this.isLogin = true;
-              this.agree = true;  
-              this.listenAgree();
-              this.loginStatue();
-            },2000) */
             sessionStorage.setItem("im_token", res.data.oid);
             sessionStorage.setItem("im_username", res.data.username);
             sessionStorage.setItem("im_realname", res.data.realname);
@@ -497,7 +473,6 @@ export default {
     },
     chgRestPwd() {
       this.isShowResetPwd = true;
-      // this.$emit('loginType', 'reset');
     },
     isShowAgree() {
       this.$emit("doClose", "showAgree");
@@ -569,16 +544,15 @@ export default {
       }
     },
     listenAgree(msg) {
-      console.log(this.sorts)
       if (msg === "agree") {
         this.isShowAgreement = false;
         this.agree = true;
         sessionStorage.setItem("agree", "true");
         sessionStorage.getItem("im_username") === "游客"
-          // ? this.$router.push(this.sorts)
+          ?  this.$router.push(this.sorts)
+          : (this.$window.location.href = "/#"+this.sorts);
+          // ? this.$router.push("/Games/race")
           // : (this.$window.location.href = "/#/Games/race");
-          ? this.$router.push("/Games/race")
-          : (this.$window.location.href = "/#/Games/race");
       } else if (msg === "disagree") {
         this.isLogin = false;
         this.isShowAgreement = false;

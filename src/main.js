@@ -18,7 +18,7 @@ import "./components/index.js";
 if (process.env.NODE_ENV === "development") {
 	// Axios.defaults.baseURL = "//apiweb.hgb168.com";
 	// Axios.defaults.baseURL = "//agcai.lebole5.com";
-	Axios.defaults.baseURL = "//www.leyingcdn.com";
+	// Axios.defaults.baseURL = "//www.leyingcdn.com";
 	// Axios.defaults.baseURL = "//www.lebole5.com";
 	// Axios.defaults.baseURL = "//wap.l5uc.com";
 	// Axios.defaults.baseURL = "//yirenwap.lebole5.com";
@@ -31,7 +31,8 @@ if (process.env.NODE_ENV === "development") {
 	// Axios.defaults.baseURL = "//ylh.lebole5.com";
 	// Axios.defaults.baseURL = "//yy.lebole5.com";
 	// Axios.defaults.baseURL = "//letian.lebole5.com";
-	Axios.defaults.baseURL = "//l5ran.lebole5.com";
+	// Axios.defaults.baseURL = "//l5ran.lebole5.com";
+	Axios.defaults.baseURL = "//www.l5jinfu.com";
 
 }
 

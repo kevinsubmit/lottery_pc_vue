@@ -141,7 +141,7 @@ export default {
       select: 0,
       navI: 0,
       betlm: {},
-      fentime: 30,
+      fentime: 60,
       list: [],
       isNav: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       type: "lotteryMarksix",
@@ -1440,7 +1440,7 @@ export default {
         this.endtime == 0 ||
         this.endtime == 298 ||
         this.endtime == 296 ||
-        this.endtime == 30
+        this.endtime == 60
       ) {
         this.fetchData(1);
         this.showDialog = false;

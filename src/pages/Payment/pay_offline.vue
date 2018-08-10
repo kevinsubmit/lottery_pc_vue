@@ -73,9 +73,9 @@
         </tr>
 
         <tr v-if="isShowOrderNum && bankName != '银行支付'">
-          <th v-if="getApiName == 'uc'">交易单号后四位</th>
+          <th v-if="getApiName == 'uc' || getApiName == 'ly'">交易单号后四位</th>
           <th v-else>商户单号后四位</th>
-          <td v-if="getApiName == 'uc'">
+          <td v-if="getApiName == 'uc'||getApiName == 'ly'">
             <el-input v-model="orderNo" :minlength="4" :maxlength="4" placeholder="交易单号后四位"></el-input>
           </td>
           <td v-else>
