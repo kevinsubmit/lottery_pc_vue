@@ -171,7 +171,7 @@
                       </div>
                       <div @click="togglePlay($event, ite)" class="clearfix hover-color" v-for='(ite,i,j) in item.list.decade'>
                         <span>{{i}}</span>
-                        <span >{{ite.odds}}</span>
+                        <span>{{ite.odds}}</span>
                         <input ref='kuang' :id="ite.key" :name="i" :data-obj="JSON.stringify(ite)" @input="chkInput()" @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7" />
                         <input v-else readonly value="封盘" class="closeBet">
                       </div>
@@ -182,7 +182,7 @@
                       </div>
                       <div @click="togglePlay($event, ite)" class="clearfix hover-color" v-for='(ite,i,j) in item.list.unit'>
                         <span>{{i}}</span>
-                        <span >{{ite.odds}}</span>
+                        <span>{{ite.odds}}</span>
                         <input ref='kuang' :id="ite.key" :name="i" :data-obj="JSON.stringify(ite)" @input="chkInput()" @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7" />
                         <input v-else readonly value="封盘" class="closeBet">
                       </div>
@@ -251,7 +251,7 @@
                           <input v-else style="margin-left:0" readonly value="封盘" class="closeBet">
                         </div>
                       </li>
-                       <li v-for='(item,j) in list_fc3d_21'>
+                      <li v-for='(item,j) in list_fc3d_21'>
                         <div class="game_subtitle">
                           <h3 class="dw">个位</h3>
                         </div>
@@ -300,7 +300,7 @@
                     </div>
                   </li>
                 </ul>
-                 <ul class="" ref='cName' v-if=" classCode == '0108' ">
+                <ul class="" ref='cName' v-if=" classCode == '0108' ">
                   <!-- er zi he shu -->
                   <el-tabs type="border-card">
                     <el-tab-pane label="佰拾和数">
@@ -377,7 +377,7 @@
                     <div @click="togglePlay($event, ite)" class="clearfix hover-color" v-for='(ite,i,j) in item.list'>
                       <span class="sanheshunum">{{ite.title}}</span>
                       <span>{{ite.odds}}</span>
-                      <input ref='kuang'  :id="ite.key" :name="i" :data-obj="JSON.stringify(ite)" @input="chkInput()" @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7" />
+                      <input ref='kuang' :id="ite.key" :name="i" :data-obj="JSON.stringify(ite)" @input="chkInput()" @focus="inputFocus($event)" min="1" type="text" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7" />
                       <input v-else readonly value="封盘" class="closeBet">
                     </div>
                   </li>
@@ -417,11 +417,11 @@
                       <b ref="hardtwo" v-for="item in easylist" v-show="item.title == checkNames2.length ? true : false"> {{item.odds}} </b>
                     </div>
                     <!--<div class="clearfix hover-color" :class="{'active-color': checkNames2.indexOf(index) > -1}" v-for='(ite,index) in easydata'>-->
-										<label class="clearfix hover-color x-label" :class="{'active-color': checkNames2.indexOf(index) > -1}" v-for='(ite,index) in easydata'>
-											<span>{{index}}</span>
-											<input ref='kuang' :id="ite" class="kuangL" :name="index" :value="index" :code="6212" v-model="checkNames2" :data-obj="ite" @focus="inputFocus($event)" min="1" type="checkbox" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7" checked="" />
-											<input v-else="closeBet" readonly value="封盘" class="closeBet">
-										</label>
+                    <label class="clearfix hover-color x-label" :class="{'active-color': checkNames2.indexOf(index) > -1}" v-for='(ite,index) in easydata'>
+                      <span>{{index}}</span>
+                      <input ref='kuang' :id="ite" class="kuangL" :name="index" :value="index" :code="6212" v-model="checkNames2" :data-obj="ite" @focus="inputFocus($event)" min="1" type="checkbox" v-if="closeBet" onkeyup="value=this.value.replace(/\D+/g,'')" maxlength="7" checked="" />
+                      <input v-else="closeBet" readonly value="封盘" class="closeBet">
+                    </label>
                     <!--</div>-->
                   </li>
                 </ul>
@@ -447,13 +447,13 @@ import betDialog from "../../components/betDialog";
 import zxDialog from "../../components/zxDialog";
 import changLong from "../../components/changlong";
 import luZhu from "../../components/luzhu";
-import { Checkbox } from 'element-ui';
-import { togglePlayActive, clearAllActives } from '../../utils/common'
+import { Checkbox } from "element-ui";
+import { togglePlayActive, clearAllActives } from "../../utils/common";
 
 export default {
   data() {
     return {
-			betlm: {},
+      betlm: {},
       toSendData: [],
       getApiName: getApiName(),
       lotteryType: "fucai3d",
@@ -464,7 +464,7 @@ export default {
       round: 0,
       endtime: 0,
       closetime: 0,
-      fentime: 2700,
+      fentime: 0,
       list: [],
       list_fc3d_0: [],
       list_fc3d_1: [],
@@ -495,24 +495,10 @@ export default {
         "拾个和尾数",
         "佰拾个和尾数"
       ],
-      tett:[
-        "佰拾和尾数",
-        "佰个和尾数",
-        "拾个和尾数"
-      ],
-      txt:[
-        "佰拾和数",
-        "佰个和数",
-        "拾个和数"
-      ],
-      baige:[
-        "佰位",
-        "个位"
-      ],
-      shige:[
-        "拾位",
-        "个位"
-      ],
+      tett: ["佰拾和尾数", "佰个和尾数", "拾个和尾数"],
+      txt: ["佰拾和数", "佰个和数", "拾个和数"],
+      baige: ["佰位", "个位"],
+      shige: ["拾位", "个位"],
       gewei: [],
       ergewei: [],
       checkNames1: [],
@@ -539,8 +525,8 @@ export default {
       quickyMoney: 0,
       todayWinLost: 0,
       hundred: [],
-      ezdwflag:false,
-      szdwflag:false,
+      ezdwflag: false,
+      szdwflag: false
     };
   },
   components: {
@@ -572,10 +558,11 @@ export default {
         sessionStorage.removeItem("quickyMoney");
       }
 
-			// 将预设的金额赋值到选中玩法的金额
-			const presetPrice = this.quickyMoney
-			let inputEl = document.querySelectorAll('.active-color input[type=text]')
-			if (inputEl.length) Array.prototype.forEach.call(inputEl, el => el.value = presetPrice);
+      // 将预设的金额赋值到选中玩法的金额
+      const presetPrice = this.quickyMoney;
+      let inputEl = document.querySelectorAll(".active-color input[type=text]");
+      if (inputEl.length)
+        Array.prototype.forEach.call(inputEl, el => (el.value = presetPrice));
     },
     addclass($event) {
       this.$refs.className = "select";
@@ -737,7 +724,7 @@ export default {
           this.sanwei = this.list12;
           以上两行变成一行 */
           this.sanwei = this.list_fc3d_12;
-          this.ergewei = this.list_fc3d_12[0].list.tail_2
+          this.ergewei = this.list_fc3d_12[0].list.tail_2;
         } else {
           this.$http.all([this.getOdds(zhihe), this.getOdds(yizh)]).then(
             this.$http.spread((acct, perms) => {
@@ -745,8 +732,14 @@ export default {
                 this.list_fc3d_0 = acct.data;
                 this.list_fc3d_1 = perms.data;
                 this.$refs.cName.className = "yizh";
-                localStorage.setItem("list_fc3d_0", JSON.stringify(this.list_fc3d_0));
-                localStorage.setItem("list_fc3d_1", JSON.stringify(this.list_fc3d_1));
+                localStorage.setItem(
+                  "list_fc3d_0",
+                  JSON.stringify(this.list_fc3d_0)
+                );
+                localStorage.setItem(
+                  "list_fc3d_1",
+                  JSON.stringify(this.list_fc3d_1)
+                );
               }
             })
           );
@@ -755,8 +748,14 @@ export default {
               if (acct.status === 200) {
                 this.list_fc3d_2 = acct.data;
                 this.list_fc3d_3 = perms.data;
-                localStorage.setItem("list_fc3d_2", JSON.stringify(this.list_fc3d_2));
-                localStorage.setItem("list_fc3d_3", JSON.stringify(this.list_fc3d_3));
+                localStorage.setItem(
+                  "list_fc3d_2",
+                  JSON.stringify(this.list_fc3d_2)
+                );
+                localStorage.setItem(
+                  "list_fc3d_3",
+                  JSON.stringify(this.list_fc3d_3)
+                );
               }
             })
           );
@@ -768,8 +767,14 @@ export default {
                 this.$refs.cName.className = "yidw";
                 this.list = this.list_fc3d_0;
                 this.$refs.cName.className = "gyh";
-                localStorage.setItem("list_fc3d_4", JSON.stringify(this.list_fc3d_4));
-                localStorage.setItem("list_fc3d_5", JSON.stringify(this.list_fc3d_5));
+                localStorage.setItem(
+                  "list_fc3d_4",
+                  JSON.stringify(this.list_fc3d_4)
+                );
+                localStorage.setItem(
+                  "list_fc3d_5",
+                  JSON.stringify(this.list_fc3d_5)
+                );
               }
             })
           );
@@ -779,8 +784,14 @@ export default {
                 this.list_fc3d_20 = acct.data;
                 this.list_fc3d_21 = perms.data;
                 this.$refs.cName.className = "yidw";
-                localStorage.setItem("list_fc3d_20", JSON.stringify(this.list_fc3d_20));
-                localStorage.setItem("list_fc3d_21", JSON.stringify(this.list_fc3d_21));
+                localStorage.setItem(
+                  "list_fc3d_20",
+                  JSON.stringify(this.list_fc3d_20)
+                );
+                localStorage.setItem(
+                  "list_fc3d_21",
+                  JSON.stringify(this.list_fc3d_21)
+                );
               }
             })
           );
@@ -789,8 +800,14 @@ export default {
               if (acct.status === 200) {
                 this.list_fc3d_6 = acct.data;
                 this.list_fc3d_7 = perms.data;
-                localStorage.setItem("list_fc3d_6", JSON.stringify(this.list_fc3d_6));
-                localStorage.setItem("list_fc3d_7", JSON.stringify(this.list_fc3d_7));
+                localStorage.setItem(
+                  "list_fc3d_6",
+                  JSON.stringify(this.list_fc3d_6)
+                );
+                localStorage.setItem(
+                  "list_fc3d_7",
+                  JSON.stringify(this.list_fc3d_7)
+                );
               }
             })
           );
@@ -801,8 +818,14 @@ export default {
                 if (acct.status === 200) {
                   this.list_fc3d_8 = acct.data;
                   this.list_fc3d_9 = perms.data;
-                  localStorage.setItem("list_fc3d_8", JSON.stringify(this.list_fc3d_8));
-                  localStorage.setItem("list_fc3d_9", JSON.stringify(this.list_fc3d_9));
+                  localStorage.setItem(
+                    "list_fc3d_8",
+                    JSON.stringify(this.list_fc3d_8)
+                  );
+                  localStorage.setItem(
+                    "list_fc3d_9",
+                    JSON.stringify(this.list_fc3d_9)
+                  );
                 }
               })
             );
@@ -811,8 +834,14 @@ export default {
               if (acct.status === 200) {
                 this.list_fc3d_10 = acct.data;
                 this.list_fc3d_11 = perms.data;
-                localStorage.setItem("list_fc3d_10", JSON.stringify(this.list_fc3d_10));
-                localStorage.setItem("list_fc3d_11", JSON.stringify(this.list_fc3d_11));
+                localStorage.setItem(
+                  "list_fc3d_10",
+                  JSON.stringify(this.list_fc3d_10)
+                );
+                localStorage.setItem(
+                  "list_fc3d_11",
+                  JSON.stringify(this.list_fc3d_11)
+                );
               }
             })
           );
@@ -824,12 +853,18 @@ export default {
                 // 以下三行是新增的
                 this.zhushipan = this.list_fc3d_13[0].list;
                 this.sanwei = this.list_fc3d_12;
-                this.ergewei = this.list_fc3d_12[0].list.tail_2
+                this.ergewei = this.list_fc3d_12[0].list.tail_2;
                 this.$refs.cName1.className = "zhihe";
-                 this.list = this.list_fc3d_1;
+                this.list = this.list_fc3d_1;
 
-                localStorage.setItem("list_fc3d_12", JSON.stringify(this.list_fc3d_12));
-                localStorage.setItem("list_fc3d_13", JSON.stringify(this.list_fc3d_13));
+                localStorage.setItem(
+                  "list_fc3d_12",
+                  JSON.stringify(this.list_fc3d_12)
+                );
+                localStorage.setItem(
+                  "list_fc3d_13",
+                  JSON.stringify(this.list_fc3d_13)
+                );
               }
             })
           );
@@ -838,8 +873,14 @@ export default {
               if (acct.status === 200) {
                 this.list_fc3d_14 = acct.data;
                 this.list_fc3d_15 = perms.data;
-                localStorage.setItem("list_fc3d_14", JSON.stringify(this.list_fc3d_14));
-                localStorage.setItem("list_fc3d_15", JSON.stringify(this.list_fc3d_15));
+                localStorage.setItem(
+                  "list_fc3d_14",
+                  JSON.stringify(this.list_fc3d_14)
+                );
+                localStorage.setItem(
+                  "list_fc3d_15",
+                  JSON.stringify(this.list_fc3d_15)
+                );
               }
             })
           );
@@ -949,7 +990,7 @@ export default {
             this.list = this.list_fc3d_9;
             this.$refs.cName.className = "zuxuansan";
             this.type_code = 6211;
-            this.fetchData()
+            this.fetchData();
           }
           break;
         case "0111":
@@ -975,14 +1016,14 @@ export default {
       this.classCode = code;
       this.reset();
     },
-    funClick(){
+    funClick() {
       document.getElementById("moni").click();
     },
     addEvent() {
-      if (navigator.userAgent.indexOf('Firefox') >= 0) {
-        setTimeout(() =>{
-          this.funClick()
-        },100)
+      if (navigator.userAgent.indexOf("Firefox") >= 0) {
+        setTimeout(() => {
+          this.funClick();
+        }, 100);
       }
       var _this = this;
       setTimeout(function() {
@@ -992,23 +1033,22 @@ export default {
             var name = this.getAttribute("name");
             var data = this.getAttribute("data-obj");
             for (let i = 0; i < _this.hardlist.length; i++) {
-              if(_this.hardlist[i].title == _this.checkNames1.length){
+              if (_this.hardlist[i].title == _this.checkNames1.length) {
                 var odds = _this.hardlist[i].odds;
               }
             }
             for (let i = 0; i < _this.easylist.length; i++) {
-              if(_this.easylist[i].title == _this.checkNames2.length){
+              if (_this.easylist[i].title == _this.checkNames2.length) {
                 var odds = _this.easylist[i].odds;
               }
-
             }
             if (e.target.checked) {
               _this.toSendData.push({
                 title: name,
                 ip: data,
-                odds:odds
+                odds: odds
               });
-              console.log(_this.toSendData)
+              console.log(_this.toSendData);
             } else {
               var indx = 0;
               for (var i = 0; i < _this.toSendData.length; i++) {
@@ -1022,65 +1062,64 @@ export default {
           };
         }
       }, 0);
-
     },
-    confirms (ite) {
-        if (!this.closeBet) {
-          this.$swal({
-            text: "已封盘！",
-            type: "error",
-            timer: 1200,
-          });
-          return
+    confirms(ite) {
+      if (!this.closeBet) {
+        this.$swal({
+          text: "已封盘！",
+          type: "error",
+          timer: 1200
+        });
+        return;
+      }
+      this.betArr = [];
+      let ites = JSON.parse(ite);
+      ites.money = this.quickyMoney;
+      if (this.classCode == "0101" || this.classCode == "0102") {
+        let _key = ites.key.split("_");
+        ites.name = this.text[_key[2]];
+        if ([_key[1]] == 6194) {
+          ites.name = "一字组合";
         }
-        this.betArr = [];
-        let ites = JSON.parse(ite)
-        ites.money = this.quickyMoney
-        if(this.classCode == '0101' || this.classCode == '0102'){
-          let _key = ites.key.split('_');
-          ites.name = this.text[_key[2]]
-          if([_key[1]] == 6194){
-            ites.name = "一字组合"
-          }
+      }
+      if (this.classCode == "0105") {
+        let _key = ites.key.split("_");
+        ites.title = this.text[_key[2]] + "位";
+        ites.name = ites.key.slice(10, 11);
+      }
+      if (this.classCode == "0108") {
+        let _key = ites.key.split("_");
+        if ([_key[1]] == 6209) {
+          ites.name = this.tett[_key[2]];
+          ites.title = ites.key.slice(10, 11);
         }
-        if(this.classCode == '0105'){
-          let _key = ites.key.split('_');
-          ites.title = this.text[_key[2]]+"位"
-          ites.name = ites.key.slice(10,11)
+      }
+      if (this.classCode == "0109") {
+        let _key = ites.key.split("_");
+        if ([_key[1]] == 6209) {
+          ites.name = "三字和尾数";
+          ites.title = ites.key.slice(10, 11);
         }
-        if(this.classCode == '0108'){
-          let _key = ites.key.split('_');
-          if([_key[1]] == 6209){
-            ites.name = this.tett[_key[2]]
-            ites.title = ites.key.slice(10,11)
-          }
+      }
+      if (this.classCode == "0112") {
+        let _key = ites.key.split("_");
+        if ([_key[1]] == 6210) {
+          ites.name = this.text[_key[2]];
+        } else {
+          ites.title = ites.key.slice(8, 9);
         }
-        if(this.classCode == '0109'){
-          let _key = ites.key.split('_');
-          if([_key[1]] == 6209){
-            ites.name = "三字和尾数"
-            ites.title = ites.key.slice(10,11)
-          }
-        }
-        if(this.classCode == '0112'){
-          let _key = ites.key.split('_');
-          if([_key[1]] == 6210){
-            ites.name = this.text[_key[2]]
-          }else{
-            ites.title = ites.key.slice(8,9)
-          }
-        }
-        this.betArr.push(ites)
-        if (this.betArr.length == 0) {
-          this.$swal({
-            text: "请选择下注项目！",
-            type: "error",
-            timer: 12000,
-          });
-          return
-        }
-        this.showDialog = true
-      },
+      }
+      this.betArr.push(ites);
+      if (this.betArr.length == 0) {
+        this.$swal({
+          text: "请选择下注项目！",
+          type: "error",
+          timer: 12000
+        });
+        return;
+      }
+      this.showDialog = true;
+    },
     confirm() {
       // console.log(this.toSendData)
       let betnumber = [];
@@ -1097,96 +1136,95 @@ export default {
         return;
       }
       this.betArr.length = 0;
-      if (this.$refs.kuang[0].getAttribute("code") == 6211 ) {
-        if(this.toSendData.length < 5){
+      if (this.$refs.kuang[0].getAttribute("code") == 6211) {
+        if (this.toSendData.length < 5) {
           this.$swal({
-          text: "至少选择5个下注项！",
-          type: "error",
-          timer: 1500
-        })
-          .then(function(response) {})
-          .catch(e => {
-            console.log(e);
-          });
-        return;
-        }
-        this.betArr.push(this.toSendData);
-        this.toSendData = []
-      }else if(this.$refs.kuang[0].getAttribute("code") == 6212){
-        if(this.toSendData.length < 4){
-          this.$swal({
-          text: "至少选择4个下注项！",
-          type: "error",
-          timer: 1500
-        })
-          .then(function(response) {})
-          .catch(e => {
-            console.log(e);
-          });
-        return;
-        }
-        if(this.toSendData.length > 8){
-          this.$swal({
-          text: "最多选择8个下注项！",
-          type: "error",
-          timer: 1500
-        })
-          .then(function(response) {})
-          .catch(e => {
-            console.log(e);
-          });
-        return;
+            text: "至少选择5个下注项！",
+            type: "error",
+            timer: 1500
+          })
+            .then(function(response) {})
+            .catch(e => {
+              console.log(e);
+            });
+          return;
         }
         this.betArr.push(this.toSendData);
         this.toSendData = [];
-      }else if(this.classCode == '0106' ){
+      } else if (this.$refs.kuang[0].getAttribute("code") == 6212) {
+        if (this.toSendData.length < 4) {
+          this.$swal({
+            text: "至少选择4个下注项！",
+            type: "error",
+            timer: 1500
+          })
+            .then(function(response) {})
+            .catch(e => {
+              console.log(e);
+            });
+          return;
+        }
+        if (this.toSendData.length > 8) {
+          this.$swal({
+            text: "最多选择8个下注项！",
+            type: "error",
+            timer: 1500
+          })
+            .then(function(response) {})
+            .catch(e => {
+              console.log(e);
+            });
+          return;
+        }
+        this.betArr.push(this.toSendData);
+        this.toSendData = [];
+      } else if (this.classCode == "0106") {
         this.szdwflag = false;
         let aa = false;
         let bb = false;
         for (let i = 0; i < this.$refs.kuang.length; i++) {
           if (this.$refs.kuang[i].value > 0) {
             let ite = JSON.parse(this.$refs.kuang[i].getAttribute("data-obj"));
-            console.log(ite)
-            let _key = ite.key.split('_');
-            if(_key[1] == 6202){
-              ite.title = this.text[_key[2]]+"位"
-              ite.name = ite.key.slice(10,11)
+            console.log(ite);
+            let _key = ite.key.split("_");
+            if (_key[1] == 6202) {
+              ite.title = this.text[_key[2]] + "位";
+              ite.name = ite.key.slice(10, 11);
               if (_key[2] == 0) aa = true;
               if (_key[2] == 1) bb = true;
             }
-            if(_key[1] == 6203){
-              console.log(_key[2])
-              console.log(this.baige[1])
-              ite.title = this.baige[_key[2]]
-              ite.name = ite.key.slice(10,11)
+            if (_key[1] == 6203) {
+              console.log(_key[2]);
+              console.log(this.baige[1]);
+              ite.title = this.baige[_key[2]];
+              ite.name = ite.key.slice(10, 11);
               if (_key[2] == 0) aa = true;
               if (_key[2] == 1) bb = true;
             }
-            if(_key[1] == 6204){
-              ite.title = this.shige[_key[2]]
-              ite.name = ite.key.slice(10,11)
+            if (_key[1] == 6204) {
+              ite.title = this.shige[_key[2]];
+              ite.name = ite.key.slice(10, 11);
               if (_key[2] == 0) aa = true;
               if (_key[2] == 1) bb = true;
             }
             // ite.title = this.text[_key[2]]+"位"
-            ite.name = ite.key.slice(10,11)
+            ite.name = ite.key.slice(10, 11);
             ite.money = this.$refs.kuang[i].value;
             this.betArr.push(ite);
           }
         }
-        if(aa && bb){
+        if (aa && bb) {
           this.szdwflag = true;
         }
-        if(!this.szdwflag){
+        if (!this.szdwflag) {
           this.$swal({
             text: "两项中请各选一项！",
             type: "error",
             timer: 1000
-          })
+          });
           return;
         }
-
-      }else if(this.classCode == '0107' ){
+      } else if (this.classCode == "0107") {
         this.szdwflag = false;
         let aa = false;
         let bb = false;
@@ -1194,86 +1232,69 @@ export default {
         for (let i = 0; i < this.$refs.kuang.length; i++) {
           if (this.$refs.kuang[i].value > 0) {
             let ite = JSON.parse(this.$refs.kuang[i].getAttribute("data-obj"));
-            let _key = ite.key.split('_');
+            let _key = ite.key.split("_");
             if (_key[2] == 0) aa = true;
             if (_key[2] == 1) bb = true;
             if (_key[2] == 2) cc = true;
-            ite.title = this.text[_key[2]]+"位"
-            ite.name = ite.key.slice(10,11)
+            ite.title = this.text[_key[2]] + "位";
+            ite.name = ite.key.slice(10, 11);
             ite.money = this.$refs.kuang[i].value;
             this.betArr.push(ite);
           }
         }
-        if(aa && bb && cc){
+        if (aa && bb && cc) {
           this.szdwflag = true;
         }
-        if(!this.szdwflag){
+        if (!this.szdwflag) {
           this.$swal({
             text: "三项中请各选一项！",
             type: "error",
             timer: 1000
-          })
+          });
           return;
         }
-
-      }else {
+      } else {
         for (let i = 0; i < this.$refs.kuang.length; i++) {
           if (this.$refs.kuang[i].value > 0) {
             let ite = JSON.parse(this.$refs.kuang[i].getAttribute("data-obj"));
-            if(ite.name != '一字组合'){
-              let index = ite.key.split('_')[2];
-              ite.name = this.text[index]
+            if (ite.name != "一字组合") {
+              let index = ite.key.split("_")[2];
+              ite.name = this.text[index];
             }
-            if(this.classCode == '0103'){
-              ite.name = "二字组合"
+            if (this.classCode == "0103") {
+              ite.name = "二字组合";
             }
-            if(this.classCode == '0104'){
-              ite.name = "三字组合"
+            if (this.classCode == "0104") {
+              ite.name = "三字组合";
             }
-            // if(this.classCode == '0106'){
-            //   let _key = ite.key.split('_');
-            //   console.log(ite)
-            //   if(_key[1] == 6202){
-            //     ite.title = this.text[_key[2]]+"位"
-            //     ite.name = ite.key.slice(8,9)
-            //   }
-            //   if(_key[1] == 6203){
-            //     ite.title = this.baige[_key[2]]
-            //     ite.name = ite.key.slice(8,9)
-            //   }
-            //   if(_key[1] == 6204){
-            //     ite.title = this.shige[_key[2]]
-            //     ite.name = ite.key.slice(8,9)
-            //   }
-            // }
-            if(this.classCode == '0105'){
-              let _key = ite.key.split('_');
-              ite.title = this.text[_key[2]]+"位"
-              ite.name = ite.key.slice(10,11)
+            if (this.classCode == "0105") {
+              let _key = ite.key.split("_");
+              ite.title = this.text[_key[2]] + "位";
+              ite.name = ite.key.slice(10, 11);
             }
-            if(this.classCode == '0108'){
-              let _key = ite.key.split('_');
-              ite.name = this.txt[_key[2]]
-              if([_key[1]] == 6209){
-                ite.name = this.tett[_key[2]]
-                ite.title = ite.key.slice(10,11)
+            if (this.classCode == "0108") {
+              let _key = ite.key.split("_");
+              ite.name = this.txt[_key[2]];
+              if ([_key[1]] == 6209) {
+                ite.name = this.tett[_key[2]];
+                ite.title = ite.key.slice(10, 11);
               }
             }
-            if(this.classCode == '0109'){
-              let _key = ite.key.split('_');
-              ite.name = "三字和数"
-              if([_key[1]] == 6209){
-                ite.name = "三字和数尾数"
-                ite.title = ite.key.slice(10,11)
+            if (this.classCode == "0109") {
+              let _key = ite.key.split("_");
+              ite.name = "三字和数";
+              if ([_key[1]] == 6209) {
+                ite.name = "三字和数尾数";
+                ite.title = ite.key.slice(10, 11);
               }
             }
-            if(this.classCode == '0112'){
-              let _key = ite.key.split('_');
-              if([_key[1]] == 6210){
-                ite.name = this.text[_key[2]]
-              }else{
-                ite.name = "跨度"
-                ite.title = ite.key.slice(8,9)
+            if (this.classCode == "0112") {
+              let _key = ite.key.split("_");
+              if ([_key[1]] == 6210) {
+                ite.name = this.text[_key[2]];
+              } else {
+                ite.name = "跨度";
+                ite.title = ite.key.slice(8, 9);
               }
             }
             ite.money = this.$refs.kuang[i].value;
@@ -1342,23 +1363,23 @@ export default {
       } // 保存快捷金额
     },
     reset() {
-    	this.checkNames1.length = 0
-    	this.checkNames2.length = 0
+      this.checkNames1.length = 0;
+      this.checkNames2.length = 0;
       for (let i = 0; i < this.$refs.kuang.length; i++) {
         this.$refs.kuang[i].checked = false;
         this.checkNames1 = [];
         this.checkNames2 = [];
         this.$refs.kuang[i].value = "";
-				clearAllActives()
+        clearAllActives();
       }
     },
     // 切换玩法的选中状态
     togglePlay(event) {
-        if (!this.closeBet) return// 封盘不能切换
-        if (event.target.tagName === 'INPUT') return// input标签不触发切换
+      if (!this.closeBet) return; // 封盘不能切换
+      if (event.target.tagName === "INPUT") return; // input标签不触发切换
 
-        togglePlayActive(event, this.quickyMoney)
-    },
+      togglePlayActive(event, this.quickyMoney);
+    }
   },
   mounted() {
     setInterval(() => {
@@ -1375,6 +1396,12 @@ export default {
   },
   created() {
     this.fetchData();
+    let params = {};
+    params.game_code = 220;
+    this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
+      this.fentime =
+        parseInt(res.data.next.endtime) - parseInt(res.data.next.closetime);
+    });
   },
   watch: {
     endtime: function() {
@@ -1404,21 +1431,12 @@ export default {
 .zuxuanliu li {
   width: 100%;
 }
-/*.game li div:hover {
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.1) 10%,
-    rgba(0, 0, 0, 0.1) 96.1%,
-    transparent 96.1%,
-    transparent 100%
-  );
-}*/
-.game li div.wrap:hover{
-  background:rgba(68, 20, 20, 0)
+.game li div.wrap:hover {
+  background: rgba(68, 20, 20, 0);
 }
 
 .game li div.game_title:hover {
-  background: #EFF6FF;
+  background: #eff6ff;
 }
 .yizh li div,
 .erzh li div,
@@ -1434,12 +1452,12 @@ export default {
   float: left;
   /*margin-top: 13px;*/
 }
-.game li div.wrap{
+.game li div.wrap {
   width: 33% !important;
   margin: 2px 0 0;
 }
-.game li div.wrap div{
-  width:100%;
+.game li div.wrap div {
+  width: 100%;
 }
 .yizh li div.game_title,
 .erzh li div.game_title,
@@ -1451,22 +1469,13 @@ export default {
   /*padding-top: 3px;*/
 }
 
-
 .erzh li div span:first-child,
 .sanzh li div span:first-child,
-.sanheshu li div span:first-child
-/* .game li div span:first-child */
-{
+.sanheshu li div span:first-child {
   width: 40px;
   height: 20px;
   background-color: #3e80d4;
-  /* background-color: #3e80d4 !important; */
 }
-
-
-/* .yidw li div {
-  width: 100% !important;
-} */
 
 .yidw li div.wrap:hover {
   background: none;
@@ -1543,7 +1552,6 @@ ul.erdw div.game_title h3.select {
   background-color: #eff6ff;
   height: 30px;
   border-bottom: 0;
-  /*padding-left: 14px;*/
   margin: 0 -20px;
 }
 
@@ -1559,7 +1567,6 @@ ul.erdw div.game_title h3.select {
   text-align: center;
   margin-right: 12px;
   padding: 0;
-  /*transition: 0;*/
 }
 
 .el-tabs--border-card > .el-tabs__header .el-tabs__item {
@@ -1573,7 +1580,6 @@ ul.erdw div.game_title h3.select {
 }
 
 .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
-  /* background-color: #862A41!important; */
   height: 30px;
   color: #fff;
   padding: 0;
@@ -1626,8 +1632,8 @@ ul.erdw div.game_title h3.select {
 
 .zhihe .clearfix {
   width: 100%;
-	margin-top: 0;
-	padding: 0;
+  margin-top: 0;
+  padding: 0;
 }
 
 .zhihe .clearfix {
@@ -1645,7 +1651,7 @@ ul.erdw div.game_title h3.select {
 
 .zhihe .clearfix .item {
   width: 14%;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 /*.zuxuansan li div.clearfix {
@@ -1670,38 +1676,38 @@ ul.erdw div.game_title h3.select {
 .sanheshuwrap div:last-child .sanheshunum {
   width: 50px;
 }
-.game_info ul.yidw li div:not(.game_title){
-	margin: 2px 0 0;
+.game_info ul.yidw li div:not(.game_title) {
+  margin: 2px 0 0;
 }
 .zhu-shi-pan .row-7 .item:nth-child(4),
 .zhu-shi-pan .row-8 .item:nth-child(4),
 .zhu-shi-pan .row-9 .item:nth-child(4),
-.zhu-shi-pan .row-10 .item:nth-child(4){
-	margin-left: 265px;
+.zhu-shi-pan .row-10 .item:nth-child(4) {
+  margin-left: 265px;
 }
-.game_info ul li input{
-	width: 41px;
+.game_info ul li input {
+  width: 41px;
 }
-.hover-color{
-	cursor: pointer;
+.hover-color {
+  cursor: pointer;
 }
-.x-label{
-	float: left;
-	width: 18%;
-	margin: 2px 1% 0;
-	padding: 4px;
-	border-radius: 4px;
-	box-sizing: border-box;
-	border: 0;
-	font-size: 100%;
-	font-weight: normal;
-	vertical-align: baseline;
-	text-align: left;
-	list-style: none;
-	cursor: pointer;
+.x-label {
+  float: left;
+  width: 18%;
+  margin: 2px 1% 0;
+  padding: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 100%;
+  font-weight: normal;
+  vertical-align: baseline;
+  text-align: left;
+  list-style: none;
+  cursor: pointer;
 }
 
-.ly_red{
+.ly_red {
   font-size: 14px;
 }
 </style>

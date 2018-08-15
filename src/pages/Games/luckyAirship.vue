@@ -30,11 +30,11 @@
                     </div>
                     <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click="togglePlay($event, ite)" style="cursor: pointer">
                       <!--<label>-->
-                        <span :class='classCode==="0103"?"":`pk_${ite.name}`' style='cursor:pointer;'>{{ite.name}}</span>
-                        <!--<span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
-                        <span style='cursor:pointer;'>{{ite.odds}}</span>
-                        <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)" @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7" />
-                        <input v-else readonly value="封盘" class="closeBet">
+                      <span :class='classCode==="0103"?"":`pk_${ite.name}`' style='cursor:pointer;'>{{ite.name}}</span>
+                      <!--<span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                      <span style='cursor:pointer;'>{{ite.odds}}</span>
+                      <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)" @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7" />
+                      <input v-else readonly value="封盘" class="closeBet">
                       <!--</label>-->
                     </div>
                   </li>
@@ -67,7 +67,7 @@ import lotteryArea from "../../components/lotteryArea";
 import betDialog from "../../components/betDialog";
 import changLong from "../../components/changlong";
 import luZhu from "../../components/luzhu";
-import { togglePlayActive, clearAllActives } from '../../utils/common'
+import { togglePlayActive, clearAllActives } from "../../utils/common";
 export default {
   data() {
     return {
@@ -81,7 +81,7 @@ export default {
       game_code: 171,
       round: 0,
       endtime: 0,
-      fentime: 30,
+      fentime: 0,
       closetime: 0,
       list: [],
       list_0: [],
@@ -110,6 +110,12 @@ export default {
       this.isSaveMoney = false;
       this.quickyMoney = "";
     }
+    let params = {};
+    params.game_code = 171;
+    this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
+      this.fentime =
+        parseInt(res.data.next.endtime) - parseInt(res.data.next.closetime);
+    });
   },
   components: {
     lotteryArea,
@@ -127,15 +133,16 @@ export default {
         sessionStorage.removeItem("quickyMoney");
       }
 
-			// 将预设的金额赋值到选中玩法的金额
-			const presetPrice = this.quickyMoney
-			Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
+      // 将预设的金额赋值到选中玩法的金额
+      const presetPrice = this.quickyMoney;
+      Array.prototype.forEach.call(
+        document.querySelectorAll(".active-color input"),
+        el => (el.value = presetPrice)
+      );
     },
     fetchData(i) {
       let params = {};
-
       params.game_code = 171;
-      // console.log(params)
       this.$http
         .post("/getinfo/game", JSON.stringify(params))
         .then(res => {
@@ -152,10 +159,8 @@ export default {
             });
             return;
           }
-          // console.log(res.status)
           if (res.status === 200) {
             this.$store.commit("updatelotteryMoney", res.data.lcurrency);
-            // this.closeBet = true;
             this.isLotteryArea = true;
             res.data.next.isclose
               ? (this.closeBet = false)
@@ -166,7 +171,6 @@ export default {
             this.closetime =
               parseInt(res.data.next.closetime) - parseInt(timeStamp);
             this.body = res.data;
-            // this.isLotteryArea = true;
             this.round = res.data.next.round;
             this.todayWinLost = parseFloat(res.data.UserResult);
             res.data.next.isclose
@@ -240,7 +244,7 @@ export default {
       return this.$http.post("/getinfo/odds", JSON.stringify(i));
     },
     changeNav(code) {
-			clearAllActives()// 去掉颜色的选中状态
+      clearAllActives(); // 去掉颜色的选中状态
 
       switch (code) {
         case "0101":
@@ -358,14 +362,8 @@ export default {
         }
       }
     },
-		inputFocus (event, item) {
-			event.target.value = sessionStorage.getItem("quickyMoney") || ''
-      /*let quickyMoney = sessionStorage.getItem("quickyMoney");
-      if (quickyMoney > 0) {
-        key.target.value = quickyMoney;
-      } else {
-        return false;
-      }*/
+    inputFocus(event, item) {
+      event.target.value = sessionStorage.getItem("quickyMoney") || "";
     },
     saveMoneyBlur(quickyMoney) {
       if (quickyMoney <= 0 || quickyMoney === "") {
@@ -389,18 +387,18 @@ export default {
     },
     reset() {
       for (let i = 0; i < this.$refs.kuang.length; i++) {
-				let el = this.$refs.kuang[i]
-				el.value = "";
-				el.parentNode.classList.remove('active-color')
+        let el = this.$refs.kuang[i];
+        el.value = "";
+        el.parentNode.classList.remove("active-color");
       }
     },
-		// 切换玩法的选中状态
-		togglePlay(event) {
-			if (!this.closeBet) return// 封盘不能切换
-			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+    // 切换玩法的选中状态
+    togglePlay(event) {
+      if (!this.closeBet) return; // 封盘不能切换
+      if (event.target.tagName === "INPUT") return; // input标签不触发切换
 
-			togglePlayActive(event, this.quickyMoney)
-		}
+      togglePlayActive(event, this.quickyMoney);
+    }
   },
   mounted() {
     setInterval(() => {
@@ -431,12 +429,12 @@ export default {
         this.showDialog = false;
       }
     },
-		closeBet(val) {
-			if (!val) {
-				// 如果封盘了，则清空玩法的选中状态
-				clearAllActives()
-			}
-		}
+    closeBet(val) {
+      if (!val) {
+        // 如果封盘了，则清空玩法的选中状态
+        clearAllActives();
+      }
+    }
   }
 };
 </script>

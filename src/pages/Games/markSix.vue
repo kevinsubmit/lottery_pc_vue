@@ -1,55 +1,57 @@
 <template>
-    <div class="content markSixArea">
-      <div style='position:fixed;width:100%;height:100%;z-index:999;' v-if="overlay"></div>
-        <!-- 右侧头部导航 -->
-       <div style='height:80px'>
-           <lottery-area v-if = "isLotteryArea" :todayWinLost="todayWinLost" :game_code=game_code :lotteryName="lotteryName" :lotteryObj="body" :endtime="endtime"  gameType="20" :closetime="closetime" :fentime='fentime' :closeBet="closeBet"></lottery-area>
-        <div v-else = "isLotteryArea" :class="`bet-top bet-top-placeholder bet-top-placeholder_${getApiName}`">数据加载中...</div>
-       </div>
+  <div class="content markSixArea">
+    <div style='position:fixed;width:100%;height:100%;z-index:999;' v-if="overlay"></div>
+    <!-- 右侧头部导航 -->
+    <div style='height:80px'>
+      <lottery-area v-if="isLotteryArea" :todayWinLost="todayWinLost" :game_code=game_code :lotteryName="lotteryName" :lotteryObj="body" :endtime="endtime" gameType="20" :closetime="closetime" :fentime='fentime' :closeBet="closeBet"></lottery-area>
+      <div v-else="isLotteryArea" :class="`bet-top bet-top-placeholder bet-top-placeholder_${getApiName}`">数据加载中...</div>
+    </div>
 
-        <!-- 下注弹窗 -->
-        <bet-dialog v-if="showDialog" :betArr="betArr" :game_code=69 :type_code=type_code :round="round"  v-on:child-say="listenToMyBoy"></bet-dialog>
-         <lh-dialog v-if="showHmDialog" :indeT="indeT" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round"  v-on:child-hm="listenHm"></lh-dialog>
-         <!-- 连码下注弹窗 -->
-      <lm-dialog v-if="showLmDialog" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round"  v-on:child-lm="listenLm"></lm-dialog>
-        <nav class="top-nav">
-            <ul class="clearfix">
-              <li v-for="(itmek,indexNav) in datas"  @click="changgeNav(itmek,indexNav)" :class='{active:itmek==select}'><span>{{itmek.name}}</span></li>
-            </ul>
-        </nav>
+    <!-- 下注弹窗 -->
+    <bet-dialog v-if="showDialog" :betArr="betArr" :game_code=69 :type_code=type_code :round="round" v-on:child-say="listenToMyBoy"></bet-dialog>
+    <lh-dialog v-if="showHmDialog" :indeT="indeT" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round" v-on:child-hm="listenHm"></lh-dialog>
+    <!-- 连码下注弹窗 -->
+    <lm-dialog v-if="showLmDialog" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round" v-on:child-lm="listenLm"></lm-dialog>
+    <nav class="top-nav">
+      <ul class="clearfix">
+        <li v-for="(itmek,indexNav) in datas" @click="changgeNav(itmek,indexNav)" :class='{active:itmek==select}'>
+          <span>{{itmek.name}}</span>
+        </li>
+      </ul>
+    </nav>
 
-        <div class="markSixSubNav" v-if = "datas[navI].datasT.length>1">
-          <!-- <h3>投注方式</h3> -->
-          <div>
-              <ul class="clearfix">
-                <li class="li_4 f-l" v-for='(item,index) in datas[navI].datasT'>
-                  <button :disabled="item.isCheck" :class="{isred:item.isCheck}" @click="one(item)">{{item._name}}</button>
-                </li>
-              </ul>
-            </div>
-          </div>
+    <div class="markSixSubNav" v-if="datas[navI].datasT.length>1">
+      <!-- <h3>投注方式</h3> -->
+      <div>
+        <ul class="clearfix">
+          <li class="li_4 f-l" v-for='(item,index) in datas[navI].datasT'>
+            <button :disabled="item.isCheck" :class="{isred:item.isCheck}" @click="one(item)">{{item._name}}</button>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-        <div class="bet-content">
-          <div class="bet-center">
-            <div class="bet-box">
-                <div class="bet-area">
-                    <div class="game">
-                        <!-- <div class="game_title lm_title" v-if = "navI===4"> -->
-                            <!-- <h3>连码</h3> -->
-                        <!-- </div> -->
-                        <div class="six_lm_ball" v-if = "navI===4">
-                           <ul class="">
-                             <li @click.prevent="toggleCheckbox" class="hover-color" v-for = "i in [1,11,21,31,41,2,12,22,32,42,3,13,23,33,43,4,14,24,34,44,5,15,25,35,45,6,16,26,36,46,7,17,27,37,47,8,18,28,38,48,9,19,29,39,49,10,20,30,40]">
-                               <label style='width:100%;'>
-                                  <span :class="`lm_ball lm_ball_${i}`">{{i}}</span>
-                                  <input type="checkbox" :value="i" ref="check"  v-if="closeBet" @click.stop="chkBox">
-                                  <input v-else readonly value="封盘" class="closeBet" style='width:30px;'>
-                                </label>
-                             </li>
-                           </ul>
-                        </div>
+    <div class="bet-content">
+      <div class="bet-center">
+        <div class="bet-box">
+          <div class="bet-area">
+            <div class="game">
+              <!-- <div class="game_title lm_title" v-if = "navI===4"> -->
+              <!-- <h3>连码</h3> -->
+              <!-- </div> -->
+              <div class="six_lm_ball" v-if="navI===4">
+                <ul class="">
+                  <li @click.prevent="toggleCheckbox" class="hover-color" v-for="i in [1,11,21,31,41,2,12,22,32,42,3,13,23,33,43,4,14,24,34,44,5,15,25,35,45,6,16,26,36,46,7,17,27,37,47,8,18,28,38,48,9,19,29,39,49,10,20,30,40]">
+                    <label style='width:100%;'>
+                      <span :class="`lm_ball lm_ball_${i}`">{{i}}</span>
+                      <input type="checkbox" :value="i" ref="check" v-if="closeBet" @click.stop="chkBox">
+                      <input v-else readonly value="封盘" class="closeBet" style='width:30px;'>
+                    </label>
+                  </li>
+                </ul>
+              </div>
 
-                        <!-- <div class="six_lm_ball" v-if = "navI===11">
+              <!-- <div class="six_lm_ball" v-if = "navI===11">
                            <ul class="">
                              <li v-for = "i in [1,11,21,31,41,2,12,22,32,42,3,13,23,33,43,4,14,24,34,44,5,15,25,35,45,6,16,26,36,46,7,17,27,37,47,8,18,28,38,48,9,19,29,39,49,10,20,30,40]">
                                <label>
@@ -61,65 +63,65 @@
                            </ul>
                         </div> -->
 
-                        <div class="game_info markSix">
-                            <ul :id="`marksix_nav_${type_code}`" ref='cName' class="clearfix">
-                                <li v-for='(item,j) in list'>
-                                    <!-- <div class="game_title" v-if = "isNav.indexOf(param.type_code)===-1"> -->
-                                    <div class="game_title" v-if="type_code > 10&&type_code < 17">
-                                        <h3>{{item.name}}</h3>
-                                    </div>
-                                    <!-- <div> -->
-                                   <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click.prevent="toggleCheckbox" style="cursor: pointer">
-                                      <label>
-                                        <span :class="`tm_ball_${ite.name}`" style='cursor:pointer;'>{{ite.name}}</span>
-                                        <!--<span @click='type_code>=17?"":confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
-                                        <span style='cursor:pointer;'>{{ite.odds}}</span>
-                                        <input @click.stop="chkBox" ref='kuang'  :id="ite.key" :title="item.name" :name="ite.name" :data-obj="JSON.stringify(ite)"  @focus="inputFocus($event, ite)" @input="chkInput()" min="1" onkeyup="value=this.value.replace(/\D+/g,'')" :type="`${navI>=8?'checkbox':'text'}`" maxlength="7" v-if="closeBet"/>
-                                        <input v-else readonly value="封盘" class="closeBet">
-
-                                      </label>
-                                  </div>
-                                  <div  class="banbo"  v-if='type_code == 14'>
-                                    <div  v-for='i in bose' >
-                                         <span v-for='j in i'>{{j}}</span>
-                                    </div>
-                                  </div>
-
-                                   <div  class="marksixNavLeft"  v-if='type_code >=15 && type_code <=33'>
-                                      <div  v-for='i in bose1' >
-                                           <span v-for='j in i.numbers' class="lhc_ball_num"  :class="`lhc_ball_num_${j}`">{{j}}</span>
-                                      </div>
-                                  </div>
-
-                                  <div  class="marksixNav"  v-if='type_code >=34 && type_code <=39'>
-                                      <div  v-for='i in bose2' >
-
-                                           <span v-for='j in i' class="lhc_ball_num"  :class="`lhc_ball_num_${j}`">{{j}}</span>
-                                      </div>
-                                  </div>
-
-                                </li>
-                            </ul>
-                        </div>
+              <div class="game_info markSix">
+                <ul :id="`marksix_nav_${type_code}`" ref='cName' class="clearfix">
+                  <li v-for='(item,j) in list'>
+                    <!-- <div class="game_title" v-if = "isNav.indexOf(param.type_code)===-1"> -->
+                    <div class="game_title" v-if="type_code > 10&&type_code < 17">
+                      <h3>{{item.name}}</h3>
                     </div>
-                </div>
+                    <!-- <div> -->
+                    <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click.prevent="toggleCheckbox" style="cursor: pointer">
+                      <label>
+                        <span :class="`tm_ball_${ite.name}`" style='cursor:pointer;'>{{ite.name}}</span>
+                        <!--<span @click='type_code>=17?"":confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                        <span style='cursor:pointer;'>{{ite.odds}}</span>
+                        <input @click.stop="chkBox" ref='kuang' :id="ite.key" :title="item.name" :name="ite.name" :data-obj="JSON.stringify(ite)" @focus="inputFocus($event, ite)" @input="chkInput()" min="1" onkeyup="value=this.value.replace(/\D+/g,'')" :type="`${navI>=8?'checkbox':'text'}`" maxlength="7" v-if="closeBet" />
+                        <input v-else readonly value="封盘" class="closeBet">
 
-                 <div class="btn-bet">
-                   <!-- <input id='fast' type="button" name="" value="快选金额"/> -->
-                   <el-checkbox  v-model="isSaveMoney" @change="saveMoney" :disabled="!quickyMoney>0">预设金额</el-checkbox>
-                   <input type="text" @input="checkMoney()" @blur="saveMoneyBlur(quickyMoney)" v-model="quickyMoney"/>
+                      </label>
+                    </div>
+                    <div class="banbo" v-if='type_code == 14'>
+                      <div v-for='i in bose'>
+                        <span v-for='j in i'>{{j}}</span>
+                      </div>
+                    </div>
 
-                   <input @click="confirm" type="button" name="" class="btn-pink" value="确定">
-                   <input @click="reset" type="button" name="" class="btn-blue" value="重置"/>
+                    <div class="marksixNavLeft" v-if='type_code >=15 && type_code <=33'>
+                      <div v-for='i in bose1'>
+                        <span v-for='j in i.numbers' class="lhc_ball_num" :class="`lhc_ball_num_${j}`">{{j}}</span>
+                      </div>
+                    </div>
 
-                 </div>
+                    <div class="marksixNav" v-if='type_code >=34 && type_code <=39'>
+                      <div v-for='i in bose2'>
+
+                        <span v-for='j in i' class="lhc_ball_num" :class="`lhc_ball_num_${j}`">{{j}}</span>
+                      </div>
+                    </div>
+
+                  </li>
+                </ul>
+              </div>
             </div>
+          </div>
 
-            <!-- 长龙模块 -->
-            <chang-long :game_code="game_code"></chang-long>
+          <div class="btn-bet">
+            <!-- <input id='fast' type="button" name="" value="快选金额"/> -->
+            <el-checkbox v-model="isSaveMoney" @change="saveMoney" :disabled="!quickyMoney>0">预设金额</el-checkbox>
+            <input type="text" @input="checkMoney()" @blur="saveMoneyBlur(quickyMoney)" v-model="quickyMoney" />
+
+            <input @click="confirm" type="button" name="" class="btn-pink" value="确定">
+            <input @click="reset" type="button" name="" class="btn-blue" value="重置" />
+
           </div>
         </div>
+
+        <!-- 长龙模块 -->
+        <chang-long :game_code="game_code"></chang-long>
+      </div>
     </div>
+  </div>
 </template>
 
 <script scoped>
@@ -128,20 +130,20 @@ import betDialog from "../../components/betDialog";
 import lmDialog from "../../components/lmDialog";
 import lhDialog from "../../components/lhDialog";
 import changLong from "../../components/changlong";
-import {cacheGame} from "@/utils"
-import { togglePlayActive, clearAllActives } from '../../utils/common'
+import { cacheGame } from "@/utils";
+import { togglePlayActive, clearAllActives } from "../../utils/common";
 export default {
   data() {
     return {
-      title:null,
-      overlay:false,
+      title: null,
+      overlay: false,
       getApiName: getApiName(),
       indeT: 2,
       configT: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 40, 41, 42, 43, 44, 45, 46, 47],
       select: 0,
       navI: 0,
       betlm: {},
-      fentime: 60,
+      fentime: 0,
       list: [],
       isNav: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       type: "lotteryMarksix",
@@ -625,25 +627,30 @@ export default {
       this.isSaveMoney = false;
       this.quickyMoney = "";
     }
+    let params = {};
+    params.game_code = 69;
+    this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
+      this.fentime =
+        parseInt(res.data.next.endtime) - parseInt(res.data.next.closetime);
+    });
   },
   methods: {
-    overlaymethod(){
-      this.overlay = false
+    overlaymethod() {
+      this.overlay = false;
     },
-    getSixnumber(){
-      if (cacheGame('sixnumber')){
-        this.bose1 = cacheGame('sixnumber')
+    getSixnumber() {
+      if (cacheGame("sixnumber")) {
+        this.bose1 = cacheGame("sixnumber");
       } else {
         this.$http.post("/user/getMarkSixNumbers").then(res => {
-          if(res.data) {
-            cacheGame('sixnumber', this.bose1)
+          if (res.data) {
+            cacheGame("sixnumber", this.bose1);
             this.bose1 = res.data;
-
           }
-        })
+        });
       }
     },
-    checkMoney(){
+    checkMoney() {
       let r = /^\+?[1-9][0-9]*$/; //正整数
       if (!r.test(this.quickyMoney)) {
         this.quickyMoney = "";
@@ -653,35 +660,40 @@ export default {
         sessionStorage.removeItem("quickyMoney");
       }
 
-			// 将预设的金额赋值到选中玩法的金额
-			const presetPrice = this.quickyMoney
-			Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
+      // 将预设的金额赋值到选中玩法的金额
+      const presetPrice = this.quickyMoney;
+      Array.prototype.forEach.call(
+        document.querySelectorAll(".active-color input"),
+        el => (el.value = presetPrice)
+      );
     },
-    odds(params){
-      if(!cacheGame(`sixGame_${params.type_code}`)){
+    odds(params) {
+      if (!cacheGame(`sixGame_${params.type_code}`)) {
         this.$http.post("/getinfo/odds", JSON.stringify(params)).then(res => {
-            if (res.data.msg == 4001) {
-              this.$swal({
-                text: "账户已下线，请重新登陆",
-                type: "error",
-                timer: 1200
-              })
-              this.$router.push({path: "/home"});
-              return;
-            }
-          cacheGame(`sixGame_${params.type_code}`,res.data);
-           this.list = res.data;
-        })
+          if (res.data.msg == 4001) {
+            this.$swal({
+              text: "账户已下线，请重新登陆",
+              type: "error",
+              timer: 1200
+            });
+            this.$router.push({ path: "/home" });
+            return;
+          }
+          cacheGame(`sixGame_${params.type_code}`, res.data);
+          this.list = res.data;
+        });
       }
       this.list = cacheGame(`sixGame_${params.type_code}`);
     },
     fetchData(i) {
-      i==1?"":this.select = this.datas[0];
+      i == 1 ? "" : (this.select = this.datas[0]);
 
       let params = {};
 
       params.game_code = 69;
-        this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
+      this.$http
+        .post("/getinfo/game", JSON.stringify(params))
+        .then(res => {
           if (res.data.msg == 4001) {
             this.$swal({
               text: "账户已下线，请重新登陆",
@@ -699,18 +711,20 @@ export default {
           this.isLotteryArea = true;
           let timeStamp = res.data.next.timestap;
           this.endtime = parseInt(res.data.next.endtime) - parseInt(timeStamp);
-          this.closetime = parseInt(res.data.next.closetime) - parseInt(timeStamp);
+          this.closetime =
+            parseInt(res.data.next.closetime) - parseInt(timeStamp);
           this.body = res.data;
           this.isLotteryArea = true;
           this.round = res.data.next.round;
           this.todayWinLost = parseFloat(res.data.UserResult);
-           if (res.data.next.isclose === true||!res.data.next.endtime) {
-              this.closeBet = false;
-              this.endtime = 0;
-            } else {
-              this.closeBet = true;
-            }
-        }).catch(function() {
+          if (res.data.next.isclose === true || !res.data.next.endtime) {
+            this.closeBet = false;
+            this.endtime = 0;
+          } else {
+            this.closeBet = true;
+          }
+        })
+        .catch(function() {
           this.$router.push({
             path: "/home"
           });
@@ -720,7 +734,7 @@ export default {
     listenToMyBoy: function(i) {
       if (i === "close") {
         this.showDialog = false;
-        this.reset()
+        this.reset();
       }
     },
     listenLm: function(i) {
@@ -728,24 +742,30 @@ export default {
         this.showLmDialog = false;
       }
     },
-    isshows(){
-      this.isshow=false;
+    isshows() {
+      this.isshow = false;
     },
     changgeNav(itmek, index) {
       let nav = {
-        4:"三全中",
-        8:"二肖",
-        9:"二肖连中",
-        10:"二尾连中",
-        11:"五不中"
-      }
-      if(index==4||index==8||index==9||index==10||index==11){
+        4: "三全中",
+        8: "二肖",
+        9: "二肖连中",
+        10: "二尾连中",
+        11: "五不中"
+      };
+      if (
+        index == 4 ||
+        index == 8 ||
+        index == 9 ||
+        index == 10 ||
+        index == 11
+      ) {
         this.name = nav[index];
-      }else{
-        this.name = itmek.name
+      } else {
+        this.name = itmek.name;
       }
-      this.overlay=true
-      setTimeout(this.overlaymethod,600)
+      this.overlay = true;
+      setTimeout(this.overlaymethod, 600);
       for (let i = 0; i < this.datas.length; i++) {
         for (let j = 0; j < this.datas[i].datasT.length; j++) {
           this.datas[i].datasT[j].isCheck = false;
@@ -759,57 +779,65 @@ export default {
       for (let i = 0; i < this.$refs.kuang.length; i++) {
         this.$refs.kuang[i].value = "";
       }
-      itmek.datasT[0].inde ? (this.indeT = itmek.datasT[0].inde) : (this.indeT = null);
+      itmek.datasT[0].inde
+        ? (this.indeT = itmek.datasT[0].inde)
+        : (this.indeT = null);
       this.select = itmek;
       this.navI = index;
       for (let i = 0; i < this.datas.length; i++) {
         this.datas[i].isCheck = false;
       }
       itmek.isCheck = true;
-      if(index != 0){
+      if (index != 0) {
         this.param.type_code = itmek.datasT[0].typecode;
         this.type_code = itmek.datasT[0].typecode;
-      }else{
+      } else {
         this.param.type_code = itmek.datasT[1].typecode;
         this.type_code = itmek.datasT[1].typecode;
       }
-      if (cacheGame(`sixGame_${itmek.datasT[0].typecode}`)){
-        this.list = cacheGame(`sixGame_${itmek.datasT[0].typecode}`)
+      if (cacheGame(`sixGame_${itmek.datasT[0].typecode}`)) {
+        this.list = cacheGame(`sixGame_${itmek.datasT[0].typecode}`);
         this.reset();
-      }else{
-        this.$http.post("/getinfo/odds", JSON.stringify(this.param)).then(res => {
-          if (this.type_code == 15) {
-            let yixiao = {};
-            let weishu = {};
-            yixiao.list = res.data[0].list.slice(0, 12);
-            yixiao.name = "一肖";
-            weishu.list = res.data[0].list.slice(12, 22);
-            weishu.name = "尾数";
-            res.data = [];
-            res.data.push(yixiao, weishu);
-          }
+      } else {
+        this.$http
+          .post("/getinfo/odds", JSON.stringify(this.param))
+          .then(res => {
+            if (this.type_code == 15) {
+              let yixiao = {};
+              let weishu = {};
+              yixiao.list = res.data[0].list.slice(0, 12);
+              yixiao.name = "一肖";
+              weishu.list = res.data[0].list.slice(12, 22);
+              weishu.name = "尾数";
+              res.data = [];
+              res.data.push(yixiao, weishu);
+            }
 
-          if (this.configT.indexOf(this.param.type_code) != -1) {
-            let tema = [];
-            for (let i = 0; i <= Math.floor(res.data[0].list.length / 5); i++) {
-              for (let j = 0; j < 5; j++) {
-                if (res.data[0].list[i + 10 * j]) {
-                  tema.push(res.data[0].list[i + 10 * j]);
+            if (this.configT.indexOf(this.param.type_code) != -1) {
+              let tema = [];
+              for (
+                let i = 0;
+                i <= Math.floor(res.data[0].list.length / 5);
+                i++
+              ) {
+                for (let j = 0; j < 5; j++) {
+                  if (res.data[0].list[i + 10 * j]) {
+                    tema.push(res.data[0].list[i + 10 * j]);
+                  }
                 }
               }
+              res.data[0].list = tema;
             }
-            res.data[0].list = tema;
-          }
-          cacheGame(`sixGame_${itmek.datasT[0].typecode}`, res.data)
-          this.list = res.data;
-          this.reset();
-        })
+            cacheGame(`sixGame_${itmek.datasT[0].typecode}`, res.data);
+            this.list = res.data;
+            this.reset();
+          });
       }
     },
     one(item, e) {
-      this.name = item._name
-      this.overlay=true
-      setTimeout(this.overlaymethod,600)
+      this.name = item._name;
+      this.overlay = true;
+      setTimeout(this.overlaymethod, 600);
       for (let i = 0; i < this.datas[this.navI].datasT.length; i++) {
         this.datas[this.navI].datasT[i].isCheck = false;
       }
@@ -848,27 +876,32 @@ export default {
       item.isCheck = true;
       this.param.type_code = item.typecode;
       this.type_code = item.typecode;
-      if (cacheGame(`sixGame_${this.param.type_code}`)){
+      if (cacheGame(`sixGame_${this.param.type_code}`)) {
         this.list = cacheGame(`sixGame_${this.param.type_code}`);
         this.reset();
-      }else{
-        this.$http.post("/getinfo/odds", JSON.stringify(this.param)).then(res => {
-          if (this.configT.indexOf(this.param.type_code) != -1) {
-            let tema = [];
-            for (let i = 0; i <= Math.floor(res.data[0].list.length / 5); i++) {
-              for (let j = 0; j < 5; j++) {
-                if (res.data[0].list[i + 10 * j]) {
-                  tema.push(res.data[0].list[i + 10 * j]);
+      } else {
+        this.$http
+          .post("/getinfo/odds", JSON.stringify(this.param))
+          .then(res => {
+            if (this.configT.indexOf(this.param.type_code) != -1) {
+              let tema = [];
+              for (
+                let i = 0;
+                i <= Math.floor(res.data[0].list.length / 5);
+                i++
+              ) {
+                for (let j = 0; j < 5; j++) {
+                  if (res.data[0].list[i + 10 * j]) {
+                    tema.push(res.data[0].list[i + 10 * j]);
+                  }
                 }
               }
+              res.data[0].list = tema;
             }
-            res.data[0].list = tema;
-          }
-          cacheGame(`sixGame_${this.param.type_code}`, res.data);
-          this.list = res.data;
-          this.reset();
-
-        })
+            cacheGame(`sixGame_${this.param.type_code}`, res.data);
+            this.list = res.data;
+            this.reset();
+          });
       }
     },
     listenHm: function(i) {
@@ -877,90 +910,53 @@ export default {
       }
     },
     chkBox(event) {
-			if (event.target.tagName === 'INPUT') return
-			let inputEl = event.target
-			let wrapperEl = inputEl.parentNode.tagName == 'LI' ? inputEl.parentNode : inputEl.parentNode.parentNode
-			if (wrapperEl.classList.contains('active-color')) {
-				wrapperEl.classList.remove('active-color')// 去掉勾
-			} else {
-				wrapperEl.classList.add('active-color')// 打上勾
-			}
-      /*this.showLmDialog = false;
-      let cboxLength = 0;
-
-      if (this.type_code === 12) {
-        // 过关
-        for (let i = 0; i < this.$refs.kuang.length; i++) {
-          if (this.$refs.kuang[i].checked) {
-            cboxLength++;
-          }
-        }
+      if (event.target.tagName === "INPUT") return;
+      let inputEl = event.target;
+      let wrapperEl =
+        inputEl.parentNode.tagName == "LI"
+          ? inputEl.parentNode
+          : inputEl.parentNode.parentNode;
+      if (wrapperEl.classList.contains("active-color")) {
+        wrapperEl.classList.remove("active-color"); // 去掉勾
       } else {
-        for (let i = 0; i < this.$refs.check.length; i++) {
-          if (this.$refs.check[i].checked) {
-            cboxLength++;
-          }
-        }
+        wrapperEl.classList.add("active-color"); // 打上勾
       }
-
-      if (cboxLength === 0) {
+    },
+    confirms(name, key, ite) {
+      if (!this.closeBet) {
         this.$swal({
-          text: "选项范围：" + this.LimitMin + "~" + this.LimitMax + "个号码",
+          text: "已封盘！",
           type: "error",
           timer: 1200
-        })
-          .then(function(response) {})
-          .catch(e => {});
-        this.showLmDialog = false;
+        });
         return;
       }
-
-      if (cboxLength > this.LimitMax - 1 && this.type_code !== 12) {
-        for (let i = 0; i < this.$refs.check.length; i++) {
-          if (!this.$refs.check[i].checked) {
-            this.$refs.check[i].setAttribute("disabled", "true");
-          } else {
-            this.$refs.check[i].removeAttribute("disabled");
-          }
-        }
+      this.betArr = [];
+      let ites = JSON.parse(ite);
+      ites.title = name;
+      ites.money = this.quickyMoney;
+      this.betArr.push(ites);
+      if (this.betArr.length == 0) {
+        this.$swal({
+          text: "请选择下注项目！",
+          type: "error",
+          timer: 12000
+        });
         return;
-      }*/
+      }
+      this.reset();
+      this.showDialog = true;
     },
-      confirms (name, key, ite) {
-        if (!this.closeBet) {
-          this.$swal({
-            text: "已封盘！",
-            type: "error",
-            timer: 1200,
-          });
-          return
-        }
-        this.betArr = [];
-        let ites = JSON.parse(ite)
-        ites.title = name
-        ites.money = this.quickyMoney
-        this.betArr.push(ites)
-        if (this.betArr.length == 0) {
-          this.$swal({
-            text: "请选择下注项目！",
-            type: "error",
-            timer: 12000,
-          });
-          return
-        }
-        this.reset();
-        this.showDialog = true
-      },
 
     confirm(e) {
-      if(sessionStorage.getItem("im_realname") == "11"){
-           this.$swal({
-            text: "请登录正式账号！",
-            type: "error",
-            timer: 1200,
-          });
-          return
-			}
+      if (sessionStorage.getItem("im_realname") == "11") {
+        this.$swal({
+          text: "请登录正式账号！",
+          type: "error",
+          timer: 1200
+        });
+        return;
+      }
 
       if (!this.closeBet) {
         this.$swal({
@@ -1047,7 +1043,6 @@ export default {
             }
           }
         }
-
 
         // 判断选中的号码数量
         let cboxLength = 0;
@@ -1282,8 +1277,8 @@ export default {
         }
       }
     },
-		inputFocus (event, item) {
-			event.target.value = sessionStorage.getItem("quickyMoney") || ''
+    inputFocus(event, item) {
+      event.target.value = sessionStorage.getItem("quickyMoney") || "";
       /*let quickyMoney = sessionStorage.getItem("quickyMoney");
       if (quickyMoney > 0) {
         key.target.value = quickyMoney;
@@ -1314,12 +1309,12 @@ export default {
     reset() {
       if (this.navI !== 4) {
         for (let i = 0; i < this.$refs.kuang.length; i++) {
-					let el = this.$refs.kuang[i]
+          let el = this.$refs.kuang[i];
           if ((this.$refs.kuang.type = "checkbox")) {
-						el.checked = false;
+            el.checked = false;
           } else {
-						el.value = "";
-						el.parentNode.classList.remove('active-color')
+            el.value = "";
+            el.parentNode.classList.remove("active-color");
           }
         }
       } else {
@@ -1328,34 +1323,35 @@ export default {
         }
       }
 
-			clearAllActives()
+      clearAllActives();
     },
-		// 切换玩法的选中状态
-		togglePlay(event) {
-			if (!this.closeBet) return// 封盘不能切换
-			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+    // 切换玩法的选中状态
+    togglePlay(event) {
+      if (!this.closeBet) return; // 封盘不能切换
+      if (event.target.tagName === "INPUT") return; // input标签不触发切换
 
-			togglePlayActive(event, this.quickyMoney)
-		},
-		toggleCheckbox(event) {
-			if (!this.closeBet) return// 封盘不能切换
-			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+      togglePlayActive(event, this.quickyMoney);
+    },
+    toggleCheckbox(event) {
+      if (!this.closeBet) return; // 封盘不能切换
+      if (event.target.tagName === "INPUT") return; // input标签不触发切换
 
-			var currentTarget = event.currentTarget
-			var wrapperEl = currentTarget.getElementsByClassName('hover-color')[0] || currentTarget
-			var inputEl = currentTarget.querySelector('input')
-			if (inputEl.type == 'checkbox') {
-				if (inputEl.checked) {
-					inputEl.checked = ''
-					wrapperEl.classList.remove('active-color')// 去掉勾
-				} else {
-					inputEl.checked = 'checked'
-					wrapperEl.classList.add('active-color')// 打上勾
-				}
-			} else {
-				togglePlayActive(event, this.quickyMoney)
-			}
-		},
+      var currentTarget = event.currentTarget;
+      var wrapperEl =
+        currentTarget.getElementsByClassName("hover-color")[0] || currentTarget;
+      var inputEl = currentTarget.querySelector("input");
+      if (inputEl.type == "checkbox") {
+        if (inputEl.checked) {
+          inputEl.checked = "";
+          wrapperEl.classList.remove("active-color"); // 去掉勾
+        } else {
+          inputEl.checked = "checked";
+          wrapperEl.classList.add("active-color"); // 打上勾
+        }
+      } else {
+        togglePlayActive(event, this.quickyMoney);
+      }
+    }
   },
   mounted() {
     setInterval(() => {
@@ -1364,7 +1360,7 @@ export default {
       }
       if (this.closetime <= 0) {
         this.closeBet = false;
-        this.showDialog=false;
+        this.showDialog = false;
       } else {
         this.closetime--;
         let timeStamp = Date.parse(new Date()) / 1000;
@@ -1386,18 +1382,18 @@ export default {
         this.showDialog = false;
       }
     },
-		indeT() {
-			clearAllActives()// 切换选项卡则清空选中状态
-		},
-		type_code() {
-			clearAllActives()
-		},
-		closeBet(val) {
-			if (!val) {
-				// 如果封盘了，则清空玩法的选中状态
-				clearAllActives()
-			}
-		}
+    indeT() {
+      clearAllActives(); // 切换选项卡则清空选中状态
+    },
+    type_code() {
+      clearAllActives();
+    },
+    closeBet(val) {
+      if (!val) {
+        // 如果封盘了，则清空玩法的选中状态
+        clearAllActives();
+      }
+    }
   }
 };
 </script>
@@ -1424,10 +1420,10 @@ export default {
 }
 #marksix_nav_14 div {
   width: 100%;
-	margin-top: 0;
-	margin-left: 0!important;
-	margin-bottom: 10px;
-	padding: 0 2%;
+  margin-top: 0;
+  margin-left: 0 !important;
+  margin-bottom: 10px;
+  padding: 0 2%;
   /*float: none;*/
 }
 #marksix_nav_14 li {
@@ -1541,11 +1537,11 @@ export default {
   float: left;
   margin-top: 10px;
 }
-#marksix_nav_15 li:nth-child(2) div:not(.game_title){
-	width: 18%!important;
+#marksix_nav_15 li:nth-child(2) div:not(.game_title) {
+  width: 18% !important;
 }
-#marksix_nav_15 li:nth-child(2) div:not(.game_title) label span:first-child{
-	color: white!important;
+#marksix_nav_15 li:nth-child(2) div:not(.game_title) label span:first-child {
+  color: white !important;
 }
 /*.markSix li:nth-child(1) div input,.markSix li:nth-child(2) div input,*/
 #marksix_nav_33 li:nth-child(1) div input,
@@ -1659,8 +1655,8 @@ export default {
   left: 75%;
 }
 .markSix li:nth-child(1) .marksixNav div:nth-child(1),
-.markSix li:nth-child(1) .marksixNav div:nth-child(2){
-	top: 1px;
+.markSix li:nth-child(1) .marksixNav div:nth-child(2) {
+  top: 1px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(2),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(2),
@@ -1680,59 +1676,59 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(2),
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(1),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(2),
-#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(1){
-	top: 3px;
+#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(1) {
+  top: 3px;
 }
 #marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(2),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(1){
-	top: 3px;
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(1) {
+  top: 3px;
 }
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(2),
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(1){
-	top: 2px;
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(1) {
+  top: 2px;
 }
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(2),
-#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(1){
-	top: 2px;
+#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(1) {
+  top: 2px;
 }
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(2),
-#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(1){
-	top: 3px;
+#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(1) {
+  top: 3px;
 }
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(1),
-#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(2){
-	top: 2px;
+#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(2) {
+  top: 2px;
 }
-.markSix li:nth-child(1) .marksixNavLeft div:nth-child(3){
-	top: 44px;
+.markSix li:nth-child(1) .marksixNavLeft div:nth-child(3) {
+  top: 44px;
 }
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(1),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(2){
-	top: 0px;
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(2) {
+  top: 0px;
 }
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 37px;
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 37px;
 }
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 75px;
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 75px;
 }
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 113px;
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 113px;
 }
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 149px;
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 149px;
 }
 #marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 185px;
+#marksix_nav_17 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 185px;
 }
 .markSix li:nth-child(1) .marksixNav div:nth-child(3),
-.markSix li:nth-child(1) .marksixNav div:nth-child(4){
-	top: 36px;
+.markSix li:nth-child(1) .marksixNav div:nth-child(4) {
+  top: 36px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(4),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(3),
@@ -1752,32 +1748,32 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(3),
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(4),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 40px;
+#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 40px;
 }
 #marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 39px;
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 39px;
 }
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 40px;
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 40px;
 }
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 39px;
+#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 39px;
 }
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 40px;
+#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 40px;
 }
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(3),
-#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(4){
-	top: 40px;
+#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(4) {
+  top: 40px;
 }
 .markSix li:nth-child(1) .marksixNav div:nth-child(5),
-.markSix li:nth-child(1) .marksixNav div:nth-child(6){
-	top: 71px;
+.markSix li:nth-child(1) .marksixNav div:nth-child(6) {
+  top: 71px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(5),
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(6),
@@ -1798,32 +1794,32 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(5),
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(6),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 76px;
+#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 76px;
 }
 #marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 76px;
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 76px;
 }
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 76px;
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 76px;
 }
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 77px;
+#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 77px;
 }
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 75px;
+#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 75px;
 }
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(5),
-#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(6){
-	top: 76px;
+#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(6) {
+  top: 76px;
 }
 .markSix li:nth-child(1) .marksixNav div:nth-child(7),
-.markSix li:nth-child(1) .marksixNav div:nth-child(8){
-	top: 106px;
+.markSix li:nth-child(1) .marksixNav div:nth-child(8) {
+  top: 106px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(7),
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(8),
@@ -1844,32 +1840,32 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(7),
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(8),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 113px;
+#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 113px;
 }
 #marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 114px;
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 114px;
 }
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 113px;
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 113px;
 }
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 113px;
+#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 113px;
 }
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 113px;
+#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 113px;
 }
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(7),
-#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(8){
-	top: 114px;
+#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(8) {
+  top: 114px;
 }
 .markSix li:nth-child(1) .marksixNav div:nth-child(9),
-.markSix li:nth-child(1) .marksixNav div:nth-child(10){
-	top: 141px;
+.markSix li:nth-child(1) .marksixNav div:nth-child(10) {
+  top: 141px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(9),
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(10),
@@ -1890,32 +1886,32 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(9),
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(10),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 150px;
+#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 150px;
 }
 #marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 150px;
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 150px;
 }
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 150px;
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 150px;
 }
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 150px;
+#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 150px;
 }
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 150px;
+#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 150px;
 }
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(9),
-#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(10){
-	top: 151px;
+#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(10) {
+  top: 151px;
 }
 .markSix li:nth-child(1) .marksixNavLeft div:nth-child(11),
-.markSix li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 187px;
+.markSix li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 187px;
 }
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_16 li:nth-child(1) .marksixNavLeft div:nth-child(12),
@@ -1934,28 +1930,27 @@ export default {
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(11),
 #marksix_nav_29 li:nth-child(1) .marksixNavLeft div:nth-child(12),
 #marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 187px;
+#marksix_nav_28 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 187px;
 }
 #marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 187px;
+#marksix_nav_27 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 187px;
 }
 #marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 187px;
+#marksix_nav_21 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 187px;
 }
 #marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 188px;
+#marksix_nav_20 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 188px;
 }
 #marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-	top: 187px;
+#marksix_nav_19 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
+  top: 187px;
 }
 #marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(11),
-#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(12){
-
+#marksix_nav_18 li:nth-child(1) .marksixNavLeft div:nth-child(12) {
 }
 /*.markSix ul li:nth-child(1) .marksixNav,*/
 .markSix ul li:nth-child(1) .marksixNavLeft,
@@ -2065,11 +2060,11 @@ export default {
   border-radius: 50% !important;
   color: #000;
   font-weight: 600;
-	font-size: 12px;
+  font-size: 12px;
 }
-.tm_ball_绿波{
-   background: #7eb900 !important;
-   color:#fff!important;
+.tm_ball_绿波 {
+  background: #7eb900 !important;
+  color: #fff !important;
 }
 /*绿波：05 ,06 ,11 ,16 ,17 ,21 ,22 ,27 ,28 ,32 ,33 ,38 ,39 ,43 ,44 ,49*/
 .lhc_ball_num_5,
@@ -2095,16 +2090,15 @@ export default {
 #marksix_nav_7 li:last-child div:nth-child(8) span:first-child,
 #marksix_nav_8 li:last-child div:nth-child(8) span:first-child,
 #marksix_nav_9 li:last-child div:nth-child(8) span:first-child,
-#marksix_nav_10 li:last-child div:nth-child(8) span:first-child
- {
-  background:url("/static/images/common/green_ball.png");
-  background-size:100% 100% !important;
-  color:#000;
+#marksix_nav_10 li:last-child div:nth-child(8) span:first-child {
+  background: url("/static/images/common/green_ball.png");
+  background-size: 100% 100% !important;
+  color: #000;
 }
 
-.tm_ball_红波{
-   background: red !important;
-   color:#fff!important;
+.tm_ball_红波 {
+  background: red !important;
+  color: #fff !important;
 }
 /*红波：01 ,02 ,07 ,08 ,12 ,13 ,18 ,19 ,23 ,24 ,29 ,30 ,34 ,35 ,40 ,45 ,46*/
 .lhc_ball_num_1,
@@ -2131,13 +2125,11 @@ export default {
 #marksix_nav_7 li:last-child div:nth-child(7) span:first-child,
 #marksix_nav_8 li:last-child div:nth-child(7) span:first-child,
 #marksix_nav_9 li:last-child div:nth-child(7) span:first-child,
-#marksix_nav_10 li:last-child div:nth-child(7) span:first-child
-{
-  background:url("/static/images/common/red_ball.png");
-  background-size:100% 100% !important;
-  color:#000;
+#marksix_nav_10 li:last-child div:nth-child(7) span:first-child {
+  background: url("/static/images/common/red_ball.png");
+  background-size: 100% 100% !important;
+  color: #000;
 }
-
 
 /*蓝波：03 ,04 ,09 ,10 ,14 ,15 ,20 ,25 ,26 ,31 ,36 ,37 ,41 ,42 ,47 ,48*/
 .lhc_ball_num_3,
@@ -2155,12 +2147,11 @@ export default {
 .lhc_ball_num_41,
 .lhc_ball_num_42,
 .lhc_ball_num_47,
-.lhc_ball_num_48
-{
+.lhc_ball_num_48 {
   /* background: #007fcd!important; */
-  background:url("/static/images/common/blue_ball.png")!important;
-  background-size:100% 100% !important;
-  color:#000!important;
+  background: url("/static/images/common/blue_ball.png") !important;
+  background-size: 100% 100% !important;
+  color: #000 !important;
 }
 
 #marksix_nav_11 li:last-child .game_title {
@@ -2173,7 +2164,7 @@ export default {
 .markSix #marksix_nav_14 .banbo div {
   line-height: 28px;
   height: 28px;
-	margin-bottom: 6px;
+  margin-bottom: 6px;
 }
 .markSix #marksix_nav_14 li .banbo div span:first-child {
   margin-top: 0 !important;
@@ -2193,9 +2184,9 @@ export default {
   /* background: red !important;
   color: #fff; */
   margin-right: 10px;
-  background:url("/static/images/common/red_ball.png")!important;
-  background-size:100% 100% !important;
-  color:#000!important;
+  background: url("/static/images/common/red_ball.png") !important;
+  background-size: 100% 100% !important;
+  color: #000 !important;
 }
 .markSix #marksix_nav_14 li .banbo div:nth-child(5) span,
 .markSix #marksix_nav_14 li .banbo div:nth-child(6) span,
@@ -2207,9 +2198,9 @@ export default {
   /* background: #7eb900!important;
   color: #fff; */
   margin-right: 10px;
-  background:url("/static/images/common/green_ball.png")!important;
-  background-size:100% 100% !important;
-  color:#000!important;
+  background: url("/static/images/common/green_ball.png") !important;
+  background-size: 100% 100% !important;
+  color: #000 !important;
 }
 .markSix #marksix_nav_14 li .banbo div:nth-child(9) span,
 .markSix #marksix_nav_14 li .banbo div:nth-child(10) span,
@@ -2221,9 +2212,9 @@ export default {
   /* background: #007fcd;
   color: #fff; */
   margin-right: 10px;
-  background:url("/static/images/common/blue_ball.png")!important;
-  background-size:100% 100% !important;
-  color:#000!important;
+  background: url("/static/images/common/blue_ball.png") !important;
+  background-size: 100% 100% !important;
+  color: #000 !important;
 }
 #marksix_nav_33 li div span:first-child,
 #marksix_nav_32 li div span:first-child,
@@ -2247,8 +2238,8 @@ export default {
 .marksixNavLeft span,
 .banbo span,
 .marksixNav span,
-.six_lm_ball span{
-	font-size: 12px!important;
+.six_lm_ball span {
+  font-size: 12px !important;
 }
 .markSix #marksix_nav_14 li .banbo div:nth-child(2) span {
   /*margin-top: 0!important;*/
@@ -2327,21 +2318,21 @@ background-color: #3e80d4!important;
   border-right: none;
 }
 .markSix li:first-child div {
-	float: left;
-	width: 18%;
-	/*margin: 8px 1% 0;*/
-	margin: 0 1% 4px;
-	padding: 3px;
+  float: left;
+  width: 18%;
+  /*margin: 8px 1% 0;*/
+  margin: 0 1% 4px;
+  padding: 3px;
 }
-#marksix_nav_17 li:first-child div{
-	padding: 5px;
+#marksix_nav_17 li:first-child div {
+  padding: 5px;
 }
-.markSix .marksixNav div{
-	margin-bottom: 8px!important;
+.markSix .marksixNav div {
+  margin-bottom: 8px !important;
 }
 #marksix_nav_15 .hover-color,
-#marksix_nav_16 .hover-color{
-	margin-top: -2px;
+#marksix_nav_16 .hover-color {
+  margin-top: -2px;
 }
 #marksix_nav_17,
 #marksix_nav_18,
@@ -2360,8 +2351,8 @@ background-color: #3e80d4!important;
 #marksix_nav_36,
 #marksix_nav_37,
 #marksix_nav_38,
-#marksix_nav_39{
-	margin-top: 6px;
+#marksix_nav_39 {
+  margin-top: 6px;
 }
 /*#marksix_nav_17 .hover-color,
 #marksix_nav_27 .hover-color,
@@ -2394,8 +2385,8 @@ background-color: #3e80d4!important;
 }
 #marksix_nav_15 .game_title,
 #marksix_nav_16 .game_title,
-#marksix_nav_17 .game_title{
-	margin: 0 0 10px 0!important;
+#marksix_nav_17 .game_title {
+  margin: 0 0 10px 0 !important;
 }
 #marksix_nav_15 > li > div:not(.game_title),
 #marksix_nav_16 > li > div:not(.game_title),
@@ -2416,16 +2407,16 @@ background-color: #3e80d4!important;
 #marksix_nav_36 > li > div:not(.game_title),
 #marksix_nav_37 > li > div:not(.game_title),
 #marksix_nav_38 > li > div:not(.game_title),
-#marksix_nav_39 > li > div:not(.game_title){
-	width: 48%;
+#marksix_nav_39 > li > div:not(.game_title) {
+  width: 48%;
 }
-#marksix_nav_27 > li > div:not(.game_title){
-	margin-bottom: 4px;
-	padding: 5px 0;
+#marksix_nav_27 > li > div:not(.game_title) {
+  margin-bottom: 4px;
+  padding: 5px 0;
 }
 .markSix #marksix_nav_11 li div.game_title {
   width: 100%;
-	margin: 0 0 10px 0!important;
+  margin: 0 0 10px 0 !important;
 }
 .markSixSubNav li button.active,
 .markSixSubNav li button.isred {
@@ -2437,7 +2428,7 @@ background-color: #3e80d4!important;
   border-radius: 50%;
   text-align: center;
 }
-.markSix ul li:first-child{
+.markSix ul li:first-child {
   position: relative;
 }
 .six_lm_ball {
@@ -2447,10 +2438,10 @@ background-color: #3e80d4!important;
   /*border-radius: 30px;*/
   /*line-height: 22px;*/
   text-align: center;
-	margin-top: 1px;
+  margin-top: 1px;
 }
-.markSix ul li:first-child span:nth-child(2){
-	margin-top: 3px;
+.markSix ul li:first-child span:nth-child(2) {
+  margin-top: 3px;
 }
 .markSix ul li:first-child input {
   margin-top: 2px;
@@ -2466,12 +2457,12 @@ background-color: #3e80d4!important;
   width: 18%;
   display: inline-block;
   cursor: pointer;
-	border-radius: 4px;
-	margin: 2px 1%;
+  border-radius: 4px;
+  margin: 2px 1%;
 }
 .six_lm_ball li:last-child {
-	margin-right: 21%;
-	text-align: center;
+  margin-right: 21%;
+  text-align: center;
 }
 .lm_title {
   text-align: left;
@@ -2526,7 +2517,7 @@ ul#marksix_nav_619 {
 #marksix_nav_36 .closeBet,
 #marksix_nav_37 .closeBet,
 #marksix_nav_38 .closeBet,
-#marksix_nav_39 .closeBet{
+#marksix_nav_39 .closeBet {
   width: 10%;
 }
 #marksix_nav_34 label > span:first-child,
@@ -2534,7 +2525,7 @@ ul#marksix_nav_619 {
 #marksix_nav_36 label > span:first-child,
 #marksix_nav_37 label > span:first-child,
 #marksix_nav_38 label > span:first-child,
-#marksix_nav_39 label > span:first-child{
-	color: white!important;
+#marksix_nav_39 label > span:first-child {
+  color: white !important;
 }
 </style>

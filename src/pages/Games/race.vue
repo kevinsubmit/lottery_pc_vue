@@ -82,7 +82,7 @@ export default {
       round: 0,
       endtime: 0,
       closetime: 0,
-      fentime:30,
+      fentime:0,
       list: [],
       list_0: [],
       oddsMoney: {},
@@ -102,6 +102,12 @@ export default {
   },
   created (){
     this.fetchData();
+    let params = {};
+    params.game_code = 260;
+    this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
+      this.fentime =
+        parseInt(res.data.next.endtime) - parseInt(res.data.next.closetime);
+    });
   },
   mounted (){
     // this.fetchData(1);
@@ -130,7 +136,6 @@ export default {
     fetchData(i) {
       let params = {};
       params.game_code = 260;
-      // this.classCode='0101'
        this.$http.post('/getinfo/game', JSON.stringify(params)).then(res => {
           if (res.data.msg == 4001) {
             this.$swal({
@@ -147,7 +152,6 @@ export default {
             return
           } else {
             this.$store.commit('updatelotteryMoney', res.data.lcurrency)
-            // this.closeBet = true;
             this.isLotteryArea = true;
             (res.data.next.isclose)?this.closeBet=false:this.closeBet=true;
             let timeStamp = res.data.next.timestap;

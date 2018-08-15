@@ -116,6 +116,11 @@ const Gd11x5 = resolve => {
 	});
 };
 
+const Six88 = resolve => {
+	require.ensure(["@/pages/Games/six88"], () => {
+		resolve(require("@/pages/Games/six88"));
+	});
+};
 const Ag = resolve => {
 	require.ensure(["@/pages/platform/ag"], () => {
 		resolve(require("@/pages/platform/ag"));
@@ -439,6 +444,11 @@ export default new VueRouter({
 					path: "/Games/gd11x5",
 					name: "Gd11x5",
 					component: Gd11x5
+				},
+				{
+					path: "/Games/six88",
+					name: "Six88",
+					component: Six88
 				},
 				{
 					path: "/historyXZ",

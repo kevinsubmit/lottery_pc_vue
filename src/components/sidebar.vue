@@ -291,6 +291,12 @@ export default {
       gamePath: "/Games/gd11x5",
       icoSrc: require("../../static/images/common/icon/ico-nav-gd11x5.png")
     }
+    gameNavs[320] = {
+      title: "88六合彩",
+      subtitle: "88 SIX",
+      gamePath: "/Games/six88",
+      icoSrc: require("../../static/images/common/icon/ico-nav-six88.png")
+    }
     gameNavs[220] = {
       title: "福彩3D",
       subtitle: "FU CAI 3D",

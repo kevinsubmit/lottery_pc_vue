@@ -497,4 +497,7 @@ export default {
 .game_ico_s_220 {
   background-image: url("/static/images/common/icon/ico-fc3d-s.png");
 }
+.game_ico_s_320 {
+  background-image: url("/static/images/common/icon/ico-six88-s.png");
+}
 </style>

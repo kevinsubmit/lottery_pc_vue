@@ -13,7 +13,6 @@
     <nav class="top-nav">
       <ul class="clearfix">
         <li :class="`${classCode===0?'active':''}`" @click="changeNav(0)">两面盘</li>
-        <!-- <li :class="`${classCode===1?'active':''}`" @click="changeNav(1)">数字盘</li> -->
       </ul>
     </nav>
     <div class="bet-content">
@@ -30,11 +29,11 @@
                     </div>
                     <div class="clearfix hover-color" v-for='(ite,i,j) in item.list' @click="togglePlay($event, ite)" style="cursor: pointer">
                       <!--<label>-->
-                        <span style='cursor:pointer;' :class="ite.name=='红波'||ite.name=='绿波'||ite.name=='蓝波'?'tm_ball_'+ite.name:''">{{ite.name}}</span>
-                        <!--<span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
-                        <span style='cursor:pointer;'>{{ite.odds}}</span>
-                        <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)" @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7" />
-                        <input v-else readonly value="封盘" class="closeBet">
+                      <span style='cursor:pointer;' :class="ite.name=='红波'||ite.name=='绿波'||ite.name=='蓝波'?'tm_ball_'+ite.name:''">{{ite.name}}</span>
+                      <!--<span @click='confirms(item.name, ite.key ,JSON.stringify(ite))' style='cursor:pointer;'>{{ite.odds}}</span>-->
+                      <span style='cursor:pointer;'>{{ite.odds}}</span>
+                      <input ref='kuang' :id="ite.key" :name="item.name" :data-obj="JSON.stringify(ite)" @focus="inputFocus($event, ite)" @input="chkInput()" min="1" type="text" onkeyup="value=this.value.replace(/\D+/g,'')" v-if="closeBet" maxlength="7" />
+                      <input v-else readonly value="封盘" class="closeBet">
                       <!--</label>-->
                     </div>
                   </li>
@@ -62,12 +61,12 @@
 import lotteryArea from "../../components/lotteryArea";
 import betDialog from "../../components/betDialog";
 import changLong from "../../components/changlong";
-import { togglePlayActive, clearAllActives } from '../../utils/common'
+import { togglePlayActive, clearAllActives } from "../../utils/common";
 export default {
   data() {
     return {
       getApiName: getApiName(),
-      fentime: 30,
+      fentime: 0,
       type: "lotteryPcdd",
       lotteryName: "PC蛋蛋",
       type_code: 0,
@@ -103,6 +102,12 @@ export default {
       this.isSaveMoney = false;
       this.quickyMoney = "";
     }
+    let params = {};
+    params.game_code = 160;
+    this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
+      this.fentime =
+        parseInt(res.data.next.endtime) - parseInt(res.data.next.closetime);
+    });
   },
   components: {
     lotteryArea,
@@ -119,15 +124,17 @@ export default {
         sessionStorage.removeItem("quickyMoney");
       }
 
-			// 将预设的金额赋值到选中玩法的金额
-			const presetPrice = this.quickyMoney
-			Array.prototype.forEach.call(document.querySelectorAll('.active-color input'), el => el.value = presetPrice)
+      // 将预设的金额赋值到选中玩法的金额
+      const presetPrice = this.quickyMoney;
+      Array.prototype.forEach.call(
+        document.querySelectorAll(".active-color input"),
+        el => (el.value = presetPrice)
+      );
     },
     fetchData() {
       let params = {};
 
       params.game_code = 160;
-      // console.log(params)
       this.$http
         .post("/getinfo/game", JSON.stringify(params))
         .then(res => {
@@ -145,12 +152,10 @@ export default {
             return;
           }
           this.$store.commit("updatelotteryMoney", res.data.lcurrency);
-          // this.closeBet = true;
           this.isLotteryArea = true;
           res.data.next.isclose
             ? (this.closeBet = false)
             : (this.closeBet = true);
-          // console.log(res.data.next.isclose)
           let timeStamp = res.data.next.timestap;
           this.endtime = parseInt(res.data.next.endtime) - parseInt(timeStamp);
           this.closetime =
@@ -169,7 +174,6 @@ export default {
       lmp.type_code = 0;
       gyh.game_code = 160;
       gyh.type_code = 1;
-      // console.log(JSON.parse(localStorage.getItem('pcegg_list_3')).length)
       if (
         JSON.parse(localStorage.getItem("pcegg_list_3")) &&
         JSON.parse(localStorage.getItem("pcegg_list_3")).length === 2
@@ -277,14 +281,8 @@ export default {
         }
       }
     },
-		inputFocus (event, item) {
-			event.target.value = sessionStorage.getItem("quickyMoney") || ''
-      /*let quickyMoney = sessionStorage.getItem("quickyMoney");
-      if (quickyMoney > 0) {
-        key.target.value = quickyMoney;
-      } else {
-        return false;
-      }*/
+    inputFocus(event, item) {
+      event.target.value = sessionStorage.getItem("quickyMoney") || "";
     },
     saveMoneyBlur(quickyMoney) {
       if (quickyMoney <= 0 || quickyMoney === "") {
@@ -308,18 +306,18 @@ export default {
     },
     reset() {
       for (let i = 0; i < this.$refs.kuang.length; i++) {
-				let el = this.$refs.kuang[i]
-				el.value = "";
-				el.parentNode.classList.remove('active-color')
+        let el = this.$refs.kuang[i];
+        el.value = "";
+        el.parentNode.classList.remove("active-color");
       }
     },
-		// 切换玩法的选中状态
-		togglePlay(event) {
-			if (!this.closeBet) return// 封盘不能切换
-			if (event.target.tagName === 'INPUT') return// input标签不触发切换
+    // 切换玩法的选中状态
+    togglePlay(event) {
+      if (!this.closeBet) return; // 封盘不能切换
+      if (event.target.tagName === "INPUT") return; // input标签不触发切换
 
-			togglePlayActive(event, this.quickyMoney)
-		}
+      togglePlayActive(event, this.quickyMoney);
+    }
   },
   mounted() {
     setInterval(() => {
@@ -350,12 +348,12 @@ export default {
         this.showDialog = false;
       }
     },
-		closeBet(val) {
-			if (!val) {
-				// 如果封盘了，则清空玩法的选中状态
-				clearAllActives()
-			}
-		}
+    closeBet(val) {
+      if (!val) {
+        // 如果封盘了，则清空玩法的选中状态
+        clearAllActives();
+      }
+    }
   }
 };
 </script>

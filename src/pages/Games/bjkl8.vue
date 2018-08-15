@@ -203,7 +203,7 @@
                 endtime: 0,
                 closetime: 0,
                 closeBet: true,
-                fentime: 40,
+                fentime: 0,
                 betArr: [],
                 betArrs: [],
                 // typeCodes: [5000], // , 5001, 5003, 5004, 5005, 5006, 5007, 5008, 5010, 5011, 5012, 5020, 5021, 5021, 5035

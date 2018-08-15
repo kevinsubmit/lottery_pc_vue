@@ -8,7 +8,7 @@
     </div>
 
     <!-- 下注弹窗 -->
-    <bet-dialog v-if="showDialog" :betArr="betArr" :game_code=270 :type_code=type_code :round="round" v-on:child-say="listenToMyBoy"></bet-dialog>
+    <bet-dialog v-if="showDialog" :betArr="betArr" :game_code=320 :type_code=type_code :round="round" v-on:child-say="listenToMyBoy"></bet-dialog>
     <lh-dialog v-if="showHmDialog" :indeT="indeT" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round" v-on:child-hm="listenHm"></lh-dialog>
     <!-- 连码下注弹窗 -->
     <lm-dialog v-if="showLmDialog" :betArr="betArr" :game_code=game_code :type_code=type_code :round="round" v-on:child-lm="listenLm"></lm-dialog>
@@ -147,9 +147,9 @@ export default {
       list: [],
       isNav: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       type: "lotteryMarksix",
-      lotteryName: "极速六合彩",
+      lotteryName: "88六合彩",
       type_code: 2,
-      game_code: 270,
+      game_code: 320,
       round: 0,
       lian: false,
       endtime: 0,
@@ -167,7 +167,7 @@ export default {
       quickyMoney: 0,
       showLmDialog: false,
       todayWinLost: 0,
-      param: { game_code: 270, type_code: 2 },
+      param: { game_code: 320, type_code: 2 },
       bose: [
         ["1", "7", "13", "19", "23", "29", "35", "45"],
         ["2", "8", "12", "18", "24", "30", "34", "40", "46"],
@@ -629,7 +629,7 @@ export default {
       this.quickyMoney = "";
     }
     let params = {};
-    params.game_code = 270;
+    params.game_code = 320;
     this.$http.post("/getinfo/game", JSON.stringify(params)).then(res => {
       this.fentime =
         parseInt(res.data.next.endtime) - parseInt(res.data.next.closetime);
@@ -673,7 +673,7 @@ export default {
 
       let params = {};
 
-      params.game_code = 270;
+      params.game_code = 320;
       this.$http
         .post("/getinfo/game", JSON.stringify(params))
         .then(res => {
@@ -965,46 +965,6 @@ export default {
       } else {
         wrapperEl.classList.add("active-color"); // 打上勾
       }
-      /*this.showLmDialog = false;
-      let cboxLength = 0;
-
-      if (this.type_code === 12) {
-        // 过关
-        for (let i = 0; i < this.$refs.kuang.length; i++) {
-          if (this.$refs.kuang[i].checked) {
-            cboxLength++;
-          }
-        }
-      } else {
-        for (let i = 0; i < this.$refs.check.length; i++) {
-          if (this.$refs.check[i].checked) {
-            cboxLength++;
-          }
-        }
-      }
-
-      if (cboxLength === 0) {
-        this.$swal({
-          text: "选项范围：" + this.LimitMin + "~" + this.LimitMax + "个号码",
-          type: "error",
-          timer: 1200
-        })
-          .then(function(response) {})
-          .catch(e => {});
-        this.showLmDialog = false;
-        return;
-      }
-
-      if (cboxLength > this.LimitMax - 1 && this.type_code !== 12) {
-        for (let i = 0; i < this.$refs.check.length; i++) {
-          if (!this.$refs.check[i].checked) {
-            this.$refs.check[i].setAttribute("disabled", "true");
-          } else {
-            this.$refs.check[i].removeAttribute("disabled");
-          }
-        }
-        return;
-      }*/
     },
     confirms(name, key, ite) {
       if (!this.closeBet) {
@@ -1373,12 +1333,6 @@ export default {
     },
     inputFocus(event, item) {
       event.target.value = sessionStorage.getItem("quickyMoney") || "";
-      /*let quickyMoney = sessionStorage.getItem("quickyMoney");
-      if (quickyMoney > 0) {
-        key.target.value = quickyMoney;
-      } else {
-        return false;
-      }*/
     },
     saveMoneyBlur(quickyMoney) {
       if (quickyMoney <= 0 || quickyMoney === "") {

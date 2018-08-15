@@ -304,7 +304,7 @@ export default {
         } else {
           if (res.data.msg == 5007) {
             this.$swal({
-              text: '正在审核中！',
+              text: res.data.info,
               type: 'info',
               timer: 1200
             })
@@ -320,7 +320,7 @@ export default {
               .catch(e => {})
           } else if (res.data.msg == 5006) {
             this.$swal({
-              text: '操作繁忙，请稍后再试！',
+              text: res.data.info,
               type: 'error',
               timer: 1200
             })
@@ -338,7 +338,7 @@ export default {
             return
           } else if (res.data.msg == 3003) {
             this.$swal({
-              text: '缺失必填参数,请重试！',
+              text: res.data.info,
               type: 'error',
               timer: 1200
             })

@@ -220,6 +220,13 @@ export default {
           subtitle: "BEIJING HAPPY8",
           gamePath: "/Games/bjkl8",
           icoSrc: require("../../static/images/common/icon/ico-nav-bjkl8.png")
+        },
+        320: {
+          title: "88六合彩",
+          code: 320,
+          subtitle: "88 SIX",
+          gamePath: "/Games/six88",
+          icoSrc: require("../../static/images/common/icon/ico-nav-bjkl8.png")
         }
       }
     };

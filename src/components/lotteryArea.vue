@@ -1,6 +1,6 @@
 <template>
   <!-- <div :id="`bet-top-${getApiName}`" :class="`bet-top clearfix lottery_type_${game_code}`"> -->
-  <div :id="`bet-top-${getApiName}`" class="bet-top clearfix" :class="game_code==270?'lottery_type_69':`lottery_type_${game_code}`">
+  <div :id="`bet-top-${getApiName}`" class="bet-top clearfix" :class="game_code==270||game_code==320?'lottery_type_69':`lottery_type_${game_code}`">
     <div class="leftPart f-l clearfix">
       <div class="ico_game f-l" :class="`ico_game_${game_code}`"></div>
       <div class="round f-l">
@@ -19,13 +19,6 @@
               <span>盘</span>
             </div>
 
-            <!--  <div>
-                           <i style="font-size: 1.4rem; line-height: 1.2rem;margin-right: 0.25rem;color: #333;margin-top: 0.05rem;">封</i>
-                            <span v-show="h>0"><span style="float: left;">{{lotteryObj.next.round&&!fenpan ? `${h}` : `00`}}</span><i>:</i></span>
-                            <span>{{lotteryObj.next.round&&!fenpan ? `${m}` : `00`}}</span>
-                            <i>:</i>
-                            <span>{{lotteryObj.next.round&&!fenpan ? `${s}` : `00`}}</span>
-                          </div> -->
           </div>
 
         </div>
@@ -53,9 +46,9 @@
             <router-link :to="`/result:${k}`">>&nbsp;开奖走势</router-link>
           </p>
         </div>
-        <div class="openData f-l" >
+        <div class="openData f-l">
           <div class="balls clearfix">
-            <div v-if="game_code !== 160 && game_code !== 69&& game_code !== 270 && game_code != 180">
+            <div v-if="game_code !== 160 && game_code !== 69&& game_code !== 270 && game_code != 180&& game_code != 320">
               <span v-for="item in lotteryObj.last.number" :class="`num_${item}`">{{item}}</span>
               <span class="dengyu" v-if="game_code === 160">=</span>
               <span class="total f-r" v-if="game_code === 160">{{eggTotal}}</span>
@@ -70,14 +63,14 @@
               <span class="total f-r" v-if="game_code === 160" :class="`total_${eggTotal}`">{{eggTotal}}</span>
             </div>
 
-            <div v-if="game_code === 69||game_code === 270">
+            <div v-if="game_code === 69||game_code === 270||game_code === 320">
               <span v-for="item in lotteryObj.last.number.slice(0, lotteryObj.last.number.length-1)" :class="`num_${item}`">{{item}}</span>
               <span class="plus">+</span>
               <span :class="`num_${lotteryObj.last.number[lotteryObj.last.number.length-1]}`">{{lotteryObj.last.number[lotteryObj.last.number.length-1]}}</span>
             </div>
 
             <div v-if="game_code == 180" class="bjkl8">
-                <span v-for="item in lotteryObj.last.number" :class="item <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{item}}</span>
+              <span v-for="item in lotteryObj.last.number" :class="item <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{item}}</span>
             </div>
           </div>
           <!--北京PK10-->
@@ -127,7 +120,7 @@
             <span>{{pkthree}}</span>
             <span>{{pkfour}}</span>
           </div>
-          
+
           <!--广东快乐11选5-->
           <div class="nums" style="display:inline-block" v-show="game_code==133">
             <span>总和:</span>
@@ -233,65 +226,65 @@
     <div class="resultTabs" @click="getResultData(1,10)">开奖记录</div>
     <div class="ten-reslut" v-if='onff'>
       <div class="overlay1" @click='clos($event)'>
-          <div class="ten-content">
-            <div class="cha el-icon-circle-close-outline" @click='clos($event)'>
-
-            </div>
-            <table class="latest-ten-table" :id="game_code==270?'ten_result_69':`ten_result_${game_code}`">
-              <tr class="latest-ten-title">
-                <th class="time">期数</th>
-                <th class="round">开奖时间</th>
-                <th v-if="onoff">开奖号码</th>
-                <th v-if='!onoff'>
-                  <span @click='haoma1' :class='{activ1e:haoma}' style='display:inline-block;width:70px;background:#b9b9b9;border-radius:5px;color:#fff; cursor: pointer;height:25px;line-height:25px;'>显示号码</span>
-                  <span v-if="isShowBigSmallMenu" @click='daxiao1' :class='{activ1e:daxiao}' style='display:inline-block;width:70px;background:#b9b9b9;border-radius:5px;color:#fff; cursor: pointer;height:25px;line-height:25px;margin:0 10px'>显示大小</span>
-                  <span @click='danshuang1' :class='{activ1e:danshuang}' style='display:inline-block;width:70px;background:#b9b9b9;border-radius:5px;color:#fff; cursor: pointer;height:25px;line-height:25px'>显示单双</span>
-                </th>
-                <th>和值</th>
-              </tr>
-              <tr v-for='i in allnum' :key=i>
-                <td class="round">第{{resultHistory && resultHistory[i-1].round}}期</td>
-                <td class="time">{{resultHistory && new Date(parseInt(resultHistory[i-1].endtime) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, "")}}</td>
-                <td>
-                  <!-- pk10 feiting -->
-                  <!-- pcddkj -->
-                  <template v-if="game_code==180">
-                      <span v-show='haoma' :class="j <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'" v-for='j in  lhckj(resultHistory && resultHistory[i-1].number.split(","))'>{{j}}</span>
-                  </template>
-                  <template v-else>
-                      <span v-show='haoma' :class="`ten_result_${j}`" v-for='j in  lhckj(resultHistory && resultHistory[i-1].number.split(","))'>{{j}}</span>
-                  </template>
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")'  v-if="game_code==180" :class="j <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j>40?'大':"小"}}</span>
-                  <span v-show='danshuang' class="feiche" v-for='j in resultHistory && resultHistory[i-1].number.split(",")'v-if="game_code==180" :class="j % 2 == 0 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j%2?'单':'双'}}</span>
-
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>=6?"background:#f9982e":"background:#7f8ab0" ' v-if="game_code==51||game_code==171||game_code==210||game_code==240||game_code==260" :class="`result-ball result-ball_${i}`">{{j>=6?'大':"小"}}</span>
-                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e":"background:#7f8ab0" ' v-if="game_code==51||game_code==171||game_code==210||game_code==240||game_code==260" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
-                  
-                  <!-- 广东11选5 -->
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>5?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==133" :class="`result-ball result-ball_${i}`">{{j>5?'大':"小"}}</span>
-                  <!-- cqssc -->
-                  <!-- <span v-show='haoma' :class="`ten_result_${j}`" v-for='j in  resultHistory[i].number.split(",")'>{{j}}</span> -->
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>4?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250" :class="`result-ball result-ball_${i}`">{{j>4?'大':"小"}}</span>
-                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250||game_code==133" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
-
-                  <!-- haapyten -->
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>10?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==3" :class="`result-ball result-ball_${i}`">{{j>10?'大':"小"}}</span>
-                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory　&& resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==3" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
-
-                  <!-- lunckfarm -->
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>10?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==47" :class="`result-ball result-ball_${i}`">{{j>10?'大':"小"}}</span>
-                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==47" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
-                  <!-- pcegg -->
-
-                  <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>4?"background:#f9982e!important;font-size:14px;color: #fff!important;":"background:#7f8ab0!important;font-size:14px;color: #fff!important;" ' v-if="game_code==160" :class="`result-ball result-ball_${i}`">{{j>4?'大':"小"}}</span>
-                  <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==160" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
-                </td>
-                <td class="total" v-if="game_code==160" :class="`total_${resultHistory &&resultHistory1(i-1)}`">{{resultHistory &&resultHistory1(i-1)}}</td>
-
-              </tr>
-            </table>
+        <div class="ten-content">
+          <div class="cha el-icon-circle-close-outline" @click='clos($event)'>
 
           </div>
+          <table class="latest-ten-table" :id="game_code==270?'ten_result_69':`ten_result_${game_code}`">
+            <tr class="latest-ten-title">
+              <th class="time">期数</th>
+              <th class="round">开奖时间</th>
+              <th v-if="onoff">开奖号码</th>
+              <th v-if='!onoff'>
+                <span @click='haoma1' :class='{activ1e:haoma}' style='display:inline-block;width:70px;background:#b9b9b9;border-radius:5px;color:#fff; cursor: pointer;height:25px;line-height:25px;'>显示号码</span>
+                <span v-if="isShowBigSmallMenu" @click='daxiao1' :class='{activ1e:daxiao}' style='display:inline-block;width:70px;background:#b9b9b9;border-radius:5px;color:#fff; cursor: pointer;height:25px;line-height:25px;margin:0 10px'>显示大小</span>
+                <span @click='danshuang1' :class='{activ1e:danshuang}' style='display:inline-block;width:70px;background:#b9b9b9;border-radius:5px;color:#fff; cursor: pointer;height:25px;line-height:25px'>显示单双</span>
+              </th>
+              <th>和值</th>
+            </tr>
+            <tr v-for='i in allnum' :key=i>
+              <td class="round">第{{resultHistory && resultHistory[i-1].round}}期</td>
+              <td class="time">{{resultHistory && new Date(parseInt(resultHistory[i-1].endtime) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, "")}}</td>
+              <td>
+                <!-- pk10 feiting -->
+                <!-- pcddkj -->
+                <template v-if="game_code==180">
+                  <span v-show='haoma' :class="j <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'" v-for='j in  lhckj(resultHistory && resultHistory[i-1].number.split(","))'>{{j}}</span>
+                </template>
+                <template v-else>
+                  <span v-show='haoma' :class="`ten_result_${j}`" v-for='j in  lhckj(resultHistory && resultHistory[i-1].number.split(","))'>{{j}}</span>
+                </template>
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' v-if="game_code==180" :class="j <= 40 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j>40?'大':"小"}}</span>
+                <span v-show='danshuang' class="feiche" v-for='j in resultHistory && resultHistory[i-1].number.split(",")' v-if="game_code==180" :class="j % 2 == 0 ? 'ball-t-gray-f' : 'ball-t-blue-f'">{{j%2?'单':'双'}}</span>
+
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>=6?"background:#f9982e":"background:#7f8ab0" ' v-if="game_code==51||game_code==171||game_code==210||game_code==240||game_code==260" :class="`result-ball result-ball_${i}`">{{j>=6?'大':"小"}}</span>
+                <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e":"background:#7f8ab0" ' v-if="game_code==51||game_code==171||game_code==210||game_code==240||game_code==260" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
+
+                <!-- 广东11选5 -->
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>5?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==133" :class="`result-ball result-ball_${i}`">{{j>5?'大':"小"}}</span>
+                <!-- cqssc -->
+                <!-- <span v-show='haoma' :class="`ten_result_${j}`" v-for='j in  resultHistory[i].number.split(",")'>{{j}}</span> -->
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>4?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250" :class="`result-ball result-ball_${i}`">{{j>4?'大':"小"}}</span>
+                <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==2||game_code==46||game_code==250||game_code==133" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
+
+                <!-- haapyten -->
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>10?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==3" :class="`result-ball result-ball_${i}`">{{j>10?'大':"小"}}</span>
+                <span v-show='danshuang' class='feiche' v-for='j in resultHistory　&& resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==3" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
+
+                <!-- lunckfarm -->
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>10?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==47" :class="`result-ball result-ball_${i}`">{{j>10?'大':"小"}}</span>
+                <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==47" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
+                <!-- pcegg -->
+
+                <span v-show='daxiao' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j>4?"background:#f9982e!important;font-size:14px;color: #fff!important;":"background:#7f8ab0!important;font-size:14px;color: #fff!important;" ' v-if="game_code==160" :class="`result-ball result-ball_${i}`">{{j>4?'大':"小"}}</span>
+                <span v-show='danshuang' class='feiche' v-for='j in resultHistory && resultHistory[i-1].number.split(",")' :style='j%2?"background:#f9982e!important":"background:#7f8ab0!important" ' v-if="game_code==160" :class="`result-ball result-ball_${i}`">{{j%2?'单':'双'}}</span>
+              </td>
+              <td class="total" v-if="game_code==160" :class="`total_${resultHistory &&resultHistory1(i-1)}`">{{resultHistory &&resultHistory1(i-1)}}</td>
+
+            </tr>
+          </table>
+
+        </div>
       </div>
 
     </div>
@@ -379,7 +372,7 @@ export default {
   },
   computed: {
     numbers() {
-      console.log('number=', this.lotteryObj.last.number)
+      console.log("number=", this.lotteryObj.last.number);
       return this.lotteryObj.last.number;
     }
   },
@@ -407,7 +400,7 @@ export default {
         this.game_code == 270 ||
         this.game_code == 180 ||
         this.game_code == 280 ||
-        this.game_code == 220||
+        this.game_code == 220 ||
         this.game_code == 133
       ) {
         return;
@@ -427,8 +420,6 @@ export default {
         if (this.game_code == 160) {
           i.splice(1, 0, "+");
           i.splice(3, 0, "+");
-          // i.splice(5,0,"=")
-          // i.splice(6,0,Number(i[0])+Number(i[2])+Number(i[4]))
         }
         return i;
       }
@@ -440,8 +431,6 @@ export default {
       return i;
     },
     resultHistory1(i) {
-      // console.log(this.resultHistory[i].number)
-      // if (i) {
       return (
         Number(this.resultHistory[i].number.split(",")[0]) +
         Number(this.resultHistory[i].number.split(",")[1]) +
@@ -497,8 +486,11 @@ export default {
       this.danshuang = true;
     },
     clos(e) {
-      let className = e.target && e.target.className || '';
-      if (className.indexOf('overlay1') != -1 || className.indexOf('cha') != -1) {
+      let className = (e.target && e.target.className) || "";
+      if (
+        className.indexOf("overlay1") != -1 ||
+        className.indexOf("cha") != -1
+      ) {
         this.onff = false;
         this.haoma1();
       }
@@ -685,7 +677,7 @@ export default {
             this.pkyhgdx = "大";
           } else if (this.kjzh == 84) {
             this.pkyhgdx = "和";
-          }  else {
+          } else {
             this.pkyhgdx = "小";
           }
           if (this.kjzh % 2 == 0) {
@@ -733,19 +725,19 @@ export default {
             this.pkfour = "虎";
           }
           break;
-          case "133":
+        case "133":
           this.gd11x5 = true;
           this.kjzh =
             parseInt(this.lotteryObj.last.number[0]) +
             parseInt(this.lotteryObj.last.number[1]) +
             parseInt(this.lotteryObj.last.number[2]) +
             parseInt(this.lotteryObj.last.number[3]) +
-            parseInt(this.lotteryObj.last.number[4])
+            parseInt(this.lotteryObj.last.number[4]);
           if (this.kjzh >= 85) {
             this.pkyhgdx = "大";
           } else if (this.kjzh == 84) {
             this.pkyhgdx = "和";
-          }  else {
+          } else {
             this.pkyhgdx = "小";
           }
           if (this.kjzh % 2 == 0) {
@@ -984,7 +976,11 @@ export default {
     getResultData(page, numb) {
       this.onff = true;
       this.onoff =
-        this.game_code == 69 || this.game_code == 172 || this.game_code == 270 || this.game_code == 280 || this.game_code == 220;
+        this.game_code == 69 ||
+        this.game_code == 172 ||
+        this.game_code == 270 ||
+        this.game_code == 280 ||
+        this.game_code == 220;
       let params = {};
       params.game_code = this.game_code;
       params.page = page;
@@ -1028,7 +1024,6 @@ export default {
       }
     },
     getBalance() {
-
       let params = {};
 
       getApiName() == "hg" ? (params.sports = 1) : "";
@@ -1074,7 +1069,10 @@ export default {
   },
   created() {
     // this.$refs.audio.play();
-    if (sessionStorage.getItem("im_username") === "游客"||sessionStorage.getItem("im_realname")=='11') {
+    if (
+      sessionStorage.getItem("im_username") === "游客" ||
+      sessionStorage.getItem("im_realname") == "11"
+    ) {
       this.shiwan1 = false;
     }
     // console.log(sessionStorage.getItem('im_kaiguan'))
@@ -1156,15 +1154,15 @@ export default {
         this.game_code == 270 ||
         this.game_code == 180 ||
         this.game_code == 280 ||
-        this.game_code == 220||
+        this.game_code == 220 ||
         this.game_code == 133
       ) {
         return "noclick";
       }
     },
     time() {
-      if(!this.endtime){
-        return '待定'
+      if (!this.endtime) {
+        return "待定";
       }
       let date = new Date(new Date().getTime() + this.endtime * 1000);
       let Y = date.getFullYear() + "-";
@@ -1236,8 +1234,8 @@ export default {
     no-repeat;
 }
 .ico_game_250 {
-  background: url("../../static/images/common/icon/ico-top-jsssc.png") left center
-    no-repeat;
+  background: url("../../static/images/common/icon/ico-top-jsssc.png") left
+    center no-repeat;
 }
 .ico_game_51 {
   background: url("@{public_img}/images/common/ico-top-pk10.png") left center
@@ -1280,10 +1278,14 @@ export default {
 }
 
 .ico_game_133 {
-  background: url("@{public_img}/images/common/icon-top-11x5.png") left center
+  background: url("@{public_img}/images/common/icon-top-11x5.png") left center;
 }
 .ico_game_220 {
   background: url("@{public_img}/images/common/icon-top-fc3d.png") left center
+    no-repeat;
+}
+.ico_game_320 {
+  background: url("@{public_img}/images/common/icon-top-six88.jpg") left center
     no-repeat;
 }
 .video {
@@ -1340,7 +1342,7 @@ export default {
   animation-duration: 1.3s;
 }
 
-.ten_result_ +  {
+.ten_result_ + {
   color: red;
 }
 .activ1e {
@@ -1355,7 +1357,7 @@ export default {
   background-color: #000;
   /* opacity: 0.5; */
   z-index: 888;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, 0.5);
 }
 .ten-content {
   position: fixed;
@@ -1475,7 +1477,7 @@ export default {
   background-color: #ccc;
   border-radius: 50px;
 }
-#ten_result_160 td .ten_result_ +  {
+#ten_result_160 td .ten_result_ + {
   background-color: #fff !important;
 }
 .clock11 span {
@@ -1541,6 +1543,9 @@ export default {
   padding: 0 !important;
 }
 .lottery_type_69 .closeTime {
+  width: 250px;
+}
+.lottery_type_320 .closeTime {
   width: 250px;
 }
 
@@ -1732,7 +1737,8 @@ export default {
 .lottery_type_3 .balls span,
 .lottery_type_160 .balls span,
 .lottery_type_270 .balls span,
-.lottery_type_69 .balls span {
+.lottery_type_69 .balls span,
+.lottery_type_320 .balls span {
   border-radius: 50%;
   font-size: 18px;
 }
@@ -1766,28 +1772,35 @@ export default {
   background-image: url("/static/images/ct/ico-dice.png");
 }
 
-#ten_result_172 td span,#ten_result_280 td span {
+#ten_result_172 td span,
+#ten_result_280 td span {
   width: 20px;
   height: 20px;
   border-radius: 5px;
   border: 1px solid #3e80d4;
 }
-.lottery_type_172 .balls .num_1,.lottery_type_280 .balls .num_1 {
+.lottery_type_172 .balls .num_1,
+.lottery_type_280 .balls .num_1 {
   background-position: 0 0;
 }
-.lottery_type_172 .balls .num_2 ,.lottery_type_280 .balls .num_2{
+.lottery_type_172 .balls .num_2,
+.lottery_type_280 .balls .num_2 {
   background-position: 0 118px;
 }
-.lottery_type_172 .balls .num_3 ,.lottery_type_280 .balls .num_3{
+.lottery_type_172 .balls .num_3,
+.lottery_type_280 .balls .num_3 {
   background-position: 0 236px;
 }
-.lottery_type_172 .balls .num_4 ,.lottery_type_280 .balls .num_4{
+.lottery_type_172 .balls .num_4,
+.lottery_type_280 .balls .num_4 {
   background-position: 0 354px;
 }
-.lottery_type_172 .balls .num_5,.lottery_type_280 .balls .num_5 {
+.lottery_type_172 .balls .num_5,
+.lottery_type_280 .balls .num_5 {
   background-position: 0 614px;
 }
-.lottery_type_172 .balls .num_6,.lottery_type_280 .balls .num_6 {
+.lottery_type_172 .balls .num_6,
+.lottery_type_280 .balls .num_6 {
   background-position: 0 590px;
 }
 .dengyu,
@@ -1843,22 +1856,23 @@ export default {
   box-shadow: none;
 }
 
-.gd11x5 .balls span{
+.gd11x5 .balls span {
   border-radius: 50%;
-  background:url('../../static/images/common/blue_ball.png') no-repeat center center;
+  background: url("../../static/images/common/blue_ball.png") no-repeat center
+    center;
   background-size: 100%;
   color: black;
   font-size: 16px;
 }
 
-.gd11x5 .openData .nums .habi1{
+.gd11x5 .openData .nums .habi1 {
   width: 10px;
 }
 
-#ten_result_133  .time+td span:not(.feiche){
-  background:url('../../static/images/common/blue_ball.png') no-repeat center center;
+#ten_result_133 .time + td span:not(.feiche) {
+  background: url("../../static/images/common/blue_ball.png") no-repeat center
+    center;
   background-size: 100%;
-  color: black
+  color: black;
 }
-
 </style>
